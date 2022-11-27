@@ -1,0 +1,574 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/owl.theme.default.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/datepicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/showCard.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/form_city_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/recaptcha_settings.js') }}"></script>
+    <script src="{{ asset('assets/js/recapthcha_validate.js') }}"></script>
+
+    <script src="{{ asset('assets/js/datepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/js/chat.js') }}"></script>
+{% endblock %}
+
+{% block socialScripts %}
+    <!-- VK -->
+    {#<script type="text/javascript" src="//vk.com/js/api/openapi.js?149"></script>#}
+    {#<script type="text/javascript">VK.init({apiId: 6213461, onlyWidgets: true});</script>#}
+    {#<script type="text/javascript" src="https://vk.com/js/api/share.js?95" charset="windows-1251"></script>#}
+    <!-- VK -->
+    {#<script src='https://www.google.com/recaptcha/api.js'></script>#}
+{% endblock %}
+
+
+{% block openGraph %}
+    {{ parent() }}
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://mix.rent{{ mainFoto }}">
+    <meta property="og:title" content="{{ include(':seo_templates:p_h1.html.twig') }}">
+    <meta property="og:url" content="https://mix.rent{{ app.request.requestUri }}">
+
+    <meta name="twitter:title" content="{{ include(':seo_templates:p_h1.html.twig') }}">
+    <meta name="twitter:description" content="{% include ':seo_templates:p_description.html.twig' %}">
+    <meta name="twitter:image" content="https://mix.rent{{ mainFoto }}">
+
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+    <meta name="description" content="{% include ':seo_templates:p_description.html.twig' %}">
+{% endblock %}
+
+{% block htmlblock %}
+ prefix="og: https://ogp.me/ns#"
+{% endblock %}
+
+{% block title %}{{ include(':seo_templates:p_title.html.twig') }}{% endblock %}
+
+{% block content %}
+
+    <!-- FB -->
+    {#<div id="fb-root"></div>#}
+    {#<script>(function(d, s, id) {#}
+            {#var js, fjs = d.getElementsByTagName(s)[0];#}
+            {#if (d.getElementById(id)) return;#}
+            {#js = d.createElement(s); js.id = id;#}
+            {#js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.10&appId=1747516202216504";#}
+            {#fjs.parentNode.insertBefore(js, fjs);#}
+        {#}(document, 'script', 'facebook-jssdk'));</script>#}
+    <!-- FB -->
+
+
+
+    {% if app.session.has('share') %}
+        {{ app.session.remove('share') }}
+    {% endif %}
+
+    <div class="standard_wide breadcrumbs uk-margin-top uk-margin-bottom uk-visible@s">
+        <a class="c_blue" href="/">{% trans %}Главная{% endtrans %}</a>
+        <i uk-icon="icon:chevron-right"></i>
+        <a class="c_blue" href="/rent/{{ card.city.url }}">{{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.url }}</a>
+        <i uk-icon="icon:chevron-right"></i>
+        <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}">{{ lang == 'ru' ? card.generalType.header|capitalize : card.generalType.url|capitalize }}</a>
+
+        {% if bodyType %}
+            <i uk-icon="icon:chevron-right"></i>
+            <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ bodyType.url }}">{{ lang == 'ru' ? bodyType.header|capitalize : bodyType.url|capitalize }}</a>
+        {% endif %}
+
+        {% if card.modelId != 20991 %}
+            <i uk-icon="icon:chevron-right"></i>
+            <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}">{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {{ card.markModel.mark.header }} {% trans %}в{% endtrans %} {{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.url }}</a>
+            <i uk-icon="icon:chevron-right"></i>
+            <a class="c_blue" href="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}/{{ card.markModel.header }}">{{ card.markModel.mark.header }} {{ card.markModel.header }}</a>
+        {% endif %}
+    </div>
+
+    <div class="uk-position-relative">
+
+
+
+        <div id="page_slider" class="owl-carousel owl-carousel-all owl-theme" data-items="1" data-full="1" data-dots="2"  uk-lightbox>
+
+            {% for k,foto in card.getFotos %}
+                <div>
+                <a href="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" class="slide uk-width-1-1" style="
+                        background:url('https://mix.rent/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg') center center;
+                        background-size: cover;
+                        display: block;
+                        height: {% if is_mobile() %}200px{% else %}600px{% endif %};
+                        "
+                {% if k == 0 %}
+                title="{{ card.serviceTypeId == 1 ? 'Прокат'|trans : 'Аренда'|trans }} {% if card.generalType.chegoSingular is defined and lang=='ru'  %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} {% trans %}в{% endtrans %} {{ lang=='en' and card.city.id>1251 ? card.city.header~' '~card.city.iso~' '~card.city.country :card.city.url }}"
+                {% endif %}
+                >
+                    {% if k == 0 %}
+
+                    <img src="https://mix.rent{{ mainFoto }}" alt="" style="visibility: hidden; height: 0;width: 0;" itemprop="image">
+                    {% endif %}
+                    {#<img src="/assets/images/cards/{{ foto.folder }}/{{ foto.id }}.jpg" alt="" style="max-height: auto">#}
+                </a>
+                </div>
+
+
+
+
+            {% endfor %}
+
+        </div>
+
+        <div class="standard_wide uk-position-absolute" style="top: 0;left:0;right: 0;">
+            <div class="likes" data-card_id="{{ card.id }}">
+                {% if app.session.has('likes') and app.session.get('likes')[card.id] is defined %}
+                    <i class="fa fa-heart c_red"></i>
+                {% else %}
+                    <i class="fa fa-heart-o c_white t_shadowed"></i>
+                {% endif %}
+            </div>
+
+            {% if reserved %}
+                <div class="page_reserved">{% trans %}Бронь до{% endtrans %} {{ card.dateRentFinish|date("d.m.Y") }}</div>
+            {% endif %}
+        </div>
+
+
+
+    </div>
+
+
+
+    <div class="standard_wide uk-margin-top">
+
+        <div uk-grid itemscope itemtype="https://schema.org/Product">
+            <div class="uk-width-3-4@s ">
+
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right uk-visible@s">{% trans %}Авто{% endtrans %}:</div>
+                    <div class="uk-width-3-4@s"><h1 itemprop="name">{{ include(':seo_templates:p_h1.html.twig') }}</h1></div>
+                </div>
+
+
+
+
+
+                {% if card.getCardFeatures is not empty%}
+                    <div class="uk-grid" uk-grid>
+                        <div class="uk-width-1-4 uk-text-right uk-visible@s">{% trans %}Характеристики{% endtrans %}:</div>
+                        <div class="uk-width-3-4@s">
+                            <div class="">
+
+                                    {% for feature in card.getCardFeatures %}
+                                        <div class="">
+                                            <span class="check_icon"
+                                                  uk-icon="icon:check; ratio: 1"></span>{{ lang=='ru' ? feature.getFeature.header : feature.getFeature.headerEn }}
+                                        </div>
+                                    {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4 uk-text-right uk-visible@s">{% trans %}Информация{% endtrans %}:</div>
+                    <div class="uk-width-3-4@s">
+                        <div class="">
+
+                            {% if card.prodYear != 0 %}<div>{% trans %}Год выпуска{% endtrans %}: {{ card.prodYear }}</div>{% endif %}
+
+                            <div>{% trans %}Состояние{% endtrans %}: {{ lang=='ru' ? card.getCondition.header : card.getCondition.headerEn }}</div>
+
+                            <div>{{ card.getColor != null ? 'Цвет'|trans~': '~ (lang=='ru' ? card.getColor.header : card.getColor.headerEn) }}</div>
+
+
+                            {% for subfield in sub_fields if subfield.value is not null %}
+                                {% if subfield.type == 'subfield' %}
+                                    <div>
+                                        {{ subfield.label }}: {{ lang=='ru' ? subfield.value.getHeader : subfield.value.url }}
+                                    </div>
+                                {% elseif subfield.value.getValue != 0 and subfield.value.getValue != '' %}
+                                    <div>
+                                        {{ subfield.label }}: {{ subfield.value.getValue }}
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+
+                            <div>{% trans %}Доставка до клиента{% endtrans %}:
+                                {{ card.deliveryStatus == 0 ? 'нет, клиент забирает транспорт самостоятельно'|trans }}
+                                {{ card.deliveryStatus == 1 ? 'да, мы доставляем транспорт'|trans }}
+                                {{ card.deliveryStatus == 2 ? 'возможна, по согласованию'|trans }}
+                            </div>
+
+                        </div>
+                        <div class="uk-margin-top">
+                            <div id="card_content" itemprop="description">{{ card_content|striptags('<br><p>')|raw }}</div>
+                            {% if card_content|length>300 %}
+                            <div class="uk-text-small uk-text-center uk-margin-top show_full_content cursor-pointer">{% trans %}показать полностью{% endtrans %}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if is_mobile() %}
+                    {% include '/card/card_show_price_owner_block.html.twig' %}
+                {% endif %}
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4@s uk-text-right@s">{% trans %}Отзывы{% endtrans %}:</div>
+                    <div class="uk-width-3-4@s">
+                        {% if app.session.has('logged_user') %}
+                            <form action="/userAddOpinion" method="POST">
+                                <div class="stars uk-margin-bottom">
+                                    {% for i in 1..5 %}
+                                        <span class="star {{ i == 1 ? 'active' }}" data-star="{{ i }}"><i class="fa fa-star"></i></span>
+                                    {% endfor %}
+                                    <span id="stars">1</span>
+                                </div>
+                                <textarea name="content" class="uk-textarea" placeholder="{% trans %}Ваш отзыв{% endtrans %}" required></textarea>
+                                <input type="hidden" name="stars" value="1">
+                                <input type="hidden" name="user_id" value="{{ app.session.get('logged_user').id }}">
+                                <input type="hidden" name="card_id" value="{{ card.id }}">
+                                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                                <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Отправить{% endtrans %}</button>
+                            </form>
+
+                        {% else %}
+                            <div>
+                                <a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}зарегистрируйтесь{% endtrans %}</a>, {% trans %}чтобы оставить отзыв{% endtrans %}.
+                            </div>
+                        {% endif %}
+
+                        {% if card.opinions is not empty %}
+                            <hr>
+                            <div class="uk-margin-top">
+                                {% for opinion in card.opinions %}
+                                    <div class="uk-margin-bottom">
+                                        <i class="fa fa-calendar"></i> {{ opinion.dateCreate|date('d.m.Y H:i') }}
+                                        <i class="fa fa-user"></i> {{ opinion.user.header }}
+                                        <i class="fa fa-star c_gold"></i> {{ opinion.stars }}
+                                        <div><i class="fa fa-comment-o"></i> {{ opinion.content }}</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4@s uk-text-right@s">{% trans %}Комментарии{% endtrans %}:</div>
+                    <div class="uk-width-3-4@s">
+                        {% if app.session.has('logged_user') %}
+                            <form action="/userAddComment" method="POST">
+                                <textarea name="comment" class="uk-textarea" placeholder="{% trans %}Ваш комментарий{% endtrans %}" required></textarea>
+                                <input type="hidden" name="user_id" value="{{ app.session.get('logged_user').id }}">
+                                <input type="hidden" name="card_id" value="{{ card.id }}">
+                                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                                <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Отправить{% endtrans %}</button>
+                            </form>
+                        {% else %}
+                            <div>
+                                <a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}зарегистрируйтесь{% endtrans %}</a>, {% trans %}чтобы написать комментарий{% endtrans %}.
+                            </div>
+                        {% endif %}
+
+                        {% if card.comments is not empty %}
+                            <hr>
+                        <div class="uk-margin-top">
+                            {% for comment in card.comments %}
+                                <div class="uk-margin-bottom">
+                                    <i class="fa fa-calendar"></i> {{ comment.dateCreate|date('d.m.Y H:i') }}
+                                    <i class="fa fa-user"></i> {{ comment.user.header }}
+                                    <div><i class="fa fa-comment-o"></i> {{ comment.content }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-4@s uk-text-right@s">{% trans %}Похожие{% endtrans %}:</div>
+                    <div class="uk-width-3-4@s">
+                        <div uk-grid class="uk-grid-small uk-grid-match">
+                            {% for card in similar %}
+                                <div class="uk-width-1-2@s">
+                                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+{# -----------------------------------------------------------  This is right block !  ----------------------------------------------- #}
+
+
+            <div class="uk-width-1-4@s">
+
+
+                {#{% if app.session.has('logged_user') %}#}
+                    {#<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #user_book_form" style="padding:10px 0;">#}
+                        {#{% trans %}Отправить заявку{% endtrans %}#}
+                    {#</button>#}
+                {#{% else %}#}
+                    {#<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #nonreged_user_book_form" style="padding:10px 0;">#}
+                        {#{% trans %}Отправить заявку{% endtrans %}#}
+                    {#</button>#}
+                {#{% endif %}#}
+
+                <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" uk-toggle="target: #user_book_form" style="padding:10px 0;">
+                    {% trans %}Отправить заявку{% endtrans %}
+                </button>
+
+
+                {% if not is_mobile() %}
+                    {% include '/card/card_show_price_owner_block.html.twig' %}
+                {% endif %}
+
+                <button class="uk-button uk-button-default uk-width-1-1 uk-margin-top" uk-toggle="target: #user_abuse">{% trans %}Жалоба{% endtrans %}</button>
+
+
+                <div id="user_message_form" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">{% trans %}Сообщение пользователю{% endtrans %}</h2>
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <form action="/user/sendMessage" uk-grid class="uk-grid-small" method="POST" >
+                            <div class="uk-width-1-1"><input type="text" name="name" class="uk-input" placeholder="{% trans %}Имя{% endtrans %}"></div>
+                            <div class="uk-width-1-1"><input type="text" name="phone" class="uk-input uk-width-1-1" placeholder="{% trans %}Телефон{% endtrans %}"></div>
+                            <div class="uk-width-1-1"><input type="text" name="email" class="uk-input" placeholder="Email" required></div>
+                            <div class="uk-width-1-1"><textarea name="message" class="uk-width-1-1 short_textarea" placeholder="{% trans %}Сообщение{% endtrans %}" required></textarea>
+                            </div>
+                            <input type="hidden" name="card_id" value="{{ card.id }}">
+                            <div class="uk-width-1-1">
+                                <button class="uk-button uk-button-default uk-width-1-1">{% trans %}Отправить{% endtrans %}</button>
+                            </div>
+                            {#<div id="recap_1" class="g-recaptcha"#}
+                                 {#data-callback="capcha_filled"#}
+                                 {#data-expired-callback="capcha_expired"#}
+                                 {#data-sitekey="6LcGCzUUAAAAADpeaCQhkXWZqdhnB6_ZEGRm7Z2m"></div>#}
+                            <input type="hidden" name="g-recaptcha-response">
+                            <div id="recap1"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="user_book_form" uk-modal="bg-close:false" data-res="{{ reserved ? card.dateRentFinish|date_modify("+1 day")|date('Y/m/d') : "now"|date("Y/m/d") }}">
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">{% trans %}Заявка{% endtrans %}</h2>
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <form action="/user/bookMessage" uk-grid class="uk-grid-small" method="POST" >
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">Image</span>
+                                <div style="
+                                        background: url(https://mix.rent{{ mainFoto }}) center center no-repeat;
+                                        background-size: cover;
+                                        height: 150px;
+                                        "></div>
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">{% trans %}Транспортное средство{% endtrans %}</span>
+                                <input type="text" name="header" class="uk-input" value="{{ card.markModel.mark.header }} {{ card.markModel.header }}">
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">{% trans %}Дата приема{% endtrans %} <span class="c_red">{{ reserved ? 'с '~card.dateRentFinish|date_modify("+1 day")|date('d.m.Y') }}</span></span>
+                                <input type="text" name="date_in" class="uk-input uk-width-1-1 datepicker-reserve" >
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">{% trans %}Дата возврата{% endtrans %} <span class="c_red">{{ reserved ? 'с '~card.dateRentFinish|date_modify("+1 day")|date('d.m.Y') }}</span></span>
+                                <input type="text" name="date_out" class="uk-input uk-width-1-1 datepicker-reserve">
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">{% trans %}Город приема{% endtrans %}</span>
+                                <input type="text" name="city_in" class="uk-input uk-width-1-1" value="{{ card.city.header }}">
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">{% trans %}Город возврата{% endtrans %}</span>
+                                <input type="text" name="city_out" class="uk-input uk-width-1-1" value="{{ card.city.header }}">
+                            </div>
+
+                            <div class="uk-width-1-1">
+                                <span class="uk-text-small">{% trans %}Имя и фамилия{% endtrans %}</span>
+                                <input type="text" name="full_name" class="uk-input uk-width-1-1" value="{{ app.session.get('logged_user') ? app.session.get('logged_user').header }}">
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">Email</span>
+                                <input type="text" name="email" class="uk-input uk-width-1-1" value="{{ app.session.get('logged_user') ? app.session.get('logged_user').email }}">
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">{% trans %}Телефон{% endtrans %}</span>
+                                <input type="text" name="phone" class="uk-input uk-width-1-1" value="{% if app.session.has('logged_user') %}{% for info in app.session.get('logged_user').information if info.uiKey == 'phone' %}{{ info.uiValue }}{% endfor %}{% endif %}">
+                            </div>
+
+
+                            <div class="uk-width-1-1">
+                                <span class="uk-text-small">{% trans %}Ваш коментарий к заявке{% endtrans %}</span>
+                                <textarea name="alternative" class="uk-width-1-1 short_textarea"></textarea>
+                            </div>
+
+                            <input type="hidden" name="card_id" value="{{ card.id }}">
+
+                            <div class="uk-width-1-1">
+                                <button class="uk-button uk-button-default uk-width-1-1">{% trans %}Отправить{% endtrans %}</button>
+                            </div>
+
+                            <input type="hidden" name="g-recaptcha-response">
+                            <div id="recap3"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="user_phone_form" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">{% trans %}Телефон{% endtrans %}</h2>
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <div class="modal_name"><i class="fa fa-user"></i> {{ card.user.header }}</div>
+                        <a class="modal_phone" href=""></a>
+                        <hr>
+                        <div class="modal_text tx_19">
+                            {% trans %}Не забудьте сообщить владельцу, что звоните с сайта Мультипрокат и спросить скидку!{% endtrans %}
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div id="share_butons" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">{% trans %}Расскажи всем!{% endtrans %}</h2>
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <div class="">
+                            <div class="">
+                                <div uk-grid class="uk-flex uk-flex-center uk-grid-small">
+                                    {#<div><!-- VK like -->#}
+                                        {#<div id="vk_like"></div>#}
+                                        {#<script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script>#}
+                                    {#</div>#}
+                                    {#<div class="  vk_share"><!-- VK share -->#}
+                                        {#<script type="text/javascript">document.write(VK.Share.button(false,{type: "round", text: "Поделиться"}));</script>#}
+                                    {#</div>#}
+                                    {#<div class="uk-width-2-3">#}
+                                        {#<div class="fb-like" data-href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>#}
+                                    {#</div>#}
+                                    <div>
+                                        <script src="https://apis.google.com/js/platform.js" async defer></script>
+                                        <g:plusone></g:plusone>
+                                        <div class="g-plus" data-action="share" data-height="24"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+        <div class="uk-margin-large">
+
+        </div>
+
+
+        {% if app.session.has('admin') and app.session.get('admin').role == 'superadmin' %}
+            {% if card.isTop %}
+                <div class="uk-label uk-label-warning">already in main slider</div>
+            {% else %}
+                <button id="make_main_slider" type="button" class="uk-button" style="background: orange;color:white" data-id="{{ card.id }}">to main slider</button>
+            {% endif %}
+
+
+            {% if card.isBest %}
+                <div class="uk-label" style="background: pink;color:white">already in best offer</div>
+            {% else %}
+                <button id="make_best_offer" type="button" class="uk-button" style="background: pink;color:white" data-id="{{ card.id }}">to best offers</button>
+            {% endif %}
+
+
+        {% endif %}
+
+
+    </div>
+
+    {% if app.session.has('first_card') %}
+        {{ app.session.remove('first_card') }}
+    {% endif %}
+
+    {{ include(':card/order_forms:nonreged_form.html.twig') }}
+
+    {{ include(':main_page:top_slider.html.twig') }}
+
+    {{ include(':main_page:bottom_rent.html.twig') }}
+
+
+    <div id="user_abuse" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <h2 class="uk-modal-title">{% trans %}Жалоба{% endtrans %}</h2>
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <form action="/user/sendAbuse" uk-grid class="uk-grid-small" method="POST" >
+                <div class="uk-width-1-1">
+                    <label><input type="checkbox" name="abuse[]" value="Телефон не отвечает">{% trans %}Телефон не отвечает{% endtrans %}</label>
+                </div>
+                <div class="uk-width-1-1">
+                    <label><input type="checkbox" name="abuse[]" value="Объявление больше не актуально">{% trans %}Объявление больше не актуально{% endtrans %}</label>
+                </div>
+                <div class="uk-width-1-1">
+                    <label><input type="checkbox" name="abuse[]" value="Ворованные фото">{% trans %}Ворованные фото{% endtrans %}</label>
+                </div>
+                <div class="uk-width-1-1">
+                    <label><input type="checkbox" name="abuse[]" value="Грубый владелец">{% trans %}Грубый владелец{% endtrans %}</label>
+                </div>
+                <input type="hidden" name="card_id" value="{{ card.id }}">
+                <div class="uk-width-1-1">
+                    <button class="uk-button uk-button-default uk-width-1-1">{% trans %}Отправить{% endtrans %}</button>
+                </div>
+                {#<div id="recap_2" class="g-recaptcha"#}
+                     {#data-callback="capcha_filled"#}
+                     {#data-expired-callback="capcha_expired"#}
+                     {#data-sitekey="6LcGCzUUAAAAADpeaCQhkXWZqdhnB6_ZEGRm7Z2m"></div>#}
+                <div id="recap2"></div>
+                <input type="hidden" name="g-recaptcha-response">
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+
+{% endblock %}

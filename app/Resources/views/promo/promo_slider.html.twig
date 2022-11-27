@@ -1,0 +1,5 @@
+<div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="3" data-dots="0">
+    {% for card in slider %}
+        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+    {% endfor %}
+</div>

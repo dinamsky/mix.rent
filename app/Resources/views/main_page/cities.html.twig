@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block title %}Регионы{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+    <div class="standard_wide uk-margin-large-top">
+
+
+        <h2>{{ region.header }}</h2>
+        <div class="uk-column-1-5">
+            {% for city in cities %}
+                <a class="uk-display-block" href="/rent/{{ city.url }}">{{ city.header }} </a>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}

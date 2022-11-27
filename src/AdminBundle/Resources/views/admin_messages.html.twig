@@ -1,0 +1,25 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block content %}
+
+<h1>Сообщения</h1>
+
+    {% for date,msgs in messages %}
+        <div class="uk-margin-bottom">
+        <div><i class="fa fa-calendar"></i> {{ date }}</div>
+        {% for m in msgs %}
+            <div>
+                [{{ m.dateCreate|date('H:i') }}]
+                <a href="/user/{{ m.fromUserId }}">{{ users[m.fromUserId].header }}</a>
+                <span uk-icon="icon: arrow-right"></span> {{ m.message }}
+                {% if m.isAttachment == 1 %}
+                    <span uk-lightbox><a href="/assets/images/chat/{{ m.id }}.jpg" alt="">[фото]</a></span>
+                {% endif %}
+                <span uk-icon="icon: arrow-right"></span>
+                <a href="/user/{{ m.toUserId }}">{{ users[m.toUserId].header }}</a>
+
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

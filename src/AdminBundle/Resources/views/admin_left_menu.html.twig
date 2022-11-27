@@ -1,0 +1,29 @@
+<div class="uk-margin-top">
+    {% if app.session.has('admin') and app.session.get('admin').role == 'superadmin'%}
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminNewAdmin">Назначить администратора</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminArticles">Страницы</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminNews">Блог</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminComments">Комментарии</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminEmails">Редактор писем</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminSEOPatterns">SEO шаблоны</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminSEOPages">SEO страницы</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminUserBan">Блокировка аккаунтов</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminStat">Статистика</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminUserInfo">Профили пользователей</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminMainSlider">Слайдер главной</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminHowWork">Как это работает</a>
+    <hr>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminPromo">Промо</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminPromoOpinions">Промо отзывы</a>
+    <hr>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminMessages">Сообщения</a>
+    <hr>
+        <a class="uk-button uk-button-danger uk-button-small uk-width-1-1 uk-text-small" href="/sendForNews">Рассылка</a>
+    <hr>
+    {%  endif %}
+    {% if app.session.has('admin') %}
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/adminNewUser">Создать новый аккаунт</a>
+    <a class="uk-button uk-button-default uk-button-small uk-width-1-1 uk-text-small" href="/rent/{{ city.url }}/all/cars">Объявления</a>
+    {% endif %}
+
+</div>

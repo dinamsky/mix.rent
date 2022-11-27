@@ -1,0 +1,8 @@
+<div id="user_book_form" uk-modal="bg-close:false" data-res="{{ reserved ? card.dateRentFinish|date_modify("+1 day")|date('Y/m/d') : "now"|date("Y/m/d") }}">
+                    <div class="uk-modal-dialog uk-modal-body">
+                        <h2 class="uk-modal-title">{% trans %}Заявка{% endtrans %}</h2>
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+                        {{ include('card/order_forms/new_order_form_content.html.twig') }}
+                    </div>
+                </div>

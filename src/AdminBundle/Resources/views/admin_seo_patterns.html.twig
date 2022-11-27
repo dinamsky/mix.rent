@@ -1,0 +1,63 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/signup_validate.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <h1>SEO Шаблоны</h1>
+    <form  action="/adminSEOPatterns" method="POST" uk-grid class="uk-grid-small">
+        <div class="uk-width-1-6"></div>
+        <div class="uk-width-5-6">
+            seo.service - тип объявления прокат/аренда<br>
+            seo.type.singular - тип транспорта в единственном числе: легкового автомобиля<br>
+            seo.type.plural - тип транспорта во множественном числе: легковых автомобилей<br>
+            seo.mark - марка<br>
+            seo.model - модель<br>
+            seo.city.chto - город в именительном падеже: Москва<br>
+            seo.city.gde - город в предложном падеже: Москве<br>
+        </div>
+
+        <div class="uk-width-1-6"></div>
+        <div class="uk-width-5-6">
+            <b>Конечная страница</b><br>
+            card.id - id объявления
+        </div>
+
+        <div class="uk-width-1-6">Title</div>
+        <div class="uk-width-5-6"><textarea name="p_title" class="uk-textarea">{{ p_title }}</textarea></div>
+
+        <div class="uk-width-1-6">Description</div>
+        <div class="uk-width-5-6"><textarea name="p_description" class="uk-textarea">{{ p_description }}</textarea></div>
+
+        <div class="uk-width-1-6">H1</div>
+        <div class="uk-width-5-6"><textarea name="p_h1" class="uk-textarea">{{ p_h1 }}</textarea></div>
+
+        <div class="uk-width-1-6">ALT</div>
+        <div class="uk-width-5-6"><textarea name="p_alt" class="uk-textarea">{{ p_alt }}</textarea></div>
+
+        <div class="uk-width-1-6"></div>
+        <div class="uk-width-5-6">
+            <b>Страница каталога</b><br>
+            seo.bodyType - тип кузова в родительном падеже, множественном числе: Прокат седанов
+        </div>
+
+        <div class="uk-width-1-6">Title</div>
+        <div class="uk-width-5-6"><textarea name="c_title" class="uk-textarea">{{ c_title }}</textarea></div>
+
+        <div class="uk-width-1-6">Description</div>
+        <div class="uk-width-5-6"><textarea name="c_description" class="uk-textarea">{{ c_description }}</textarea></div>
+
+        <div class="uk-width-1-6">H1</div>
+        <div class="uk-width-5-6"><textarea name="c_h1" class="uk-textarea">{{ c_h1 }}</textarea></div>
+
+        <div class="uk-width-1-6">Text</div>
+        <div class="uk-width-5-6"><textarea name="c_text" class="uk-textarea">{{ c_text }}</textarea></div>
+
+
+        <div class="uk-width-1-1"><button class="uk-button uk-button-primary">Сохранить</button></div>
+    </form>
+
+{% endblock %}

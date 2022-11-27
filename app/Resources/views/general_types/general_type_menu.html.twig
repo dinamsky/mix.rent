@@ -1,0 +1,21 @@
+{% macro general_menu_links(links, city_id, general_type) %}
+    {% import _self as macros %}
+    {% for id, type in links %}
+        <li class="">
+            <a href="/type/{{ city_id }}/{{ id }}" class="{% if id == general_type %} uk-background-primary uk-light {% endif %}">{{ type.header }}</a>
+            {% if type.childs %}
+                <ul>
+                    {{ macros.general_menu_links(type.childs, city_id, general_type) }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+
+
+<ul class="main-menu">
+    {{ macros.general_menu_links(general_types, city.id, general_type) }}
+</ul>

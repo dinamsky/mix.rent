@@ -1,0 +1,41 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+
+    <h1>Количество регистраций/объявлений по датам</h1>
+
+    <div>
+        {% for year in 2017..'now'|date('Y') %}
+            {{ year }}<br>
+            {% for month in monthes_nums %}
+                <div class="uk-text-center"><b>{{ monthes_names[month] }}</b></div>
+                <div uk-grid class="uk-grid-small">
+                    <div>
+                        <br>
+                        <i class="fa fa-user"></i><br>
+                        <i class="fa fa-file"></i>
+                    </div>
+                    {% for day in 1..31 if (dates[year][month][day] is defined or cards[year][month][day] is defined)%}
+                       <div>
+                        <i class="c_green">{{ day }}</i><br>
+                        {% if dates[year][month][day] is defined %}
+                            <span class="uk-text-small">{{ dates[year][month][day] }}</span>
+                        {% endif %}
+                        <br>
+                        {% if cards[year][month][day] is defined %}
+                            <span class="uk-text-small c_red">{{ cards[year][month][day] }}</span>
+                        {% endif %}
+                       </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

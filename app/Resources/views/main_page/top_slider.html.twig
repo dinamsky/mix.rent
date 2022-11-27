@@ -1,0 +1,17 @@
+<div class="top_slider_block">
+    <div class="standard_wide uk-position-relative">
+        <div class="uk-text-center tx_24 uk-margin-bottom">{% trans %}Лучшие предложения{% endtrans %}</div>
+        <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="4" data-dots="0">
+            {% for card in topSlider %}
+                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+            {% endfor %}
+        </div>
+        <div class="uk-text-center">
+            {% if app.session.has('logged_user') %}
+                <a href="/card/new" class="" title="Want to be here?<br>Add listing!" uk-tooltip>{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
+            {% else %}
+                <a class="" title="Want to be here?<br>Add listing!" uk-tooltip uk-toggle="target: #sign_in_or_up">{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

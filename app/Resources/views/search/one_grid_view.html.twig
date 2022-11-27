@@ -1,0 +1,136 @@
+<div class="bg_white all_shadowed uk-position-relative">
+
+    {% set main_foto = main_foto(card.getFotos) %}
+
+    {% set bgrnd = 'white' %}
+
+    {% if main_foto  %}
+        {% set bgrnd = 'url(/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg)' %}
+    {% elseif card.fotos[0] is defined %}
+        {% set bgrnd = 'url(/assets/images/cards/'~card.fotos[0].folder~'/t/'~card.fotos[0].id~'.jpg)' %}
+    {% else %}
+        {% set bgrnd = 'url(/assets/images/interface/no_image.jpg)' %}
+    {% endif %}
+
+
+    {% set serviceType = 'Прокат' %}
+    {% if card.serviceTypeId == 2  %}
+        {% set serviceType = 'Аренда' %}
+    {% endif %}
+
+
+    {% set currency = {
+        'RUB': '₽',
+        'EUR': '€',
+        'USD': '$',
+        'CAD': 'C$',
+        'THB': '฿',
+        'MXN': '$',
+        'KRW': '₩',
+        'GBP': '£',
+        'AED': 'Dh',
+    } %}
+
+
+    <a target="_blanc" id="card_img_{{ card.id }}" href="/card/{{ card.id }}" style="background: {{ bgrnd }} center center;
+            background-size: cover;
+            height: {{ height }};
+            display: block;
+            position: relative;"
+    >
+
+    </a>
+
+
+
+
+    <div class="padding10 bg_white uk-position-relative">
+        <div class="uk-grid uk-grid-small" uk-grid>
+            <div class="uk-width-expand">
+                <a target="_blanc" class="uk-text-truncate uk-text-small uk-display-block uk-position-relative c_grey {{ micro is defined ? 'micro' : '' }}" href="/card/{{ card.id }}" title="{{ serviceType }} {% if card.generalType.chegoSingular is defined %}{{ card.generalType.chegoSingular }}{% else %}{% endif %} {{ card.markModel.Mark.header }} {{ card.markModel.header }} {% trans %}в{% endtrans %} {{ card.city.gde }}">
+                    {{ card.markModel.Mark.header }} {{ card.markModel.header }}
+                </a>
+            </div>
+            <div class="uk-width-auto uk-text-right">
+                <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
+                    <i class="fa fa-eye"></i> {{ card.views }}
+                </div>
+            </div>
+        </div>
+        <div class="uk-grid uk-grid-small uk-margin-remove-top" uk-grid>
+            <div class="uk-width-expand">
+                <div class="card_grid_price c_blue {{ micro is defined ? 'micro' : '' }}">
+                    {% set c_price = '' %}
+                    {% set c_ed = '' %}
+
+                    {% for price in card.cardPrices if price.priceId == 2 %}
+                        {% set c_price = price.value %}
+                        {% set c_ed = '/'~'день'|trans %}
+                    {% endfor %}
+
+                    {% for price in card.cardPrices if price.priceId == 1 and c_price == '' %}
+                        {% set c_price = price.value %}
+                        {% set c_ed = '/'~'час'|trans %}
+                    {% endfor %}
+
+                    {% for price in card.cardPrices if price.priceId == 6 and c_price == '' %}
+                        {% set c_price = price.value %}
+                        {% set c_ed = '' %}
+                    {% endfor %}
+
+                    {% if c_price != '' %}
+                    {{ c_price|number_format(0,'.','<span class="thousand_separator"></span>')|raw }}{{ currency[card.currency]|raw }}<span class="">{{ c_ed }}</span>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="uk-width-auto uk-text-right">
+                <div class="uk-text-small c_grey {{ micro is defined ? 'micro' : '' }}">
+                   {{ lang=='en' and card.city.id > 1251 ? card.city.header~' '~card.city.iso~' '~card.city.country : card.city.header }}
+                </div>
+            </div>
+        </div>
+
+
+
+
+        {% if card.dateRentFinish > date() %}
+            <div class="reserved">бронь до {{ card.dateRentFinish|date("d.m.Y") }}</div>
+        {% endif %}
+    </div>
+
+
+
+    {% if share is defined %}
+        <a href="/card_share/{{ card.id }}" class="bottom_share"><span uk-icon="icon: social"></span></a>
+        <div class="uk-text-center uk-text-small" style="border-top: 1px solid #d4d4d4;
+                                                    padding-top: 5px;">
+            {% trans %}Тариф{% endtrans %}:
+            <span class="c_blue">
+                {{ card.tariffId == 1 ? 'Стандарт'|trans }}
+                {{ card.tariffId == 2 ? 'Экспресс'|trans }}
+                {{ card.tariffId == 3 ? 'Премиум'|trans }}
+            </span>
+        </div>
+        <div class="uk-text-center">
+            <a href="/promote_card/{{ card.id }}" class="promote_card_link">{% trans %}Продвинуть{% endtrans %}</a>
+        </div>
+    {% endif %}
+
+
+    {% if (
+       ( app.session.has('admin') and card.adminId == app.session.get('admin').id )
+       or ( app.session.has('admin') and app.session.get('admin').role == 'superadmin' )
+       or ( app.session.has('logged_user') and card.user.id == app.session.get('logged_user').id )
+    ) %}
+        {% if in_edit is not defined %}
+            <form action="/card/update" method="POST" style="position: absolute;top:0;left:0;" onsubmit="return confirm('Вы уверены?');">
+                <input type="hidden" name="cardId" value="{{ card.id }}">
+                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                <button class="uk-button-danger c_white" name="delete" style="padding: 0;border:0;vertical-align: top;"><span uk-icon="icon: close"></span></button>
+            </form>
+            <a class="uk-button-primary uk-position-top-right icon_button" href="/user/edit/card/{{ card.id }}" ><i class="fa fa-pencil"></i></a>
+        {% endif %}
+    {% endif %}
+</div>
+

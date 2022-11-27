@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block stylesheets %}
+            <link href="{{ asset('assets/css/uikit.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/base.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/typo.css') }}" rel="stylesheet" />
+            <link href="{{ asset('assets/css/base-responsive.css') }}" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+        <title>{% block title %}Mix.rent{% endblock %}</title>
+    </head>
+    <body class="{{ is_mobile() ? 'mobile' : 'desktop' }} {% block bodyClass %}{% endblock %}">
+        {{ include('header.html.twig') }}
+        <div id="content" class="standard_wide {{ is_mobile() ? '' : 'uk-margin-top' }}">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div id="main_message" uk-alert class="uk-position-absolute uk-position-center uk-width-1-3">
+                        <a class="uk-alert-close" uk-close></a>
+                        <div class="flash-{{ label }}">
+                            {{ message|raw }}
+                        </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function(event) {
+                              setTimeout(function() {
+                                UIkit.alert('#main_message').close();
+                              }, 3000);
+                            });
+                        </script>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% if full is not defined %}
+                <div uk-grid>
+                <div class=" uk-width-1-5@s {{ is_mobile() ? 'uk-flex-last' }}">{% block left_block %}{{ include('user/user_left.html.twig') }}{% endblock %}</div>
+                <div class=" uk-width-4-5@s">
+            {% endif %}
+                {% block content %}{% endblock %}
+            {% if full is not defined %}
+                </div>
+                </div>
+            {% endif %}
+        </div>
+        {{ include('footer.html.twig') }}
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
+            <script src="{{ asset('assets/js/uikit.min.js') }}"></script>
+            <script src="{{ asset('assets/js/uikit-icons.min.js') }}"></script>
+            <script src="{{ asset('assets/js/signup_validate.js') }}"></script>
+        {% endblock %}
+        {{ include('counters.html.twig') }}
+        {{ include('user/auth_modals.html.twig') }}
+    </body>
+</html>

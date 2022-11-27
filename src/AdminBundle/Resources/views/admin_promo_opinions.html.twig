@@ -1,0 +1,66 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/js/visual_editor.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Промо отзывы</h1>
+
+
+    <form action="/adminPromoOpinionsInsert" method="POST" enctype="multipart/form-data">
+
+        <div class="uk-margin-bottom" uk-grid>
+            <div class="uk-width-1-6">
+
+                <div uk-form-custom>
+                    <input type="file" name="foto">
+                    <button class="uk-button uk-button-default" type="button" tabindex="-1">Фото</button>
+                </div>
+            </div>
+            <div class="uk-width-5-6">
+                <div uk-grid>
+                    <div class="uk-width-1-6"><input type="text" name="sort"  class="uk-input"></div>
+                    <div class="uk-width-5-6"><input type="text" name="name"  class="uk-input"></div>
+                </div>
+                <textarea name="desc" class="visual_editor"></textarea>
+            </div>
+        </div>
+
+        <button class="uk-button uk-button-primary">Добавить</button>
+    </form>
+
+    <hr>
+
+    <form action="/adminPromoOpinionsUpdate" method="POST" enctype="multipart/form-data">
+        {% for o in opinions %}
+            <div class="uk-margin-bottom" uk-grid>
+                <div class="uk-width-1-6">
+                    <img src="{{ asset('assets/images/interface/promo/op_'~o.id~'.jpg') }}">
+                    <div uk-form-custom>
+                        <input type="file" name="foto_{{ o.id }}">
+                        <button class="uk-button uk-button-default" type="button" tabindex="-1">Фото</button>
+                    </div>
+                </div>
+                <div class="uk-width-5-6">
+                    <div uk-grid>
+                        <div class="uk-width-auto"><input type="text" name="sort[{{ o.id }}]" value="{{ o.sort }}" class="uk-input" style="width:50px;"></div>
+                        <div class="uk-width-expand"><input type="text" name="name[{{ o.id }}]" value="{{ o.name }}" class="uk-input"></div>
+                        <div class="uk-width-auto"><button name="delete" class="uk-button uk-button-danger" style="padding: 0 10px" value="{{ o.id }}" onclick="return confirm('Вы уверны?');"><i uk-icon="icon:close"></i></button></div>
+                    </div>
+                    <textarea name="desc[{{ o.id }}]" class="visual_editor">{{ o.desc }}</textarea>
+                </div>
+            </div>
+        {% endfor %}
+        <button class="uk-button uk-button-primary">Записать</button>
+    </form>
+
+
+{% endblock %}

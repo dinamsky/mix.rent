@@ -1,0 +1,28 @@
+mark:
+    resource: "@MarkBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+info:
+    resource: "@InfoBundle/Controller/"
+    type:     annotation
+
+admin:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+app_menu:
+    resource: '@AppBundle/Menu/'
+    type: annotation
+
+app_foto:
+    resource: '@AppBundle/Foto/'
+    type: annotation

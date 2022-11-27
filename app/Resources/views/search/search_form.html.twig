@@ -1,0 +1,40 @@
+<form id="searchForm" action="/search" method="GET" {{ top is defined ? 'uk-grid' }} class="{{ top is defined ? 'uk-grid-small uk-flex uk-flex-center' }}">
+
+
+    {#<div class="cursor-pointer">{{ include('selector/adress_block.html.twig') }}</div>#}
+
+    <div class="cursor-pointer uk-margin-bottom">
+        <span class="uk-text-small">{% trans %}Тип транспорта{% endtrans %}</span>
+        <div class="border_selector">{{ include('selector/general_new_block.html.twig') }}</div>
+    </div>
+
+    <div class="cursor-pointer uk-margin-bottom" id="mark_placement">
+        <span class="uk-text-small">{% trans %}Марка{% endtrans %}</span>
+        <div class="border_selector">{{ include('selector/mark_block.html.twig', {'mark_arr':mark_arr_sorted,'type':car_type_id}) }}</div>
+    </div>
+
+    <div class="cursor-pointer" id="model_placement">
+        <span class="uk-text-small">{% trans %}Модель{% endtrans %}</span>
+        <div class="border_selector">{{ include('selector/model_block.html.twig', {'model_arr':models_in_mark, 'mark_id':mark.id}) }}</div>
+    </div>
+
+
+
+
+    <input type="hidden" name="view" value="{{ view is defined ? view : 'grid_view' }}">
+
+    {{ top is defined ? '<div class="top_find_button">' }}
+
+        <button data-page="{{ page is defined ? page : 1 }}"
+                data-view="{{ view is defined ? view : 'grid_view' }}"
+                data-onpage="{{ onpage is defined ? onpage : 12 }}"
+
+                id="main_search_button"
+                type="button"
+                class="uk-button uk-button-primary uk-margin-top uk-width-1-1">
+            {% trans %}Найти{% endtrans %}
+        </button>
+
+    {{ top is defined ? '</div>' }}
+
+</form>

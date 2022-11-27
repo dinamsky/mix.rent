@@ -1,0 +1,33 @@
+<input type="hidden" id="markURL" name="markURL" value="{{ mark.header }}" data-id="{{ mark.id }}">
+
+<div uk-toggle="target: #mark_popular">
+    <span  class="mark_selector uk-text-truncate">{{ mark and mark.header ? mark.header : 'Любая марка'|trans }}</span>
+    <i uk-icon="icon:chevron-down"></i>
+</div>
+
+<div id="mark_popular" class="uk-modal-container uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">{% trans %}Выберите марку{% endtrans %}</h2>
+
+        <div>
+            {% trans %}или начните вводить наименование марки{% endtrans %}: <input name="input_mark" class="uk-input uk-width-1-5">
+        </div>
+        <hr>
+        <div class="uk-column-1-1 uk-column-1-5@s">
+            <div class="mark_block uk-margin-bottom {{ left_block is defined ? 'left_block' }}" data-id="0" data-url="" data-header="{% trans %}Любая марка{% endtrans %}">{% trans %}Любая марка{% endtrans %}</div>
+            {% for mark in mark_arr[type]|slice(0,50) %}
+                <div class="mark_block {{ left_block is defined ? 'left_block' }}" data-id="{{ mark.mark.id }}" data-url="{{ mark.mark.header }}" data-header="{{ mark.mark.header }}">{{ mark.mark.header }} </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <button uk-toggle="target: #more_marks" type="button" class="more_cities_button">{% trans %}показать все марки{% endtrans %}</button>
+        <div id="more_marks" hidden>
+            <div class="uk-column-1-1 uk-column-1-5@s">
+                {% for mark in mark_arr[type]|slice(50) %}
+                    <div class="mark_block {{ left_block is defined ? 'left_block' }}" data-id="{{ mark.mark.id }}" data-url="{{ mark.mark.header }}" data-header="{{ mark.mark.header }}">{{ mark.mark.header }} </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+
+    <h1>Статистика</h1>
+    <div>Введите id пользователя
+        <input type="text" name="user_id" id="user_id">
+        <button type="button" class="uk-button uk-button-primary"
+                onclick="document.location.href = '/adminEditUser/'+document.getElementById('user_id').value">
+            Редактировать
+        </button>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+<div id="chat_modal" uk-modal data-is_file="0">
+    <div class="uk-modal-dialog uk-modal-body" uk-overflow-auto>
+        <h2 class="uk-modal-title">Messages</h2>
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div id="chat_block"></div>
+        <hr>
+        <div class="uk-grid uk-grid-collapse" uk-grid>
+            <div class="uk-width-auto">
+                <form id="chat_upload_form" action="/ajax_chat_upload" method="post" enctype="multipart/form-data" target="upload_target">
+                    <div uk-form-custom>
+                        <input name="chat_foto" type="file" >
+                        <button type="button" tabindex="-1" id="upload_chat_button"><i class="fa fa-paperclip"></i></button>
+                    </div>
+                    <input type="hidden" name="filename">
+                </form>
+                <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+            </div>
+            <div class="uk-width-expand"><input type="text" id="new_chat_message" placeholder="Your message"></div>
+            <div class="uk-width-auto"><button type="button" id="send_chat_message"><i class="fa fa-send"></i></button></div>
+        </div>
+    </div>
+</div>

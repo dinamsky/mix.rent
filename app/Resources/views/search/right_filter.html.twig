@@ -1,0 +1,84 @@
+{% if filter %}
+
+
+<form id="filter_form" class="{{ is_filter ? 'filtered' }}">
+    {% for f in filter %}
+
+        {% if f.type == 'input' %}
+            <div class="filter_container">
+                <div class="filter_label uk-clearfix">
+                    <div class="uk-float-left">{{ lang == 'ru' ? f.label|capitalize : f.label_en|capitalize }}</div>
+                    <div class="uk-float-right"><i class="fa fa-angle-down"></i></div>
+                </div>
+                <div class="filter_content {{ get_filter[f.id]['on'] is defined and get_filter[f.id]['on'] == 'on' ? 'is_expanded' : 'is_collapsed' }}">
+                    <div>
+                        <label>
+                            <input type="checkbox" name="filter[{{ f.id }}][on]" {{ get_filter[f.id]['on'] is defined and get_filter[f.id]['on'] == 'on' ? 'checked' }}> {% trans %}Учитывать{% endtrans %}
+                        </label>
+                    </div>
+                    <div class="uk-margin-top">
+                        <input id="r_from_{{ f.id }}" type="number" name="filter[{{ f.id }}][from]" value="{{ get_filter[f.id]['from'] is defined ? get_filter[f.id]['from'] }}" class="uk-input uk-width-1-3">
+                        - <input id="r_to_{{ f.id }}" type="number" name="filter[{{ f.id }}][to]" value="{{ get_filter[f.id]['to'] is defined ? get_filter[f.id]['to'] }}" class="uk-input uk-width-1-3">
+                        <div id="ranger_{{ f.id }}" class="ranger uk-margin-top" data-from="0" data-to="3000" data-id="{{ f.id }}" data-start="{{ get_filter[f.id]['from'] is defined ? get_filter[f.id]['from'] : '0' }}" data-finish="{{ get_filter[f.id]['from'] is defined ? get_filter[f.id]['to'] : '3000' }}"></div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if f.type == 'checkbox' %}
+            <div class="filter_container">
+                <div class="filter_label uk-clearfix">
+                    <div class="uk-float-left">{{ lang == 'ru' ? f.label|capitalize : f.label_en|capitalize }}</div>
+                    <div class="uk-float-right"><i class="fa fa-angle-down"></i></div>
+                </div>
+                <div class="filter_content {{ get_filter[f.id] is defined ? 'is_expanded' : 'is_collapsed' }}">
+                    {% for ch in f.set %}
+                        <div>
+                            <label>
+                                <input type="checkbox" name="filter[{{ f.id }}][{{ ch.id }}]" {{ get_filter[f.id][ch.id] is defined and get_filter[f.id][ch.id] == 'on' ? 'checked' }}> {{ lang == 'ru' ? ch.header : ch.url }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    {% endfor %}
+    <button type="button" id="filter_search" class="uk-button uk-button-default uk-margin-top uk-width-1-1">{% trans %}Отфильтровать{% endtrans %}</button>
+
+    {% if is_filter %}
+        <button type="button" id="filter_search_reset" class="uk-button uk-button-danger uk-margin-top uk-width-1-1">{% trans %}Сбросить фильтры{% endtrans %}</button>
+    {% endif %}
+
+</form>
+{% endif %}
+
+
+{% if features %}
+    <h3>{% trans %}Характеристики{% endtrans %}</h3>
+
+    <form id="feature_form" class="{{ is_feature ? 'featured' }}">
+        <div class="bordered padding10">
+        {% for f in features %}
+            <div>
+                <label class="uk-grid uk-grid-collapse" uk-grid>
+                    <div class="uk-width-auto">
+                        <input type="checkbox" name="feature[{{ f.id }}]" {{ get_feature[f.id] is defined and get_feature[f.id] == 'on' ? 'checked' }}>
+                    </div>
+                    <div class="uk-width-expand">
+
+                        <div class="feature_item">{{ lang == 'ru' ? f.header : f.headerEn }}</div>
+                    </div>
+
+                </label>
+            </div>
+        {% endfor %}
+        </div>
+    </form>
+
+    <button type="button" id="feature_search" class="uk-button uk-button-default uk-margin-top uk-width-1-1">{% trans %}Отфильтровать{% endtrans %}</button>
+
+    {% if is_feature %}
+        <button type="button" id="feature_search_reset" class="uk-button uk-button-danger uk-margin-top uk-width-1-1">{% trans %}Сбросить характеристики{% endtrans %}</button>
+    {% endif %}
+{% endif %}

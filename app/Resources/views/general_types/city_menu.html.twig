@@ -1,0 +1,35 @@
+<form action="/mainCitySelector" method="POST">Страна и город:
+    <select name="countryCode" id="countryCode" class="uk-select"><br>
+        <option value="0">-выберите страну-</option>
+        {% for country_code, country_title in countries %}
+            <option value="{{ country_code }}"
+                    {% if city.object.country is defined and  city.object.country == country_code %} selected {% endif %}
+                    {% if city.id == country_code %} selected {% endif %}
+            >{{ country_title }}</option>
+        {% endfor %}
+    </select>
+    <select name="regionId" id="regionId" style="width:100%" class="uk-select">
+        <option value="0">- любой регион -</option>
+        {% for region in city.regions %}
+            <option value="{{ region.id }}"
+                {% if city.object is not empty and city.object.parentId == NULL and city.object.id == region.id %} selected {% endif %}
+                {% if city.object is not empty and city.object.parentId != NULL and city.object.parentId == region.id %} selected {% endif %}
+            >{{ region.header }}</option>
+        {% endfor %}
+    </select><br>
+    <select name="cityId" id="cityId" class="uk-select">
+        <option value="0">- любой город -</option>
+        {% if city.object.parent is defined and city.object.parent == NULL %}
+            {% for town in city.object.getChildren %}
+                <option value="{{ town.id }}">{{ town.header }}</option>
+            {% endfor %}
+        {% elseif city.object.parent is defined %}
+            {% for town in city.object.parent.getChildren %}
+                <option value="{{ town.id }}" {% if city.id == town.id %} selected {% endif %}>{{ town.header }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
+    <br>
+    <input type="hidden" name="general_type" value="{{ general_type }}">
+    <button class="uk-button">Выбрать</button>
+</form>

@@ -1,0 +1,38 @@
+<div>
+    {% if app.session.has('logged_user') %}
+        <div uk-grid class="uk-grid-small">
+            <div class="uk-width-auto">
+                <a href="/user" style="background:url(/assets/images/users/t/{{ app.session.get('user_pic') }}.jpg) center center no-repeat;
+                                        background-size: cover;
+                        width: 95px;
+                        height: 95px;
+                        display: block;
+                        ">
+                </a>
+            </div>
+            <div class="uk-width-expand">
+
+                <div class="uk-text-right"><a href="/userLogout" class=""><span><i uk-icon="icon:sign-out"></i> {% trans %}Выход{% endtrans %}</span></a></div>
+                <div class="uk-text-right" style="margin-top: 10px"><i uk-icon="icon:user"></i> <a href="/profile">{% trans %}Профиль{% endtrans %}</a></div>
+                <div class="uk-text-right" style="margin-top: 10px"><i uk-icon="icon:album"></i> <a href="/user/cards">{% trans %}Объявления{% endtrans %}</a></div>
+            </div>
+        </div>
+        <div class="uk-text-center uk-text-truncate uk-margin-top">{{ app.session.get('logged_user').header }}</div>
+
+
+
+
+    {% elseif app.session.get('admin').email is defined %}
+        <div class="uk-clearfix">
+            <div class="uk-float-left"><a href="/admin"><span uk-icon="icon:user"></span> {{ app.session.get('admin').email }}</a></div>
+            <div class="uk-float-right"><a href="/adminLogout" class=""><span><i uk-icon="icon:sign-out"></i> {% trans %}Выход{% endtrans %}</span></a></div>
+        </div>
+    {% else %}
+        <div class="uk-clearfix">
+            <div class="uk-float-left"><div uk-toggle="target: #sign_in" class=""><span uk-icon="icon:sign-in"></span> {% trans %}Войти{% endtrans %}</div></div>
+            <div class="uk-float-right"><div uk-toggle="target: #sign_up" class=""><span uk-icon="icon:lock"></span>{% trans %}Регистрация{% endtrans %}</div></div>
+        </div>
+
+
+    {% endif %}
+</div>

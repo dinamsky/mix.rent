@@ -1,0 +1,215 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    <script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/search_page.js') }}"></script>
+    <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/price_search.js') }}"></script>
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+    {% if custom_seo and custom_seo.description != ''%}
+        <meta name="description" content="{% include(template_from_string(custom_seo.description)) %}">
+    {% else %}
+        <meta name="description" content="{% include '/seo_templates/c_description.html.twig' %}">
+    {% endif %}
+
+    {% if total_cards == 0 %}
+    <meta name="robots" content="noindex">
+    {% endif %}
+
+{% endblock %}
+
+{% block title %}{% if custom_seo and custom_seo.title != '' %}{% include(template_from_string(custom_seo.title)) %}{% else %}{% include '/seo_templates/c_title.html.twig' %}{% endif %}{% endblock %}
+
+{% block content %}
+
+
+    {% set x_uri = app.request.pathinfo|split('/') %}
+
+    {% if bodyTypes and model.id == null %}
+        {% set body_url = '/rent/'~x_uri[2]~'/'~x_uri[3]~'/'~x_uri[4] %}
+        {% if mark.id != null %}
+            {% set body_url = '/rent/'~x_uri[2]~'/'~x_uri[3]~'/'~x_uri[4]~'/'~x_uri[5] %}
+        {% endif %}
+    {% endif %}
+
+
+    <div id="main_finder" class="standard_wide uk-margin-top">
+
+
+        <div class="uk-grid" uk-grid>
+            <div class="uk-width-1-4@s uk-visible@s">
+                &nbsp;
+            </div>
+            <div class="uk-width-3-4@s">
+                {% if custom_seo and custom_seo.h1 != ''%}
+                    <h1>{% include(template_from_string(custom_seo.h1)) %}</h1>
+                {% else %}
+                    <h1>{% include 'seo_templates/c_h1.html.twig' %}</h1>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="uk-grid uk-margin-remove-top" uk-grid>
+
+            <div class="uk-width-1-4@s">
+
+                <div class="uk-grid uk-grid-collapse" uk-grid>
+                    <div class="uk-width-1-3">
+                        <button class="uk-width-1-1 view_select {{ view == 'grid_view' ? 'uk-button-primary' : '' }}" type="button" value="grid_view" uk-icon="icon:grid"></button>
+                    </div>
+                    <div class="uk-width-1-3">
+                        <button class="uk-width-1-1 view_select {{ view == 'list_view' ? 'uk-button-primary' : '' }}" type="button" value="list_view" uk-icon="icon:list"></button>
+                    </div>
+                    <div class="uk-width-1-3">
+                        <button class="uk-width-1-1 view_select {{ view == 'map_view' ? 'uk-button-primary' : '' }}" type="button" value="list_view" uk-icon="icon:location"></button>
+                    </div>
+                </div>
+
+                {% if total_cards > 0 %}
+                    <div class="border_bottom uk-margin-top">
+                        {% trans %}Найдено{% endtrans %}: {{ total_cards }}
+                    </div>
+                {% endif %}
+
+                {% if is_mobile() %}
+                    <button type="button" class="uk-button uk-button-default uk-width-1-1 uk-margin-top" uk-toggle="target: #all_filters">{% trans %}Уточнить поиск{% endtrans %}</button>
+                    <div id="all_filters" hidden>
+                {% endif %}
+
+
+
+
+                {% if total_cards > 0 %}
+                    <input type="hidden" id="order" name="order" value="{{ app.request.get('order')  is not null ? app.request.get('order') : 0 }}">
+                    <div class="uk-grid uk-grid-collapse uk-margin-top" uk-grid>
+                        <div class="uk-width-1-3 uk-text-center">
+                            {% trans %}Цена{% endtrans %}:
+                        </div>
+                        <div class="uk-width-1-3">
+                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order')  is not null and app.request.get('order') == 'price_asc' ? 'active' }}" value="price_asc">{% trans %}дешевле{% endtrans %}</button>
+                        </div>
+                        <div class="uk-width-1-3">
+                            <button class="uk-width-1-1 sort_button price_sort {{ app.request.get('order')  is not null and app.request.get('order') == 'price_desc' ? 'active' }}" value="price_desc">{% trans %}дороже{% endtrans %}</button>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {{ include('search/price_ranger.html.twig',{'app':app}) }}
+
+                <div class="uk-margin-top uk-visible@s">{{ include('search/search_form.html.twig',{'app':app}) }}</div>
+
+
+
+                <div class="uk-margin-top">
+                    {% if service == 'all' and  total_cards > 0 and model and model.header != 'Any vehicle model' %}
+                        <a class="sort_button buyout_link {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/leasebuyout/{{ general.url }}{{ mark and mark.header !='' ? '/'~mark.header }}{{ model and model.header!='' and model.header !='Любая модель' and mark and mark.header !='' ? '/'~model.header }}">
+                            <span class="buyout_box c_blue"><i class="fa fa-check"></i></span></span> {{ 'Аренда с правом выкупа'|trans }}
+                        </a>
+                    {% endif %}
+                    {% if service == 'leasebuyout' %}
+                        <a class="sort_button buyout_link {{ is_mobile() ? 'uk-width-1-1' }}" href="/rent/{{ city.url }}/all/{{ general.url }}{{ mark ? '/'~mark.header }}{{ model and model.header!='Any vehicle model' ? '/'~model.header }}">
+                            <span class="buyout_box"><i class="fa fa-check"></i></span> {{ 'Аренда с правом выкупа'|trans }}
+                        {#{{ 'Прокат и аренда'|trans }}#}
+                        </a>
+                    {% endif %}
+                </div>
+
+                <hr>
+
+                <div class="uk-margin-bottom">
+                    {% if filter or features %}
+                        {{ include('search/right_filter.html.twig',{'app':app}) }}
+                    {% endif %}
+                </div>
+
+                {% if is_mobile() %}
+                        <button type="button" class="uk-button uk-button-default uk-margin-top uk-width-1-1" uk-toggle="target: #all_filters">{% trans %}Свернуть{% endtrans %}</button>
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="uk-width-3-4@s">
+
+                {% if total_cards < 1 %}
+                    <div class="uk-text-center found_row">{% trans %}Объявлений не найдено{% endtrans %} ...</div>
+                {% endif %}
+
+                {% include 'search/' ~ view ~ '.html.twig' %}
+
+                {% include 'search/mobile_search_pager.html.twig' %}
+
+                {% if total_cards == 0 %}
+
+                    <div class="zero_text">
+                        {% trans %}Пока никто не разместил объявление в этом городе и категории.{% endtrans %}<br>
+                        {% trans %}Будь первым - добавь объявления и получай клиентов!{% endtrans %}
+                    </div>
+
+                    {% if app.session.has('logged_user') %}
+                        <a href="/card/new" class="uk-button uk-button-success zero_button">{% trans %}Разместить объявление!{% endtrans %}</a>
+                    {% elseif app.session.has('admin') %}
+                        <a href="/card/new" class="uk-button uk-button-success zero_button">{% trans %}Разместить объявление!{% endtrans %}</a>
+                    {% else %}
+                        <a uk-toggle="target: #sign_in" class="uk-button uk-button-success zero_button">{% trans %}Разместить объявление!{% endtrans %}</a>
+                    {% endif %}
+
+                    {% if similar %}
+                        <h2 class="pf_style_header"><span>{% trans %}Похожие объявления{% endtrans %}</span></h2>
+
+                        <div uk-grid class="uk-grid-small uk-grid-match uk-margin-top">
+                            {% for card in similar %}
+                                <div class="uk-width-1-3@s">
+                                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'150px'}) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+
+                {% endif %}
+
+
+
+
+
+
+                {% set seo_text %}{% include 'seo_templates/c_text.html.twig' %}{% endset %}
+
+                {% if custom_seo and custom_seo.seoText != ''%}
+                    {% set seo_text = custom_seo.seoText %}
+                {% endif %}
+
+                {% if seo_text != '' %}
+                    <hr>
+                    <div>{{ seo_text }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {{ include(':main_page:top_slider.html.twig') }}
+
+    {{ include(':main_page:bottom_rent.html.twig') }}
+
+</div>
+
+{% endblock %}
+
+
+

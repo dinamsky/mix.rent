@@ -1,0 +1,299 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/js/mainPage.js') }}"></script>
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    {#<script src="{{ asset('assets/html5_banner/createjs-2015.11.26.min.js') }}"></script>#}
+    {#<script src="{{ asset('assets/html5_banner/body.js') }}"></script>#}
+    {#<script src="{{ asset('assets/html5_banner/init.js') }}"></script>#}
+    <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/top_price_ranger.js') }}"></script>
+
+
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+    {% if custom_seo and custom_seo.description != ''%}
+        <meta name="description" content="{% include(template_from_string(custom_seo.description)) %}">
+    {% endif %}
+{% endblock %}
+
+{% block title %}{% if custom_seo and custom_seo.title != ''%}{% include(template_from_string(custom_seo.title)) %}{% else %}Mix.rent{% endif %}{% endblock %}
+
+{% block bodyVars %}{% endblock %}
+{% block bodyClass %}main_page{% endblock %}
+
+{% block content %}
+
+<div class="big_slider uk-position-relative" >
+
+    <div id="pre_cov_sl" style="height: {{ is_mobile() ? '200px' : '600px' }};">
+        <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="1" data-full="1">
+
+
+            {% for s in cover_slider %}
+                <div class="cov_sl" style="
+                        background:
+                        linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6) ),
+                        url({{ s.img }}) center center;background-size: cover;
+                        height: {{ is_mobile() ? '200px' : '600px' }};position:relative;display: block;">
+                    {#<a href="{{ s.link }}" class="b_content_block">#}
+                        {#<h2>{{ s.header|raw }}</h2>#}
+                        {#<p>{{ s.content|raw }}</p>#}
+                    {#</a>#}
+
+
+
+                </div>
+
+            {% endfor %}
+
+            {#<div style="background:url(/assets/images/interface/bigsl1.png) center center;background-size: cover;#}
+                    {#height: {{ is_mobile() ? '200px' : '600px' }};position:relative;">#}
+                {#<div class="b_content_block">#}
+                    {#<h2>Wide transport offer<br>#}
+                    {#to select</h2>#}
+                    {#<p>Help text for header of slider</p>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div style="background:url(/assets/images/interface/bigsl2.png) center center;background-size: cover;#}
+                    {#height: {{ is_mobile() ? '200px' : '600px' }};position:relative;">#}
+                {#<div class="b_content_block">#}
+                    {#<h2>Second<br>#}
+                    {#fraze</h2>#}
+                    {#<p>Another help text for header of slider</p>#}
+                {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+
+    <div style="position: absolute;
+                                top: 30%;
+                                left: 50%;
+                                color: white;z-index: 100;" class="msl_txt">
+                        <div class="slt1" style="font-size: 83px;font-weight: 800">Rental platform</div>
+                        <div class="slt2" style="font-size: 26px;font-weight: 300">Cars, yachts, boats, motorcycles, bicycles, scooters<br>and all transport</div>
+                    </div>
+
+    <script>
+        // console.log(window.innerHeight);
+        // console.log(document.getElementById("header").offsetHeight);
+
+        {% if is_mobile() %}
+            var h = document.body.clientWidth*0.5626;
+        {% else %}
+            var h = window.innerHeight - document.getElementById("header").offsetHeight ;
+        {% endif %}
+
+        document.getElementById("pre_cov_sl").style.height = h + 'px' ;
+
+        var elems = document.getElementsByClassName('cov_sl');
+        var size = elems.length;
+        for (var i = 0; i < size; i++) {
+            elems[i].style.height = h + 'px' ;
+        }
+    </script>
+
+    <div class="main_top_form" id="mtf_id">
+        <div class="mtf_content">
+
+            <h4 style="font-size: 15px;
+                font-weight: 800;
+                margin-bottom: 5px;">Search by city, vehicle type<br>and price:</h4>
+
+            <div class="uk-margin-bottom">
+                <span class="uk-text-small">{% trans %}Город{% endtrans %}</span>
+                <div >
+                    <div class="uk-inline uk-width-1-1">
+                        <a class="uk-form-icon uk-form-icon-flip" href="#" uk-icon="icon: pencil"></a>
+                        <input name="left_city_input" id="left_city_input" class="uk-input uk-form-small uk-width-1-1" type="text" value="{{ city ? city.url|replace({'_':', '}) : 'New York' }}" >
+                        <input id="left_city_input_url" type="hidden" value="{{ city ? city.url : 'New York' }}" >
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="uk-text-small">{% trans %}Тип транспорта{% endtrans %}</span>
+                <div class="uk-margin-bottom">
+                    <div class="uk-inline uk-width-1-1">
+                        <select name="left_gt_select" id="left_gt_select" class="uk-select">
+                            {% for gt in generalTypes %}
+                                <option value="{{ gt.url }}">{{ gt.url|capitalize }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span class="uk-text-small uk-text-center uk-width-1-1 uk-display-inline-block">{% trans %}Цена{% endtrans %}</span>
+                <div class="uk-margin-top uk-margin-bottom">
+                    <input id="r_from_top_price" type="hidden" name="price_from" value="{{ app.request.get('price_from') is defined ? app.request.get('price_from') : 0 }}" class="uk-input uk-width-1-3">
+                    <input id="r_to_top_price" type="hidden" name="price_to" value="{{ app.request.get('price_to') is defined ? app.request.get('price_to') : 1000000 }}" class="uk-input uk-width-1-3">
+
+                    <div id="ranger_top_price"
+                         class="ranger uk-margin-top"
+                         data-from="0"
+                         data-to="1000000"
+                         data-id="top_price"
+                         data-start="0"
+                         data-finish="1000000"></div>
+                </div>
+
+            </div>
+            <a class="mtf_button" href="/rent/{{ city.url }}/all/cars">{% trans %}Найти{% endtrans %}</a>
+        </div>
+
+    </div>
+
+
+    {% if is_mobile() %}
+        <script>
+            document.getElementById("mtf_id").style.height = window.innerHeight - document.getElementById("header").offsetHeight - document.getElementById("pre_cov_sl").offsetHeight + 'px' ;
+        </script>
+    {% endif %}
+
+</div>
+
+
+<div class="top_categories uk-position-relative">
+
+    <div class="bg_blue cat_color_box"></div>
+
+    <h2>{% trans %}Категории{% endtrans %}</h2>
+
+    <div class="standard_wide top_categories_content">
+
+        <div uk-grid class="uk-grid-small uk-margin-large-bottom">
+            <div class="uk-width-1-3@s">
+                <a href="/rent/{{ in_city }}/all/cars" class="cat_main_header c_white uk-display-block">{% trans %}Легковые автомобили{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[2] is defined %}
+                    {% for card in topcats[2] %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="uk-width-1-3@s">
+                <a href="/rent/{{ in_city }}/all/trucks" class="cat_main_header c_white uk-display-block">{% trans %}Грузовые автомобили{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[3] is defined %}
+                    {% for card in topcats[3] %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="uk-width-1-3@s">
+                <a href="/rent/{{ in_city }}/all/airplanes" class="cat_main_header c_white uk-display-block">{% trans %}Самолеты{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[29] is defined %}
+                    {% for card in topcats[29] %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="uk-width-1-3@s">
+                <a href="/rent/{{ in_city }}/all/helicopters" class="cat_main_header c_grey uk-display-block">{% trans %}Вертолеты{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[17] is defined %}
+                    {% for card in topcats[17] %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="uk-width-1-3@s">
+                <a href="/rent/{{ in_city }}/all/boats" class="cat_main_header c_grey uk-display-block">{% trans %}Катера{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[12] is defined %}
+                    {% for card in topcats[12] %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="uk-width-1-3@s">
+                <a href="/rent/{{ in_city }}/all/yachts" class="cat_main_header c_grey uk-display-block">{% trans %}Яхты{% endtrans %}</a>
+                <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="1" data-dots="0">
+                    {% if topcats[13] is defined %}
+                    {% for card in topcats[13] %}
+                        {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'170px'}) }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div uk-toggle="target: #all_gt" class="uk-text-center c_blue undln uk-margin-bottom">{% trans %}Все категории{% endtrans %}</div>
+
+    <div class="standard_wide">
+        <div id="all_gt" class="uk-position-relative uk-padding-top" hidden>
+            <div  uk-grid class="uk-flex uk-flex-center uk-padding-large-top uk-margin-bottom uk-grid-medium">
+
+                {% for gt in generalTypes if gt.carTypeIds %}
+                    <div>
+                        <a href="/rent/{{ in_city }}/all/{{ gt.url }}" class="all_gt_main_link">{{ lang == 'ru' ? gt.header : gt.url }}</a>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+            {% if not is_mobile() %}
+            <div uk-close uk-toggle="target: #all_gt" class="uk-position-top-right"></div>
+            {% else %}
+            <div uk-toggle="target: #all_gt" class="uk-text-center uk-margin"><span uk-icon="icon: chevron-up; ratio: 2"></span></div>
+            {% endif %}
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+{{ include(':main_page:top_slider.html.twig') }}
+
+{{ include(':main_page:bottom_rent.html.twig') }}
+
+
+
+
+
+
+    {% set seo_text = '' %}
+    {% if custom_seo and custom_seo.seoText != ''%}
+        {% set seo_text = custom_seo.seoText %}
+    {% endif %}
+    {% if seo_text != '' %}
+        <hr>
+        <div class="standard_wide">{{ seo_text }}</div>
+    {% endif %}
+
+
+
+{% endblock %}

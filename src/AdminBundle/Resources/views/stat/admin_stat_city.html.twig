@@ -1,0 +1,23 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+
+    <h1>Количество объявлений в регионах</h1>
+
+    <div>
+        {% for key,s in sort %}
+            <div uk-grid class="uk-margin-remove-bottom uk-margin-remove-top">
+                <div class="uk-width-1-4">{{ cities[key].header }}</div>
+                <div class="uk-width-small">{{ s }}</div>
+                <div class="uk-width-expand">({{ cities[key].parent.header }})</div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

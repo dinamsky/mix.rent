@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/owl.theme.default.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/mainPage.js') }}"></script>
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+
+
+    <div id="top_selector_block">
+        <div class="standard_wide">
+            <h1 class="uk-text-center">Большой выбор транспорта в аренду</h1>
+            <div class="uk-margin-top">
+                <div uk-grid class="uk-grid-small">
+                    {% for gt in generalTypes if gt.cards is not empty%}
+                        <div class="uk-width-1-4@l uk-width-1-2">
+                            <a href="/rent/{{ in_city }}/all/{{ gt.url }}" class="generals_in_main"><span class="gim_text uk-text-truncate">{{ gt.header }}</span><span class="gim_count">{{ gt.cards|length }}</span></a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

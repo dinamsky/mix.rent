@@ -1,0 +1,64 @@
+<div uk-grid>
+    <div class="uk-width-1-5@s">
+        {% trans %}Цены{% endtrans %} <span class="red_star">*</span>
+        <div class="help_text">{% trans %}Укажите свои расценки по периодам{% endtrans %}</div>
+    </div>
+    <div class="uk-width-3-5@s">
+
+        <div class="uk-margin-bottom">
+            <select name="currency" class="uk-width-1-5@s uk-select">
+                <option value="EUR">EUR</option>
+                <option value="USD" {{ city.country == 'USA' ? 'selected' }}>USD</option>
+                <option value="CAD" {{ city.country == 'CAN' ? 'selected' }}>CAD</option>
+                <option value="THB" {{ city.country == 'ТНА' ? 'selected' }}>THB</option>
+                <option value="MXN" {{ city.country == 'MEX' ? 'selected' }}>MXN</option>
+                <option value="RUB" {{ city.country == 'RUS' ? 'selected' }}>RUB</option>
+                <option value="KRW" {{ city.country == 'KOR' ? 'selected' }}>KRW</option>
+                <option value="GBP" {{ city.country == 'GBR' ? 'selected' }}>GBP</option>
+                <option value="AED" {{ city.country == 'AED' ? 'selected' }}>AED</option>
+            </select>
+        </div>
+
+        <div class="non_plane">
+            <div uk-grid>
+                <div class="uk-width-1-2@s">
+                    <div class="">
+                        <div class="">
+                            {% for price in prices if price.id < 3 %}
+                                <div class="uk-margin-small-bottom">
+                                    <input type="number" name="price[{{ price.id }}]" class="uk-input uk-width-1-3 one_of"> / <span>{{ price.header|trans }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="uk-text-small"><span class="red_star">*</span> {% trans %}Одна из расценок: в час/в день обязательна!{% endtrans %}</div>
+                    </div>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div id="counted_prices"></div>
+                </div>
+            </div>
+
+            <div class="uk-margin-top">
+                <span class="expander_button" uk-toggle="target: #price_selector">{% trans %}Еще расценки{% endtrans %} <i uk-icon="icon:chevron-down"></i></span>
+            </div>
+            <div class="expandable_block uk-margin-top" id="price_selector" hidden>
+                {% for price in prices if price.id > 2 and price.id != 6%}
+                    <div>
+                        <input type="number" name="price[{{ price.id }}]" class="uk-input uk-width-1-3"> / <span>{{ price.header|trans }} </span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="plane" style="display: none">
+            <input type="number" name="price[6]" class="uk-input uk-width-1-3 one_of"> ₽ - <span>{% trans %}Ориентировочная{% endtrans %}</span>
+        </div>
+
+
+    </div>
+    <div class="uk-width-1-5 uk-visible@s">
+
+    </div>
+
+    <div id="nprh" hidden>{% trans %}Минимальная и максимальная цена на сайте{% endtrans %}</div>
+    <div id="nprf" hidden>{% trans %}Подсказка!<br>Если поставить цены ниже, чем у конкурентов, звонков будет больше.{% endtrans %}</div>
+</div>

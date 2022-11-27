@@ -1,0 +1,116 @@
+{% extends 'user/user_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/image_upload_preview.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('assets/js/phone_validate.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+    {% set phone = '' %}
+    {% set website = '' %}
+    {% set foto = '' %}
+    {% set about = '' %}
+
+    {% set vk = '' %}
+    {% set fb = '' %}
+    {% set ig = '' %}
+    {% set ok = '' %}
+    {% set tw = '' %}
+    {% set gp = '' %}
+    {% set yt = '' %}
+
+    {% for info in user.information %}
+        {% if info.uiKey == 'phone' %}
+            {% set phone = info.uiValue %}
+        {% endif %}
+        {% if info.uiKey == 'website' %}
+            {% set website = info.uiValue %}
+        {% endif %}
+        {% if info.uiKey == 'foto' %}
+            {% set foto = info.uiValue %}
+        {% endif %}
+        {% if info.uiKey == 'about' %}
+            {% set about = info.uiValue %}
+        {% endif %}
+
+        {% if info.uiKey == 'vk' %}{%  set vk = info.uiValue %}{% endif %}
+        {% if info.uiKey == 'fb' %}{%  set fb = info.uiValue %}{% endif %}
+        {% if info.uiKey == 'ig' %}{%  set ig = info.uiValue %}{% endif %}
+        {% if info.uiKey == 'ok' %}{%  set ok = info.uiValue %}{% endif %}
+        {% if info.uiKey == 'tw' %}{%  set tw = info.uiValue %}{% endif %}
+        {% if info.uiKey == 'gp' %}{%  set gp = info.uiValue %}{% endif %}
+        {% if info.uiKey == 'yt' %}{%  set yt = info.uiValue %}{% endif %}
+
+    {% endfor %}
+
+
+    <h1>{% trans %}Мой профиль{% endtrans %}</h1>
+    <div class="uk-margin-bottom">
+        <div uk-grid class="uk-grid">
+
+
+            <div class="uk-width-1-2@s">
+                <div class="uk-grid uk-grid-small" uk-grid>
+                    <div class="uk-width-1-3">
+                        <div class="uk-position-relative">
+                            {% if foto != '' %}
+                            <img src="/assets/images/users/t/{{ foto }}.jpg" alt="" style="max-height: 150px">
+                                <button name="delete" form="profile_foto_upload" class="c_white bg_red uk-position-top-left"><i class="fa fa-close"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="uk-width-2-3">
+                        <div class="uk-margin-small-bottom c_blue">{{ user.header }}</div>
+                        <div class="uk-margin-small-bottom">email: {{ user.email }}</div>
+                        <input id="foto_upload" type="file" name="foto" form="profile_foto_upload">
+                    </div>
+                </div>
+
+                <form id="profile_foto_upload" action="/profile/saveFoto" method="POST" enctype="multipart/form-data">
+
+                    <div id="foto_list_view" uk-grid class="uk-grid-small"></div>
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <button class="uk-button uk-button-default uk-margin-top">{% trans %}Записать фото{% endtrans %}</button>
+                </form>
+
+
+                <form id="save_profile" action="/profile/save" method="POST">
+                    <div>{% trans %}Имя{% endtrans %}: <input name="header" value="{{ user.header }}" class="uk-input"></div>
+
+
+
+                    <div>{% trans %}Телефон{% endtrans %}: <input name="info[phone]" value="{{ phone }}" class="uk-input" placeholder="for example of format: +1(234)5678900"></div>
+                    <div>Website: <input name="info[website]" value="{{ website }}" class="uk-input"></div>
+                    <div>{% trans %}Кратко о себе/компании{% endtrans %}: <textarea name="info[about]" class="uk-textarea">{{ about }}</textarea></div>
+
+                    <button class="uk-button uk-button-primary uk-margin-top">{% trans %}Сохранить профиль{% endtrans %}</button>
+                 </form>
+            </div>
+
+
+            <div class="uk-width-1-2@s">
+
+
+
+                    <div>Вконтакте: <input name="info[vk]" value="{{ vk }}" class="uk-input" form="save_profile"></div>
+                    <div>Facebook: <input name="info[fb]" value="{{ fb }}" class="uk-input" form="save_profile"></div>
+                    <div>Instagram: <input name="info[ig]" value="{{ ig }}" class="uk-input" form="save_profile"></div>
+                    <div>Одноклассники: <input name="info[ok]" value="{{ ok }}" class="uk-input" form="save_profile"></div>
+                    <div>Twitter: <input name="info[tw]" value="{{ tw }}" class="uk-input" form="save_profile"></div>
+                    <div>Google+: <input name="info[gp]" value="{{ gp }}" class="uk-input" form="save_profile"></div>
+                    <div>Youtube: <input name="info[yt]" value="{{ yt }}" class="uk-input" form="save_profile"></div>
+
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}
+

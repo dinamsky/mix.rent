@@ -1,0 +1,11 @@
+
+<select name="subField[{{ options[0].fieldId }}]" data-id="{{ options[0].fieldId }}"
+        class="sub_field_field subFieldSelect {{ options[0].getChildren is empty ? 'is_last' : '' }} uk-select">
+        <option value="0">- {% trans %}все{% endtrans %} -</option>
+    {% for option in options %}
+        <option value="{{ option.id }}">
+            {{ lang=='ru' ? option.header }}
+            {{ lang=='en' and option.url is defined ? option.url }}
+        </option>
+    {% endfor %}
+</select>

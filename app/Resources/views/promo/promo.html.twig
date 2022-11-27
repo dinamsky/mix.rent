@@ -1,0 +1,331 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
+
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/promo.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/js/mainPage.js') }}"></script>
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+
+    <script src="{{ asset('assets/js/new_card_settings.js') }}"></script>
+    <script src="{{ asset('assets/js/newCardForm.js') }}"></script>
+
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/select_combo.js') }}"></script>
+    <script src="{{ asset('assets/js/promo.js') }}"></script>
+    <script src="{{ asset('assets/js/recaptcha_single.js') }}"></script>
+    <script src="{{ asset('assets/js/recapthcha_validate.js') }}"></script>
+
+
+
+
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block title %}promo{% endblock %}
+
+{% block bodyClass %}promo{% endblock %}
+
+
+{% block content %}
+
+<div class="promo_block block_1 uk-flex uk-flex-center uk-flex-middle" style="
+
+     background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6) ), url({{ asset('assets/images/interface/promo/b1.jpg') }}) center center; background-size: cover;height: 100vh;">
+    <div class="standard_wide">
+
+
+                <h1 class="c_white uk-text-bold tx_40">{{ promo.b1_h1|raw }}</h1>
+                <div>
+                    <a href="#calculator" uk-scroll="offset:150" class="uk-button uk-button-large c_black bg_yellow">{{ promo.b1_a1|raw }}</a>
+                    <a href="/card/new" class="uk-button uk-button-large c_white border_white">{{ promo.b1_a2|raw }}</a>
+                </div>
+
+
+    </div>
+</div>
+
+<div class="promo_block block_2 block_padding  bg_white">
+    <div class="standard_wide">
+        <div uk-grid>
+            <div class="uk-width-1-2@s">
+                <h2 class="uk-text-bold">{{ promo.b2_h2|raw }}</h2>
+                <div id="promo_case_list">{{ promo.b2_list|raw }}</div>
+                <div class="uk-margin-top">{{ promo.b2_case|raw }}
+                    <input id="promo_case" type="text" name="case" class="uk-input uk-width-1-2" style="border:0;border-bottom: 1px solid lightgrey">
+                    <button id="promo_add_case" type="button"><i uk-icon="icon:plus"></i></button>
+                </div>
+            </div>
+            <div class="uk-width-1-2@s">
+                <div style="background: url({{ asset('assets/images/interface/promo/b2.jpg') }}) center center; background-size: cover;height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="calculator" class="promo_block block_3  bg_white">
+    <div class="standard_wide">
+        <h2 class="tx_30 uk-text-bold">{{ promo.b3_h2|raw }}</h2>
+        <div class="tx_24">{{ promo.b3_desc|raw }}</div>
+
+        <div uk-grid class="block_padding">
+            <div class="uk-width-1-3@s">
+                <div>{{ promo.b8_t2|raw }}</div>
+                <select name="mark" id="markId" class="uk-select sel_combo">
+                    {{ include( 'common/ajax_edit_options.html.twig', { 'options': marks, 'id': 0 }) }}
+                </select>
+
+                <div class="uk-margin-top">{{ promo.b8_t3|raw }}</div>
+                <select name="modelId" id="markModelId" class="uk-select sel_combo"></select>
+
+                <div class="uk-margin-top">{{ promo.b8_t10|raw }}</div>
+                <input id="dayz" type="text" class="uk-input" value="20">
+
+                <button id="promo_count" type="button" class="uk-button uk-button-success uk-width-1-1 uk-margin-top">{{ promo.b8_t11|raw }}</button>
+            </div>
+
+            <div class="uk-width-2-3@s" id="example">
+                <img src="{{ asset('assets/images/interface/promo/camry2.jpg') }}" alt="">
+                <div class="uk-margin-top">{{ promo.b8_t12|raw }}</div>
+            </div>
+
+            <div class="uk-width-2-3 uk-animation-slide-right uk-hidden" id="counted">
+                <div>&nbsp;</div>
+                <div class="bg_blue c_white padding20">
+                    <div>{{ promo.b8_t13|raw }} - <span class="promo_result_car"></span></div>
+                    <div>{{ promo.b8_t14|raw }} - <span id="promo_result_day"></span>$</div>
+                    <div>{{ promo.b8_t15|raw }} <span id="promo_result_dayz"></span> {{ promo.b8_t16|raw }} - <span id="promo_result_total"></span>$</div>
+                </div>
+                <div class="uk-margin-small">{{ promo.b8_t17|raw }} <span class="promo_result_car"></span> - Mix.Rent:</div>
+                <div id="promo_result_slider"></div>
+            </div>
+            <div class="uk-width-2-3 uk-animation-slide-right uk-hidden" id="nothing">
+                <div>&nbsp;</div>
+                <div>
+                   {{ promo.b8_t18|raw }} {{ random(['190', '200', '220']) }}
+                    {{ promo.b8_t19|raw }} {{ random(['1800', '1500', '2000']) }} {{ lang is defined and lang=='ru' ? 'руб.' : '$' }}<br><br>
+                    <a href="/card/new" class="uk-button uk-button-success">{{ promo.b1_a2|raw }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="promo_block block_4 block_padding  bg_white">
+    <div class="promo_wide">
+        <div class="b4_toggler tx_24 uk-text-bold c_black uk-clearfix" uk-toggle="target: #b4_t1"><span class="uk-float-left">{{ promo.b4_t1|raw }}</span><span class="uk-float-right promo_plus"><i uk-icon="plus"></i></span></div>
+        <div id="b4_t1" class="b4_toggler_text uk-margin-top" hidden>{{ promo.b4_t1_text|raw }}</div>
+        <hr>
+        <div class="b4_toggler tx_24 uk-text-bold c_black uk-clearfix" uk-toggle="target: #b4_t2"><span class="uk-float-left">{{ promo.b4_t2|raw }}</span><span class="uk-float-right promo_plus"><i uk-icon="plus"></i></span></div>
+        <div id="b4_t2" class="b4_toggler_text uk-margin-top" hidden>{{ promo.b4_t2_text|raw }}</div>
+        <hr>
+        <div class="b4_toggler tx_24 uk-text-bold c_black uk-clearfix" uk-toggle="target: #b4_t3"><span class="uk-float-left">{{ promo.b4_t3|raw }}</span><span class="uk-float-right promo_plus"><i uk-icon="plus"></i></span></div>
+        <div id="b4_t3" class="b4_toggler_text uk-margin-top" hidden>{{ promo.b4_t3_text|raw }}</div>
+        <hr>
+        <div class="b4_toggler tx_24 uk-text-bold c_black uk-clearfix" uk-toggle="target: #b4_t4"><span class="uk-float-left">{{ promo.b4_t4|raw }}</span><span class="uk-float-right promo_plus"><i uk-icon="plus"></i></span></div>
+        <div id="b4_t4" class="b4_toggler_text uk-margin-top" hidden>{{ promo.b4_t4_text|raw }}</div>
+    </div>
+</div>
+
+<div class="promo_block block_5 block_padding  bg_white">
+    <div class="promo_wide">
+        <h2 class=" tx_30 uk-text-bold c_black uk-text-center">{{ promo.b5_h2|raw }}</h2>
+        <div class=" tx_24 c_black uk-text-center">{{ promo.b5_desc|raw }}</div>
+        <div uk-grid class="block_padding">
+            <div class="uk-width-1-2@s">
+                <div uk-grid>
+                    <div class="uk-width-1-5">
+                        <img src="{{ asset('assets/images/interface/promo/star.svg') }}" alt="">
+                    </div>
+                    <div class="uk-width-4-5">
+                        <h3 class="uk-text-bold">{{ promo.b5_h3_1|raw }}</h3>
+                        <div>{{ promo.b5_h3_desc_1|raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1-2@s">
+                <div uk-grid>
+                    <div class="uk-width-1-5">
+                        <img src="{{ asset('assets/images/interface/promo/pen.svg') }}" alt="">
+                    </div>
+                    <div class="uk-width-4-5">
+                        <h3 class="uk-text-bold">{{ promo.b5_h3_2|raw }}</h3>
+                        <div>{{ promo.b5_h3_desc_2|raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1-2@s">
+                <div uk-grid>
+                    <div class="uk-width-1-5">
+                        <img src="{{ asset('assets/images/interface/promo/wallet.svg') }}" alt="">
+                    </div>
+                    <div class="uk-width-4-5">
+                        <h3 class="uk-text-bold">{{ promo.b5_h3_3|raw }}</h3>
+                        <div>{{ promo.b5_h3_desc_3|raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1-2@s">
+                <div uk-grid>
+                    <div class="uk-width-1-5">
+                        <img src="{{ asset('assets/images/interface/promo/target.svg') }}" alt="">
+                    </div>
+                    <div class="uk-width-4-5">
+                        <h3 class="uk-text-bold">{{ promo.b5_h3_4|raw }}</h3>
+                        <div>{{ promo.b5_h3_desc_4|raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1-2@s">
+                <div uk-grid>
+                    <div class="uk-width-1-5">
+                        <img src="{{ asset('assets/images/interface/promo/gps.svg') }}" alt="">
+                    </div>
+                    <div class="uk-width-4-5">
+                        <h3 class="uk-text-bold">{{ promo.b5_h3_5|raw }}</h3>
+                        <div>{{ promo.b5_h3_desc_5|raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1-2@s">
+                <div uk-grid>
+                    <div class="uk-width-1-5">
+                        <img src="{{ asset('assets/images/interface/promo/bill.svg') }}" alt="">
+                    </div>
+                    <div class="uk-width-4-5">
+                        <h3 class="uk-text-bold">{{ promo.b5_h3_6|raw }}</h3>
+                        <div>{{ promo.b5_h3_desc_6|raw }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if lang=='ru' %}
+    <div class="promo_block block_6 bg_white">
+        <div class="standard_wide">
+            <h2 class="tx_30 uk-text-bold uk-text-center">{{ promo.b6_h2 }}</h2>
+            <div uk-grid class="block_padding">
+
+                {% for op in opinions %}
+                    <div class="uk-width-1-2@s">
+                        <div uk-grid>
+                            <div class="uk-width-1-5@s uk-text-center">
+                                <img src="{{ asset('assets/images/interface/promo/op_'~op.id~'.jpg') }}" alt="">
+                            </div>
+                            <div class="uk-width-4-5@s">
+                                <h4 class="c_black uk-margin-remove uk-text-bold">{{ op.name|raw }}</h4>
+                                <div>{{ op.desc|raw }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+
+<div class="promo_block block_7 block_padding">
+    <div class="promo_wide">
+        <div class="uk-text-center">
+
+                <span class="tx_24 c_black">{{ promo.b7_t1|raw }}</span><span style="padding: 30px"></span><a href="/card/new" class="uk-button uk-button-primary">{{ promo.b7_a1|raw }}</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="promo_block block_8 block_padding bg_white uk-hidden">
+    <div class="promo_wide">
+        <div class="padding0-10">
+{{ promo.b8_t1|raw }}
+        </div>
+
+        <form class="uk-grid uk-margin-large-top uk-grid-small uk-flex uk-flex-center padding0-10" uk-grid action="/promo_request" method="POST" onsubmit="return promo_mark_model_names();">
+            <div class="uk-width-1-2@s">
+                <div>{{ promo.b8_t2|raw }}</div>
+                <select name="promo_mark_sel" id="b8_mark" class="uk-select sel_combo">
+                    {{ include( 'common/ajax_edit_options.html.twig', { 'options': marks, 'id': 0 }) }}
+                </select>
+            </div>
+            <div class="uk-width-1-2@s uk-hidden">
+                <div class="">{{ promo.b8_t3|raw }}</div>
+                <select name="promo_model_sel" id="b8_model" class="uk-select sel_combo" required></select>
+            </div>
+            <div class="uk-width-1-2@s uk-hidden">
+                <div class="">{{ promo.b8_t4|raw }}</div>
+                <select name="prod_year" class="uk-select" required>
+                    {% for year in 'now'|date('Y')..1950 %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="uk-width-1-2@s uk-hidden">
+                <div class="">{{ promo.b8_t5|raw }}</div>
+                <input type="text" name="promo_city" class="uk-input" required>
+            </div>
+            <div class="uk-width-1-3@s uk-hidden">
+                <div class="">{{ promo.b8_t6|raw }}</div>
+                <input type="text" name="promo_email" class="uk-input" required>
+            </div>
+            <div class="uk-width-1-3@s uk-hidden">
+                <div class="">{{ promo.b8_t7|raw }}</div>
+                <input type="text" name="promo_phone" class="uk-input" required>
+            </div>
+            <div class="uk-width-1-3@s uk-hidden">
+                <div class="">{{ promo.b8_t8|raw }}</div>
+                <input type="text" name="promo_name" class="uk-input" required>
+            </div>
+            <div class="uk-width-1-2@s uk-hidden">
+                <div id="recap1"></div>
+                <input type="hidden" name="g-recaptcha-response">
+            </div>
+            <div class="uk-width-1-2@s uk-hidden">
+                <div>&nbsp;</div>
+                <button class="uk-button uk-button-success uk-width-1-1">{{ promo.b8_t9|raw }}</button>
+            </div>
+
+
+
+
+            <input type="hidden" name="promo_mark">
+            <input type="hidden" name="promo_model">
+        </form>
+
+
+
+
+
+
+    </div>
+</div>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+    </script>
+
+{% endblock %}

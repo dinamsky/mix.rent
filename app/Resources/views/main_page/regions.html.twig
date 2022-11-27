@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block title %}Регионы{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+    <div class="standard_wide uk-margin-large-top">
+
+
+        <div class="uk-column-1-5">
+            {% for region in regions %}
+                <a class="uk-display-block" href="/region/{{ region.id }}">{{ region.header }} </a>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}

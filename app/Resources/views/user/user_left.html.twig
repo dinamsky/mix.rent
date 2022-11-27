@@ -1,0 +1,39 @@
+<div class="">
+
+    <div class="uk-visible@s">
+        <a class="c_blue" href="/profile">{% trans %}Мой профиль{% endtrans %}</a><br>
+        <a class="c_blue" href="/user/cards">{% trans %}Мои объявления{% endtrans %}</a><br>
+        {#<a class="c_blue" href="/user/messages">{% trans %}Мои сообщения{% endtrans %}</a>#}
+        {#<a class="c_blue" href="/user/orders">My orders</a>#}
+
+        {% if t3_new.getUnread>0 %}<span class="uk-badge">{{ t3_new.getUnread }}</span>{% endif %}
+        <br>
+        <a class="c_blue" href="/userLogout"><span><i uk-icon="icon:sign-out"></i> {% trans %}Выход{% endtrans %}</span></a>
+        <hr>
+
+    </div>
+    <div>
+    {% if app.session.get('logged_user').accountTypeId == 0 %}
+        {% trans %}Ваш аккаунт{% endtrans %}: <b>{% trans %}стандартный{% endtrans %}</b>
+        <div>{% trans %}Вы можете разместить не более 2-х объявлений{% endtrans %}</div>
+        <hr>
+        {#<a href="/userPayPro/{{ app.session.get('logged_user').id }}" class="uk-button uk-button-success uk-button-small pay_pro_button">#}
+            {#{% trans %}Оплатить PRO аккаунт{% endtrans %}<br>#}
+            {#450<i class="fa fa-ruble"></i>#}
+        {#</a>#}
+
+        <form action="/paypalPayPro" method="POST">
+            <button class="uk-button uk-button-success uk-button-small pay_pro_button">
+                {% trans %}Оплатить PRO аккаунт{% endtrans %}<br>
+                $99.99
+            </button>
+        </form>
+
+        <div class="uk-margin-top uk-text-small">{% trans %}Оплаченный PRO аккаунт действует бессрочно{% endtrans %}<br>
+            {% trans %}и дает больше возможностей, в том числе: размещать больше объявлений и получать больше звонков от клиентов{% endtrans %}</div>
+    {% else %}
+        {% trans %}Ваш аккаунт{% endtrans %}: <span class="c_red uk-text-bold">PRO</span>
+        <div class="uk-margin-top">{% trans %}Вы можете разместить неограниченное количество объявлений{% endtrans %}</div>
+    {% endif %}
+    </div>
+</div>

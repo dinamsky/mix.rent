@@ -1,0 +1,29 @@
+<div uk-grid>
+    <div class="uk-width-1-5@s">
+        {% trans %}Тип транспорта{% endtrans %} <span class="red_star">*</span>
+        <div class="help_text">{% trans %}Выберите группу и тип транспорта{% endtrans %}</div>
+    </div>
+    <div class="uk-width-3-5@s">
+        <span class="expander_button" uk-toggle="target: #general_selector">{{ lang == 'ru' ? gt.header: gt.url }} <i uk-icon="icon:chevron-down"></i></span>
+        <div class="expandable_block" id="general_selector" hidden>
+            <div uk-grid class="uk-grid-small">
+                <div class="uk-width-1-2">
+                    <div class="uk-text-small">{% trans %}Группа{% endtrans %}</div>
+                    <select name="generalTypeTopLevelId" id="generalTypeTopLevelId" class="uk-select">
+                        {{ include( 'common/ajax_edit_options.html.twig', { 'options': generalTopLevel, 'id': 1 }) }}
+                    </select>
+                </div>
+
+                <div class="uk-width-1-2">
+                    <div class="uk-text-small">{% trans %}Тип{% endtrans %}</div>
+                    <select name="generalTypeId" id="generalTypeId" class="uk-select">
+                        {{ include( 'common/ajax_edit_options.html.twig', { 'options': generalSecondLevel, 'id':2 }) }}
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="uk-width-1-5 uk-visible@s">
+    </div>
+</div>

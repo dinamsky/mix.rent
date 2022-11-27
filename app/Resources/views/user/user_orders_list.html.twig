@@ -1,0 +1,556 @@
+{% extends 'user/user_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/image_upload_preview.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('assets/js/phone_validate.js') }}"></script>
+    <script src="{{ asset('assets/js/order.js') }}"></script>
+{% endblock %}
+
+{% block bodyClass %}
+    big_order_list
+{% endblock %}
+
+{% block content %}
+
+
+
+    <h1 style="font-size: 18px">
+        <div class="uk-grid">
+            <div class="uk-width-1-4@s">Orders</div>
+            <div class="uk-width-3-4@s uk-text-right"></div>
+        </div>
+
+    </h1>
+
+    {% if orders is empty %}
+        <div class="uk-margin-large-bottom">All orders will be there</div>
+    {% endif %}
+
+
+    <div class="{{ is_mobile() ? '' : 'uk-grid' }}" id="ord_messaging">
+
+        <div class="uk-width-1-4@s" {{ is_mobile() ? 'uk-offcanvas' }} id="ofc_left">
+
+            {{ is_mobile() ? '<div class="uk-offcanvas-bar"><button class="uk-offcanvas-close" type="button" uk-close></button>' }}
+
+            <div {{ is_mobile() ? '' : 'style="background: #e8e8e8;"' }} class="lft_blk">
+                {% for o in orders %}
+                    <div class="uk-margin-bottom ord_toggler
+                                {{ app.session.get('logged_user').id == o.userId and o.isActiveOwner == 1 ? 'active' : '' }}
+                                {{ app.session.get('logged_user').id == o.renterId and o.isActiveRenter == 1 ? 'active' : '' }}"
+                         data-id="{{ o.id }}"
+                         data-user_id="{{ app.session.get('logged_user').id }}"
+                    >
+
+        {{ app.session.get('logged_user').id == o.userId and o.isActiveOwner == 1 ? '<div class="active_white"></div>' : '' }}
+        {{ app.session.get('logged_user').id == o.renterId and o.isActiveRenter == 1 ? '<div class="active_white"></div>' : '' }}
+
+                        <div class="uk-grid uk-grid-small">
+                            <div style="width: 60px;">
+                                {% set card = getcard(o.cardId) %}
+
+                                {% if card %}
+                                {% set main_foto = main_foto(card.getFotos) %}
+                                {% endif %}
+
+                                {% set bgrnd = 'white' %}
+
+                                {% if main_foto is defined %}
+                                    {% set bgrnd = 'url(/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg)' %}
+                                {% elseif card.fotos[0] is defined %}
+                                    {% set bgrnd = 'url(/assets/images/cards/'~card.fotos[0].folder~'/t/'~card.fotos[0].id~'.jpg)' %}
+                                {% else %}
+                                    {% set bgrnd = 'url(/assets/images/interface/no_image.jpg)' %}
+                                {% endif %}
+
+                                <div style="background: {{ bgrnd }} center center;background-size: cover;height: 60px;position: relative;">
+                                </div>
+                            </div>
+
+                            <div class="uk-width-expand">
+                                <div>{{ o.transport }}</div>
+                                <div class="uk-text-small">{{ o.dateIn|date('d.m.Y') }} - {{ o.dateOut|date('d.m.Y') }}</div>
+
+
+
+
+                        {#<div class="uk-text-small c_grey"><b class="c_black">#{{ o.id }}</b> {{ o.dateCreate|date('d.m.Y') }}</div>#}
+
+
+                                <div style="color:red;font-weight:bold;font-size: 12px; line-height: 13px;">
+
+                                    {% if o.ownerStatus == 'wait_for_accept' and app.session.get('logged_user').id == o.renterId %}
+                                        wait for owner accept
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'wait_for_accept' and app.session.get('logged_user').id == o.userId %}
+                                        wait for your accept
+                                    {% endif %}
+
+                                     {#---- after accept#}
+
+                                    {% if o.renterStatus == 'wait_for_pay' and app.session.get('logged_user').id == o.renterId %}
+                                        Accepted. Wait for pay
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'accepted' and app.session.get('logged_user').id == o.userId %}
+                                        Wait for pay
+                                    {% endif %}
+
+                                     {#---- after payment#}
+
+                                    {% if o.renterStatus == 'wait_for_finish' and app.session.get('logged_user').id == o.renterId %}
+                                        Order paid
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'wait_for_rent' and app.session.get('logged_user').id == o.userId %}
+                                        Order paid
+                                    {% endif %}
+
+                                    {#---- after pincode#}
+
+                                    {% if o.renterStatus == 'rent_in_process' and app.session.get('logged_user').id == o.renterId %}
+                                        in rent
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'rent_in_process' and app.session.get('logged_user').id == o.userId %}
+                                        in rent
+                                    {% endif %}
+
+                                    {#----- messages#}
+                                    {% if o.renterStatus == 'wait_for_answer' and app.session.get('logged_user').id == o.renterId %}
+                                        there is owner answer
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'wait_for_answer' and app.session.get('logged_user').id == o.userId %}
+                                        there is renter answer
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        {% set ord_icon = 'bell' %}
+                        {% if notifies[o.id] is defined %}
+
+                            {% if notifies[o.id]|length > 1%}
+
+                            {% else %}
+                                {% if notifies[o.id][0].notify == 'new_order' %}
+                                    {% set ord_icon = 'star' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_accept' %}
+                                    {% set ord_icon = 'check' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_reject' %}
+                                    {% set ord_icon = 'ban' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_answer' %}
+                                    {% set ord_icon = 'mail' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_payed' %}
+                                    {% set ord_icon = 'happy' %}
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="ord_notify"><i uk-icon="{{ ord_icon }}"></i></div>
+                        {% endif %}
+
+
+
+
+                    </div>
+                {% endfor %}
+
+            </div>
+            {#<div style="    font-size: 13px;#}
+    {#border: 1px solid grey;#}
+    {#padding: 10px;">#}
+                    {#круглосуточная поддержка платежей платформы "Мультипрокат"<br>#}
+                    {#+7(916) 455-98-08#}
+                {#</div>#}
+            {{ is_mobile() ? '<div class="uk-margin-large-bottom"></div>' }}
+            {{ is_mobile() ? '</div>' }}
+        </div>
+        <div class="uk-width-1-2@s ord_central">
+            {% for o in orders %}
+                <div id="ord_desc_{{ o.id }}" class=" ord_content
+                                {{ (app.session.get('logged_user').id == o.userId and o.isActiveOwner == 1) or (app.session.get('logged_user').id == o.renterId and o.isActiveRenter == 1) ? '' : 'uk-hidden' }}">
+
+
+
+                    {% if o.messages != '' %}
+
+                        <div class="ord_messages uk-margin-top uk-clearfix">
+                        {% for m in jsond(o.messages) %}
+
+                            {% set dir = 'left' %}
+
+                            {% if app.session.get('logged_user').id == o.userId and m.from == 'owner' %}
+                                {% set dir = 'right' %}
+                            {% endif %}
+                            {% if app.session.get('logged_user').id == o.userId and m.from == 'renter' %}
+                                {% set dir = 'left' %}
+                            {% endif %}
+                            {% if app.session.get('logged_user').id == o.renterId and m.from == 'renter' %}
+                                {% set dir = 'right' %}
+                            {% endif %}
+                            {% if app.session.get('logged_user').id == o.renterId and m.from == 'owner' %}
+                                {% set dir = 'left' %}
+                            {% endif %}
+                            {% if m.from == 'system' %}
+                                {% set dir = 'system' %}
+                            {% endif %}
+                            {% if m.from == 'system_ok' %}
+                                {% set dir = 'system_ok' %}
+                            {% endif %}
+
+
+                            <div class="uk-grid uk-grid-small" {{ is_mobile() ? '' : 'style="margin-right: 10px"' }}>
+                                {% if dir == 'left' %}
+
+                                    {% set url = '/assets/images/users/t/user_'~o.renterId~'.jpg' %}
+                                    {% if(m.from == 'owner') %}
+                                        {% set url = '/assets/images/users/t/user_'~o.userId~'.jpg' %}
+                                    {% endif %}
+                                    {% if not file_exists('.'~url) %}
+                                        {% set url = '/assets/images/interface/default-user.png' %}
+                                    {% endif %}
+
+
+                                <div style="width: 60px;">
+                                    <a target="_blanc"
+                                       href="/user/{{  m.from == 'owner' ? o.userId : o.renterId }}"
+                                       {#uk-tooltip="title:Перейти на страницу пользователя"#}
+                                       style="background: url({{ url }}) center center;
+                                        background-size: cover;
+                                        height: 60px;
+                                        display: block;
+                                        border-radius: 30px;
+                                        position: relative;"
+                                    ></a>
+                                </div>
+                                {% endif %}
+                                <div class="uk-width-expand">
+                                    <div class="{{ dir }}_message">
+                                        <div style="font-size: 10px">{{ m.date }} {{ m.time }}</div>
+                                        <div class="ms_content">{{ m.message }}</div>
+
+                                    </div>
+
+                                </div>
+                                {% if dir == 'right' %}
+
+                                    {% set url = '/assets/images/users/t/user_'~o.renterId~'.jpg' %}
+                                    {% if(m.from == 'owner') %}
+                                        {% set url = '/assets/images/users/t/user_'~o.userId~'.jpg' %}
+                                    {% endif %}
+                                    {% if not file_exists('.'~url) %}
+                                        {% set url = '/assets/images/interface/default-user.png' %}
+                                    {% endif %}
+
+                                    {#{{ dump(file_exists('.'~url)) }}#}
+                                <div style="width: 60px;">
+                                    <a target="_blanc"
+                                       href="/user/{{  m.from == 'owner' ? o.userId : o.renterId }}"
+                                       {#uk-tooltip="title:Перейти на страницу пользователя"#}
+                                       style="background: url({{ url }}) center center;
+                                        background-size: cover;
+                                        height: 60px;
+                                        display: block;
+                                        border-radius: 30px;
+                                        position: relative;"
+                                    ></a>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="uk-width-1-1" style="height: 10px;clear:both;"></div>
+                        {% endfor %}
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <div style="border: 1px solid grey;margin-top: 40px;margin-bottom: 40px;">
+                        <div class="uk-grid uk-grid-small">
+
+                            <div class="uk-width-expand msgb">
+                                <textarea name="answer" class="uk-width-1-1" style="height: 30px;padding: 5px;font-size: 16px;overflow:hidden;resize: none;border: 0" placeholder="your message"></textarea>
+
+                            </div>
+                            <div class="uk-width-auto">
+                                <button type="button" id="{{ app.session.get('logged_user').id == o.userId ? 'owner' : 'renter' }}_answer" class="snd_btn" value="{{ o.id }}" disabled><i class="fa fa-send"></i> Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                            {#<div class="uk-hidden">#}
+                                {#<div uk-toggle="target: #show_pat_{{ o.id }}" style="border-bottom: 1px dotted blue;display: inline-block;cursor: pointer">Выбрать шаблон</div><br>#}
+                                {#<div id="show_pat_{{ o.id }}" hidden>#}
+                                    {#<div class="ord_pat">Запрос документов: фото водительского удостоверения и фото арендатора с удостоверением в руках на электронную почту:</div>#}
+                                    {#<div class="ord_pat">Запрос документов: фото паспотра и фото арендатора с паспортом в руках на электронную почту:</div>#}
+                                    {#<div class="ord_pat">Транспорт не доступен в выбранные даты, можем предложить:</div>#}
+                                    {#<div class="ord_pat">Данный транспорт, к сожалению, не доступен. Предлагаем замену: </div>#}
+                                    {#<div class="ord_pat">Данный транспорт можно забрать и вернуть только в городе:</div>#}
+                                {#</div>#}
+                            {#</div>#}
+
+
+
+
+                    {#{% if o.renterStatus in ['wait_for_pay','wait_for_accept','wait_for_answer','answered'] and app.session.get('logged_user').id == o.renterId %}#}
+                        {#<br><br>#}
+                        {#<textarea name="answer" class="uk-width-1-1" style="min-height: 100px" placeholder="Отправить владельцу сообщение:"></textarea>#}
+                        {#<br><br>#}
+                        {#<button type="button" id="renter_answer" class="nt_btn" value="{{ o.id }}">Отправить</button>#}
+                    {#{% endif %}#}
+
+
+
+
+
+
+
+
+                </div>
+                {#{{ include('card/order_forms/owner_anketa.html.twig') }}#}
+                {#{{ include('card/order_forms/renter_anketa.html.twig') }}#}
+            {% endfor %}
+        </div>
+
+        <div class="uk-width-1-4@s ord_righter" {{ is_mobile() ? 'uk-offcanvas="flip: true"' }} id="ofc_right">
+            {{ is_mobile() ? '<div class="uk-offcanvas-bar"><button class="uk-offcanvas-close" type="button" uk-close></button>' }}
+            {% for o in orders %}
+                <div id="ord_sum_{{ o.id }}" class=" padding10 ord_sum
+                                {{ (app.session.get('logged_user').id == o.userId and o.isActiveOwner == 1) or (app.session.get('logged_user').id == o.renterId and o.isActiveRenter == 1) ? '' : 'uk-hidden' }}">
+
+                    {% set card = getcard(o.cardId) %}
+                        {% set rightuser = getuser(o.userId) %}
+                        {% set rating = o.ownerRating %}
+                    {% if app.session.get('logged_user').id == o.userId %}
+                        {% set rightuser = getuser(o.renterId) %}
+                        {% set rating = o.renterRating %}
+                    {% endif %}
+
+
+
+                    <div class="uk-margin-medium-bottom uk-text-center">
+
+                        {% set url = '/assets/images/users/t/user_'~o.renterId~'.jpg' %}
+                        {% if( app.session.get('logged_user').id == o.renterId) %}
+                            {% set url = '/assets/images/users/t/user_'~o.userId~'.jpg' %}
+                        {% endif %}
+                        {% if not file_exists('.'~url) %}
+                            {% set url = '/assets/images/interface/default-user.png' %}
+                        {% endif %}
+
+                        <a target="_blanc"
+                                       href="/user/{{  app.session.get('logged_user').id == o.renterId ? o.userId : o.renterId }}"
+                                       uk-tooltip="title:Перейти на страницу пользователя"
+                                       style="background: url({{ url }}) center center;
+                                        background-size: cover;
+                                        height: 60px;
+                                               width: 60px;
+                                        display: inline-block;
+                                        border-radius: 30px;
+                                        position: relative;"
+                                    ></a>
+                        <div>{{ rightuser.header }}</div>
+                        <div>Россия, {{ o.cityIn }}</div>
+                        <div>
+                            {% for star in [1,2,3,4,5] %}
+                                <span uk-icon="icon:star; ratio:0.5" class="rating_star {{ rating >= star ? 'filled' : '' }}"></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="uk-margin-top">
+                        <div class="">
+                            <div><b>Order №{{ o.id }}</b></div>
+                            <a href="/card/{{ o.cardId }}" >{{ o.transport }}</a><br>
+                            {#Арендатор: {{ o.fioRenter }} <br>#}
+                            <i class="fa fa-calendar"></i> {{ o.dateIn|date('d.m.Y') }} - <i class="fa fa-calendar"></i> {{ o.dateOut|date('d.m.Y') }}
+                            <br>
+                            Rent days: {{ date(o.dateOut).diff(date(o.dateIn)).days == 0 ? 1 : date(o.dateOut).diff(date(o.dateIn)).days }}
+                            <hr>
+                            <div class="uk-grid uk-grid-small">
+                                <div class="uk-width-2-3">
+                                    Take: {{ o.cityIn }}<br>
+                                    Back: {{ o.cityOut }}<br>
+                                </div>
+
+                                <div class="uk-width-1-3">
+
+                                    {% if card %}
+                                    {% set main_foto = main_foto(card.getFotos) %}
+                                    {% endif %}
+
+                                    {% set bgrnd = 'white' %}
+
+                                    {% if main_foto is defined %}
+                                        {% set bgrnd = '/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg' %}
+                                    {% elseif card.fotos[0] is defined %}
+                                        {% set bgrnd = '/assets/images/cards/'~card.fotos[0].folder~'/t/'~card.fotos[0].id~'.jpg' %}
+                                    {% else %}
+                                        {% set bgrnd = '/assets/images/interface/no_image.jpg' %}
+                                    {% endif %}
+
+                                    <div uk-lightbox>
+                                        <a href="{{ bgrnd }}">
+                                            <div style="background: url({{ bgrnd }}) center center;
+                                                background-size: cover;
+                                                height: 60px;
+                                                display: block;
+                                                position: relative;"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if o.email != '' %}
+                            Email: {{ o.email }}<br>
+                            {% endif %}
+                            {% if o.phone != '' %}
+                            Phone: {{ o.phone }}<br>
+                            {% endif %}
+
+                            {#{% if o.content != '' %}#}
+                                {#Сообщение: {{ o.content }}<br>#}
+                            {#{% endif %}#}
+
+                            <hr>
+                            <div class="uk-grid uk-margin-remove-top">
+                                <div class="uk-width-expand">Rent:</div>
+                                <div class="uk-width-auto">{{ o.price }} <i class="fa fa-ruble"></i></div>
+                            </div>
+                            {#<div class="uk-grid uk-margin-remove-top">#}
+                                {#<div class="uk-width-expand">Залог:</div>#}
+                                {#<div class="uk-width-auto">{{ o.deposit }} <i class="fa fa-ruble"></i></div>#}
+                            {#</div>#}
+                            <div class="uk-grid uk-margin-remove-top">
+                                <div class="uk-width-expand">Service fee:</div>
+                                <div class="uk-width-auto">{{ o.service }} <i class="fa fa-ruble"></i></div>
+                            </div>
+                            <div class="uk-grid uk-margin-remove-top">
+                                <div class="uk-width-expand"><b>Total:</b></div>
+                                <div class="uk-width-auto"><b>{{ o.total }}</b> <i class="fa fa-ruble"></i></div>
+                            </div>
+                            <hr>
+                            <div class="uk-text-small">
+                                Sometimes owner ask for deposit
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div class="uk-margin-top">
+                            {% if o.renterStatus == 'wait_for_pay' and app.session.get('logged_user').id == o.renterId %}
+                                <a href="/pay_for_order/{{ o.id }}" class="ok_btn uk-margin-top uk-text-center uk-display-block">Pay</a>
+
+                                {#<div class="uk-margin-top">#}
+                                    {#Оплата производится через партнера: <a href="http://mandarinpay.com/" target="_blank">Mandarin Pay</a><br>#}
+                                {#</div>#}
+                                {##}
+                                {#<div class="uk-margin-top">#}
+                                    {#<a href="/article/pravila-oplaty" target="_blank">Правила</a> оплаты заявок#}
+                                {#</div>#}
+                            {% endif %}
+                        </div>
+
+
+                        {% if o.ownerStatus in ['wait_for_accept','answered','wait_for_answer'] and app.session.get('logged_user').id == o.userId %}
+
+                        <button type="button" id="owner_accept" class="ok_btn ok_big uk-width-1-1" value="{{ o.id }}">Accept</button>
+                        <br><br>
+                        <button type="button" id="owner_reject" class="nt_btn uk-width-1-1" value="{{ o.id }}">Reject</button>
+
+
+                        {% endif %}
+
+                        <div>
+                            {% if o.renterStatus == 'wait_for_finish' and app.session.get('logged_user').id == o.renterId %}
+                                {% set owner = getuser(o.userId) %}
+                                {% set userinfo = owner.getInformation %}
+                                Owner : {{ owner.header }}<br>
+                                {% for info in userinfo if info.uiKey == 'phone' and info.uiValue != '' %}
+                                Phone: {{ info.uiValue }}<br>
+                                {% endfor %}
+                                Email: {{ owner.email }}<br><br>
+                                {#<a href="/assets/docs/rent_contract.docx">Скачать договор аренды транспорта</a>#}
+                            {% endif %}
+
+                            {% if o.ownerStatus == 'wait_for_rent' and app.session.get('logged_user').id == o.userId %}
+                                {% set owner = getuser(o.renterId) %}
+                                {% set userinfo = owner.getInformation %}
+                                Owner : {{ owner.header }}<br>
+                                {% for info in userinfo if info.uiKey == 'phone' and info.uiValue != '' %}
+                                Phone: {{ info.uiValue }}<br>
+                                {% endfor %}
+                                Email: {{ owner.email }}<br><br>
+                                {#<a href="/assets/docs/rent_contract.docx">Скачать договор аренды транспорта</a>#}
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            {% if o.renterStatus == 'wait_for_finish' and app.session.get('logged_user').id == o.renterId %}
+                                <button type="button" uk-toggle="target: #renter_modal_{{ o.id }}" class="ok_btn uk-margin-top uk-text-center uk-display-block uk-width-1-1">Finish</button>
+                            {% endif %}
+
+                            {% if o.ownerStatus == 'wait_for_rent' and app.session.get('logged_user').id == o.userId %}
+                                <button type="button" uk-toggle="target: #owner_modal_{{ o.id }}" class="ok_btn uk-margin-top uk-text-center uk-display-block uk-width-1-1">Finish</button>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    {#<button uk-toggle="target: #howtopay" type="button" style="padding: 10px;#}
+                        {#width: 100%;#}
+                        {#margin-top: 20px;#}
+                        {#background: #ffffff;#}
+                        {#color: #1976d2;#}
+                        {#border: 1px solid #1976d2;">Как это работает?</button>#}
+
+                </div>
+
+            {% endfor %}
+            {{ is_mobile() ? '<div class="uk-margin-large-bottom"></div>' }}
+            {{ is_mobile() ? '</div>' }}
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+</div>
+
+    {#{% if is_mobile() %}#}
+    {#<div style="position: fixed;bottom: 0;left: 0;width: 100%;height: auto;z-index: 2000" class="uk-clearfix">#}
+        {#<button uk-toggle="target: #ofc_left" type="button" class="ordbtn_left">Заявки</button>#}
+        {#<button uk-toggle="target: #ofc_right" type="button" class="ordbtn_right">О заявке</button>#}
+    {#</div>#}
+    {#{% endif %}#}
+
+{% endblock %}
+

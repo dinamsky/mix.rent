@@ -1,0 +1,13 @@
+<div uk-grid class="uk-grid uk-grid-match">
+    {% for card in cards %}
+        <div class="uk-width-1-3@s">
+            {% set hgt = '150px' %}
+
+            {% if is_mobile() %}
+                {% set hgt = '200px' %}
+            {% endif %}
+
+            {{ include('search/one_grid_view.html.twig', {'card':card, 'height':hgt}) }}
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,30 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/form_autocomplete.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Назначение администратора</h1>
+    <form action="/adminNewAdmin" method="POST">
+        <div>
+            Выберите email пользователя: <input type="text" name="user_email" class="uk-input uk-width-1-4"> (автокомплит от 3-х символов)
+        </div>
+        <div class="uk-margin-top">
+            Назначьте роль:
+            <select name="role" class="uk-select uk-width-1-2">
+                <option value="cardmaster">Создание аккаунтов и генерация объявлений</option>
+            </select>
+        </div>
+        <div class="uk-margin-top">
+            <button class="uk-button uk-button-primary">Назначить</button>
+        </div>
+    </form>
+{% endblock %}

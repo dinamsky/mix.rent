@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/owl.theme.default.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/datepicker.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,600,800&amp;subset=cyrillic" rel="stylesheet">
+    <link href="{{ asset('assets/css/howto.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    <script src="{{ asset('assets/js/howto.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+
+
+
+    <div id="page_slider" class="owl-carousel owl-carousel-all owl-theme" data-items="1" data-full="1" data-dots="0" data-ratio="3">
+        {% for foto in slider %}
+
+            <div href="{{ foto }}" class="slide uk-width-1-1 uk-position-relative" style="
+
+
+                    background: linear-gradient( rgba(87, 42, 144, 0.6), rgba(87, 42, 144, 0.6) ),
+                    url('{{ foto }}') center center;
+                    background-size: cover;
+                    display: block;
+                    height: {% if is_mobile() %}200px{% else %}calc(100vh - 96px){% endif %};
+                    "
+            >
+                <div class="how_h1" style="font-weight: 800;
+    color: white;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    font-size: 80px;
+    margin-left: -400px;">How does it work?</div>
+
+                <div class="hw_mouse" style="position: absolute;
+    bottom: 30px;    margin-left: -13px;
+    left: 50%;"><img class="svg" src="/assets/images/interface/howto/macintosh-mouse.svg" alt="" style="height:50px;"></div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="how_black" style="background: #161633;height: 360px;">
+        <div class="standard_wide">
+            <div class="uk-grid" style="width: 100%" uk-grid>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-position-relative">
+                        <div class="uk-text-center" style="position: absolute;
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 800;
+    color: white;
+    opacity: 0.1;
+    top: 103px;">Drivers</div>
+                        <div class="uk-text-center" style="position: relative;top: 50px;z-index: 2;color:white;">
+                            <img class=" bbl" src="/assets/images/interface/howto/sw2.svg" alt=""><br><br>
+                            <b>Need a car?</b>
+                            <div>Hire on Mix.rent!</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-position-relative">
+                        <div class="uk-text-center" style="position: absolute;
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    font-weight: 800;
+    color: white;
+    opacity: 0.1;
+    top: 103px;">Owners</div>
+                        <div class="uk-text-center" style="position: relative;top: 50px;z-index: 2;color:white;">
+                            <img class=" bbl" src="/assets/images/interface/howto/ky2.svg" alt=""><br><br>
+
+                            <div>Own a car?</div>
+                            <b>Earn money on Mix.rent!</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="standard_wide hw_mob" style="position: relative;top: -80px;background: white;min-height:500px;box-shadow: 0 0 5px black;">
+        <div class="uk-grid hw_grid">
+            <div class="uk-width-1-2@s">
+
+                <div class="howto_inner">
+                    {% for k,left in content[0] %}
+                        <div class="left_howto_block uk-margin-bottom blk_{{ k }} " {% if not is_mobile() %}uk-scrollspy="cls:uk-animation-slide-left; delay: 200; offset-top:-200"{% endif %}>
+                            <div>{{ left|raw }}</div>
+                            <div class="left_round">
+                                {%  if k == 0 %}<img class="svg" src="/assets/images/interface/howto/magnifying-glass-browser.svg" alt="">{% endif %}
+                                {%  if k == 1 %}<img class="svg" src="/assets/images/interface/howto/fix-sign.svg" alt="">{% endif %}
+                                {%  if k == 2 %}<img class="svg" src="/assets/images/interface/howto/key.svg" alt="">{% endif %}
+                                {%  if k == 3 %}<img class="svg" src="/assets/images/interface/howto/finish.svg" alt="">{% endif %}
+                                {%  if k == 4 %}<img class="svg" src="/assets/images/interface/howto/favorites.svg" alt="">{% endif %}
+                            </div>
+                            <div class="left_corner"></div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="uk-width-1-2@s">
+                <div class="howto_inner">
+                    {% for k,right in content[1] %}
+                        <div class="right_howto_block uk-margin-bottom blk_{{ k }}" {% if not is_mobile() %}uk-scrollspy="cls:uk-animation-slide-right; delay: 200; offset-top:-200"{% endif %}>
+                            <div>{{ right|raw }}</div>
+                            <div class="right_round">
+                                {%  if k == 0 %}<img class="svg" src="/assets/images/interface/howto/car.svg" alt="">{% endif %}
+                                {%  if k == 1 %}<img class="svg" src="/assets/images/interface/howto/contact.svg" alt="">{% endif %}
+                                {%  if k == 5 %}<img class="svg" src="/assets/images/interface/howto/piggybank.svg" alt="">{% endif %}
+                            </div>
+                            <div class="right_corner"></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="uk-grid  hw_grid" style="margin-top:0;" uk-grid>
+            <div class="uk-width-1-2@s">
+                <div class="howto_inner" style="padding-top: 0">
+                    <a href="/" class="howto_lb">LET'S GO!</a>
+                </div>
+            </div>
+            <div class="uk-width-1-2@s">
+                <div class="howto_inner" style="padding-top: 0">
+                    <a href="/card/new" class="howto_rb">Register your vehicle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top_slider_block">
+    <div class="standard_wide uk-position-relative">
+        <div class="uk-text-center tx_24 uk-margin-bottom uk-text-bold">New transport on the site</div>
+        <div class="owl-carousel owl-carousel-all owl-theme uk-width-1-1" data-items="4" data-dots="0">
+            {% for card in t3_new.getNew4 %}
+                {{ include('search/one_grid_view.html.twig', {'card':card, 'height':'130px'}) }}
+            {% endfor %}
+        </div>
+        <div class="uk-text-center">
+            {% if app.session.has('logged_user') %}
+                <a href="/card/new" class="" title="Want to be here?<br>Add listing!" uk-tooltip>{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
+            {% else %}
+                <a class="" title="Want to be here?<br>Add listing! " uk-tooltip uk-toggle="target: #sign_in_or_up">{% trans %}Разместить объявление в ТОП{% endtrans %}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

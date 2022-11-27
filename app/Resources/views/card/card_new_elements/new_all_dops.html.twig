@@ -1,0 +1,79 @@
+<div uk-grid>
+    <div class="uk-width-1-5@s">{% trans %}Характеристики{% endtrans %}</div>
+    <div class="uk-width-4-5@s">
+        <div class=""><span class="expander_button" uk-toggle="target: #features_selector">{% trans %}Показать{% endtrans %}  <i uk-icon="icon:chevron-down"></i></span></div>
+
+        <div class="expandable_block" id="features_selector" hidden>
+            <div >
+                {% for feature in features %}
+                    <div>
+                        <b>{{ lang == 'ru' ? feature.header : feature.headerEn }}</b>
+                        <div>
+                            {% for item in feature.getChildren %}
+                                <div>
+                                    <label>
+                                        <input type="checkbox" name="feature[{{ item.id }}]"> {{ lang == 'ru' ? item.header : item.headerEn }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div uk-grid>
+    <div class="uk-width-1-5@s">{% trans %}Дополнительно{% endtrans %}</div>
+    <div class="uk-width-4-5@s">
+        <div class="">
+            <span class="expander_button" uk-toggle="target: #subfields">{% trans %}Показать{% endtrans %} <i uk-icon="icon:chevron-down"></i></span>
+            <span class="uk-margin-left help_text"> {% trans %}Дополнительные параметры объявления будут участвовать в фильтрации{% endtrans %}</span>
+        </div>
+        <div class="expandable_block" id="subfields" hidden></div>
+    </div>
+</div>
+
+<div uk-grid>
+    <div class="uk-width-1-5@s">{% trans %}Состояние{% endtrans %}</div>
+    <div class="uk-width-4-5@s">
+        <select name="conditionId" class="uk-select uk-width-1-5@s">
+            {% for condition in conditions %}
+                <option value="{{ condition.id }}" {{ condition.id == 2 ? 'selected' }}>{{ lang == 'ru' ? condition.header : condition.headerEn }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div uk-grid>
+    <div class="uk-width-1-5@s">{% trans %}Цвет{% endtrans %}</div>
+    <div class="uk-width-4-5@s">
+        <select name="colorId" class="uk-select uk-width-1-5@s">
+            <option value="0">- {% trans %}выберите{% endtrans %} -</option>
+            {% for color in colors %}
+                <option value="{{ color.id }}">{{ lang == 'ru' ? color.header : color.headerEn }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div uk-grid>
+    <div class="uk-width-1-5@s">{% trans %}Год выпуска{% endtrans %}</div>
+    <div class="uk-width-4-5@s">
+        <select name="prodYear" class="uk-select uk-width-1-5@s">
+            <option value="0" selected>- {% trans %}выберите{% endtrans %} -</option>
+            {% for year in 'now'|date('Y')..1950 %}
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div uk-grid>
+    <div class="uk-width-1-5@s">{% trans %}Видео{% endtrans %}</div>
+    <div class="uk-width-4-5@s">
+        <input name="video" class="uk-input">
+        <div class="uk-text-small">{% trans %}например{% endtrans %}: https://www.youtube.com/watch?v=10WEWgAdDKk</div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/js/visual_editor.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Новый материал</h1>
+
+    <form action="/adminNewsAdd" method="POST" enctype="multipart/form-data">
+        <div>Миниатюра
+            <div uk-form-custom>
+                <input type="file" name="thumbnail">
+                <button class="uk-button uk-button-default" type="button" tabindex="-1">Выбрать файл</button>
+            </div>
+        </div>
+        <div>Заголовок
+            <input type="text" name="header"  class="uk-input">
+        </div>
+        <div class="uk-margin-top">
+            Анонс
+            <textarea name="anons" class="visual_editor"></textarea>
+        </div>
+        <div class="uk-margin-top">
+            Контент
+            <textarea name="content" class="visual_editor"></textarea>
+        </div>
+
+        <button class="uk-button uk-button-primary">Добавить</button>
+    </form>
+
+{% endblock %}

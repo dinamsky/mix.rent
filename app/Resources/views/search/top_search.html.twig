@@ -1,0 +1,22 @@
+<div class="uk-grid uk-grid-small uk-margin-bottom uk-margin-top">
+    <div>
+        <input name="input_top_city" class="top_search_input uk-width-1-1" >
+        <div class="help_text">Начните вводить город</div>
+    </div>
+
+    <div>
+        <input name="input_top_gt" class="top_search_input uk-width-1-1" >
+        <div class="help_text">и/или тип транспорта, например: авто</div>
+    </div>
+
+    <div>
+        <input name="input_top_mark" class="top_search_input uk-width-1-1" >
+        <div class="help_text">и/или марку, например: bmw</div>
+    </div>
+
+    <div><button class="uk-button-primary uk-button" id="go_top_search">Найти</button></div>
+
+    <input type="hidden" name="top_s_city" value="{{ app.session.get('city').url }}">
+    <input type="hidden" name="top_s_gt" value="cars">
+    <input type="hidden" name="top_s_mark">
+</div>

@@ -1,0 +1,42 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>SEO Страница</h1>
+    <form  action="/adminSEOPage/{{ seo.id }}" method="POST" uk-grid class="uk-grid-small">
+        <div class="uk-width-1-6"></div>
+        <div class="uk-width-5-6">
+            seo.service - тип объявления прокат/аренда<br>
+            seo.type.singular - тип транспорта в единственном числе: легкового автомобиля<br>
+            seo.type.plural - тип транспорта во множественном числе: легковых автомобилей<br>
+            seo.mark - марка<br>
+            seo.model - модель<br>
+            seo.city.chto - город в именительном падеже: Москва<br>
+            seo.city.gde - город в предложном падеже: Москве<br>
+        </div>
+
+        <div class="uk-width-1-6">URL</div>
+        <div class="uk-width-5-6"><input name="url" class="uk-input" value="{{ seo.url }}"></div>
+
+        <div class="uk-width-1-6">Title</div>
+        <div class="uk-width-5-6"><textarea name="title" class="uk-textarea">{{ seo.title }}</textarea></div>
+
+        <div class="uk-width-1-6">Description</div>
+        <div class="uk-width-5-6"><textarea name="description" class="uk-textarea">{{ seo.description }}</textarea></div>
+
+        <div class="uk-width-1-6">H1</div>
+        <div class="uk-width-5-6"><textarea name="h1" class="uk-textarea">{{ seo.h1 }}</textarea></div>
+
+        <div class="uk-width-1-6">Text</div>
+        <div class="uk-width-5-6"><textarea name="seo_text" class="uk-textarea">{{ seo.seoText }}</textarea></div>
+
+        <input type="hidden" name="id" value="{{  seo.id }}">
+        <div class="uk-width-1-1"><button class="uk-button uk-button-primary" name="update">Сохранить</button></div>
+        <div class="uk-width-1-1"><button class="uk-button uk-button-danger" name="delete">Удалить</button></div>
+    </form>
+
+{% endblock %}

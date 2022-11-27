@@ -1,0 +1,22 @@
+<input type="hidden" id="modelURL" name="modelURL" value="{{ model.header }}">
+
+<div uk-toggle="target: #model_popular" >
+    <span class="model_selector uk-text-truncate">{{ model ? model.header : 'Модель'|trans }}</span>
+    <i uk-icon="icon:chevron-down"></i>
+</div>
+
+<div id="model_popular" class="uk-modal-container uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">{% trans %}Выберите Модель{% endtrans %}</h2>
+
+        <div class="uk-column-1-1 uk-column-1-5@s">
+            <div class="model_block {{ left_block is defined ? 'left_block' }} uk-margin-bottom" data-url="" data-header="{% trans %}Любая модель{% endtrans %}">{% trans %}Любая модель{% endtrans %}</div>
+            {% if model_arr[mark_id] is defined %}
+            {% for model in model_arr[mark_id] %}
+                <div class="model_block {{ left_block is defined ? 'left_block' }}" data-url="{{ model.header }}" data-header="{{ model.header }}">{{ model.header }} </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+{% if is_mobile() %}
+<div id="left_bar" uk-offcanvas>
+
+    <div class="uk-offcanvas-bar">
+
+        <div class="uk-clearfix">
+            {{ include('user/auth_left_bar.html.twig') }}
+        </div>
+
+        <hr>
+
+
+        <div>
+            {{ include('selector/global_city_selector.html.twig') }}
+        </div>
+
+        <hr>
+
+        <div class="uk-margin-top">
+
+            <div class="uk-text-center cursor-pointer  left_bar_more" uk-toggle="target: #left_more_gt">{% trans %}Категории{% endtrans %} <i uk-icon="icon:chevron-down"></i></div>
+            <div id="left_more_gt" hidden class="uk-margin-top">
+                {% for gt in t3_new.getGt if gt.carTypeIds %}
+                    <div class="left_gtypes">
+                        <a href="/rent/{{ city.url }}/all/{{ gt.url }}" class=""><i class="fa fa-{{ gt.icon }} left_gt_icon"></i> <span class="uk-text-truncate uk-display-inline-block" style="width: 200px">{{ lang=='ru' ? gt.header: gt.url|capitalize }}</span></a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="uk-margin-top">
+            {% if app.session.has('logged_user') %}
+                <a href="/card/new" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">{% trans %}Сдать{% endtrans %}</a>
+            {% elseif app.session.has('admin') %}
+                <a href="/card/new" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">{% trans %}Сдать{% endtrans %}</a>
+            {% else %}
+                <a uk-toggle="target: #sign_in" class="uk-button uk-button-success uk-width-1-1 m_add_card_button">{% trans %}Сдать{% endtrans %}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+

@@ -1,0 +1,19 @@
+<form action="/type/{{ city_id }}/{{ general_type }}" method="POST">
+<ul class="mark-menu">
+    {% for mark in mark_model %}
+        <li class="">
+            <span><input type="checkbox" name="mark[]" value="{{ mark.object.id }}">{{ mark.object.header }}</span>
+            {% if mark.childs %}
+                <ul>
+                    {% for model in mark.childs %}
+                        <li class=""><input type="checkbox" name="model[]" value="{{ model.id }}">{{ model.header }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+    {#<input type="hidden" name="general_type" value="{{ general_type }}">#}
+    {#<input type="hidden" name="cityId" value="{{ city_id }}">#}
+    <button class="uk-button">Выбрать</button>
+</form>

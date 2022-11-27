@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/owl.theme.default.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/showCard.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    <script src="{{ asset('assets/js/auto-complete.min.js') }}"></script>
+    <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+{% endblock %}
+
+
+
+
+{% block openGraph %}
+    {{ parent() }}
+
+    <meta property="og:url" content="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">
+{% endblock %}
+
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+
+    <div class="breadcrumbs uk-margin-bottom">
+        <div class="standard_wide">
+            <a href="/">Main</a>
+            <i uk-icon="icon:chevron-right"></i>
+            <a href="/rent/{{ city.url }}">{{ city.url }}</a>
+            <i uk-icon="icon:chevron-right"></i>
+            <a href="/rent/{{ city.url }}/all/{{ general.url }}">{{ general.url }}</a>
+
+            <i uk-icon="icon:chevron-right"></i>
+            <a href="/rent/{{ city.url }}/all/{{ general.url }}/{{ model.mark.header }}">{{ model.mark.header }}</a>
+            <i uk-icon="icon:chevron-right"></i>
+            <a href="/rent/{{ city.url }}/all/{{ general.url }}/{{ model.mark.header }}/{{ model.header }}">{{ model.header }}</a>
+        </div>
+    </div>
+
+    <div class="standard_wide">
+
+        <div>
+
+            <div class="">
+
+
+                    <h2>The page was deleted by user</h2>
+
+
+            </div>
+        </div>
+
+        {{ include(':main_page:top_slider.html.twig') }}
+
+    </div>
+
+{% endblock %}

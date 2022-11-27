@@ -1,0 +1,18 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>SEO Страницы</h1>
+    <div>
+        <a class="uk-button uk-button-primary" href="/adminAddSeoPage">Добавить</a>
+    </div>
+    <hr>
+    {% for page in pages %}
+        <div><a href="/adminSEOPage/{{ page.id }}">{{ page.url }}</a></div>
+    {% endfor %}
+
+{% endblock %}

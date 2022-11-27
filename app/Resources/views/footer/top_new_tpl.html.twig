@@ -1,0 +1,44 @@
+{% set main_foto = main_foto(card.getFotos) %}
+{% set bgrnd = 'white' %}
+{% if main_foto %}
+    {% set bgrnd = 'url(/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg)' %}
+{% else %}
+    {% set bgrnd = 'white' %}
+{% endif %}
+
+
+
+{% set currency = {
+        'RUB': '₽',
+        'EUR': '€',
+        'USD': '$',
+        'CAD': 'C$',
+        'THB': '฿',
+        'MXN': '$',
+        'KRW': '₩',
+        'GBP': '£',
+        'AED': 'Dh',
+    } %}
+
+<a href="/card/{{ card.id }}" class="uk-display-block uk-margin-bottom" uk-scrollspy="cls:uk-animation-slide-bottom;delay:1000">
+    <div uk-grid class="uk-grid-small">
+        <div class="uk-width-auto">
+            <div style="background: {{ bgrnd }} center center;
+                    background-size: cover;
+                    height: 60px;
+                    width: 60px;
+                    vertical-align: middle;
+                    margin-bottom: 5px;
+                    display: inline-block;">
+            </div>
+        </div>
+        <div class="uk-width-expand">
+            <div class="c_white uk-text-truncate uk-text-small">{{ card.markModel.mark.header }} {{ card.markModel.header }}</div>
+            <div class="c_grey uk-text-truncate uk-text-small"><i class="fa fa-map-marker"></i> {{ card.getCity.header }}, {{ card.getCity.getParent.header }}</div>
+            <div class="c_grey uk-text-truncate uk-text-small">
+                {% for price in card.cardPrices if price.priceId == 2 %}
+                    {{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }} {{ currency[card.currency]|raw}}/{% trans %}день{% endtrans %}
+                {% endfor %}</div>
+        </div>
+    </div>
+</a>

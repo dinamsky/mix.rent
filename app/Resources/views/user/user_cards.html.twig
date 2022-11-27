@@ -1,0 +1,31 @@
+{% extends 'user/user_base.html.twig' %}
+
+
+{% block content %}
+        <h1>{% trans %}Мои объявления{% endtrans %}</h1>
+        {{ include('search/grid_view.html.twig') }}
+
+        <div class="uk-margin"></div>
+
+        {% if app.session.has('first_jump') %}
+
+            <div id="first_jump" class="uk-modal" uk-modal>
+                <div class="uk-modal-dialog uk-modal-body">
+                    <button class="uk-modal-close-default" type="button" uk-close><i class="fa fa-close"></i></button>
+                    <h2 class="uk-modal-title">Hello!</h2>
+                    <p>
+                        We registered your company on the MixRent site and posted lists about your services.<br>
+On the site MixRent customers are looking for rent and transportation of vehicles, at the moment we are working in 350 cities of the World, on the site more than 10000 units of transport, we connect tenants and owners daily.<br>
+Now you will be called by customers and we will send requests to your email.<br>
+We do not take any commissions from your transactions, the purpose of the site is to create a single rental portal, for the convenience of customers.
+                    </p>
+                </div>
+            </div>
+            <script>document.addEventListener("DOMContentLoaded", function(event) { UIkit.modal('#first_jump').show();})</script>
+
+            <span style="display: none">{{ app.session.remove('first_jump') }}</span>
+
+        {% endif %}
+
+
+{% endblock %}

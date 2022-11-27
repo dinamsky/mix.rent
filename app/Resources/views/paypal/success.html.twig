@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('assets/css/main_page/top_slider.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/auto-complete.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('assets/js/mainPage.js') }}"></script>
+    <script src="{{ asset('assets/js/city_general_mark_selector.js') }}"></script>
+    <script src="{{ asset('assets/js/sliderSettings.js') }}"></script>
+    <script src="{{ asset('assets/js/mark_autocomplete.js') }}"></script>
+    <script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/top_price_ranger.js') }}"></script>
+
+
+{% endblock %}
+
+{% block metaTags %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}paypalSuccess{% endblock %}
+
+{% block bodyVars %}{% endblock %}
+{% block bodyClass %}{% endblock %}
+
+{% block content %}
+
+<div class="standard_wide uk-margin-top">
+    <h1>Благодарим за ваш платеж.</h1>
+    Ваша операция завершена, и квитанция на покупку отправлена вам по электронной почте. <br>
+    Вы можете войти в свою учетную запись по адресу www.paypal.com и просмотреть данные этой операции.
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

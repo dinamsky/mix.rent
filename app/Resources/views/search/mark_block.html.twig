@@ -1,0 +1,6 @@
+<hr>
+<div class="uk-column-1-3 uk-column-1-5@s">
+    {% for mark in all_marks %}
+        <a class="uk-display-block" href="/rent/{{ city.url }}/all/{{ general.url }}/{{ mark.header }}">{{ mark.header }} </a>
+    {% endfor %}
+</div>

@@ -1,0 +1,116 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/js/visual_editor.js') }}"></script>
+    <script src="{{ asset('assets/js/admin_slider.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Слайдер</h1>
+
+    <form id="slider_form" action="/adminUpdateSlider" method="POST" enctype="multipart/form-data">
+    {% for slide in slider %}
+        <div class="slrow">
+            <div>
+                Позиция: <input type="text" name="pos[]" value="{{ slide.pos }}">
+            </div>
+
+            <div>
+                <img src="{{ slide.img }}" style="height: 150px;">
+                <input type="file" name="img[]">
+                <input type="hidden" name="oldimg[]" value="{{ slide.img }}">
+            </div>
+
+            <div>
+                Заголовок:
+                <textarea name="header[]" class="visual_editor">{{ slide.header }}</textarea>
+            </div>
+
+            <div>
+                Текст:
+                <textarea name="content[]" class="visual_editor">{{ slide.content }}</textarea>
+            </div>
+
+            <div>
+                Ссылка:
+                <input type="text" name="link[]" value="{{ slide.link }}" class="uk-input">
+            </div>
+            <button type="button" class="delslide">Удалить слайд</button>
+            <hr>
+        </div>
+
+    {% endfor %}
+        <button type="button" id="add_slide">Добавить слайд</button>
+        <button>Сохранить все</button>
+    </form>
+
+    <div id="slide_tpl" class="uk-hidden">
+        <div class="slrow">
+            <div>
+                Позиция: <input type="text" name="pos[]" value="99">
+            </div>
+
+            <div>
+                <input type="file" name="img[]">
+            </div>
+
+            <div>
+                Заголовок:
+                <textarea name="header[]" class="visual_editor"></textarea>
+            </div>
+
+            <div>
+                Текст:
+                <textarea name="content[]" class="visual_editor"></textarea>
+            </div>
+
+            <div>
+                Ссылка:
+                <input type="text" name="link[]" value="" class="uk-input">
+            </div>
+            <button type="button" class="delslide">Удалить слайд</button>
+            <hr>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+
+{#<form action="/adminSliderUpdate" method="POST" enctype="multipart/form-data">#}
+        {#<div uk-grid>#}
+            {#<div class="uk-width-1-2">#}
+                {#<img src="{{ asset('assets/images/interface/promo/b1.jpg') }}" style="height: 150px;width:auto">#}
+                {#<div uk-form-custom>#}
+                        {#<input type="file" name="f_b1">#}
+                        {#<button class="uk-button uk-button-default" type="button" tabindex="-1">Фото1</button>#}
+                    {#</div>#}
+            {#</div>#}
+            {#<div class="uk-width-1-2">#}
+                {#<img src="{{ asset('assets/images/interface/promo/b2.jpg') }}" style="height: 150px;width:auto">#}
+                {#<div uk-form-custom>#}
+                        {#<input type="file" name="f_b2">#}
+                        {#<button class="uk-button uk-button-default" type="button" tabindex="-1">Фото2</button>#}
+                    {#</div>#}
+            {#</div>#}
+        {#</div>#}
+        {#<button class="uk-button uk-button-primary">Записать</button>#}
+    {#</form>#}
+    {#<hr>#}
+    {#<form action="/adminPromoUpdate" method="POST">#}
+        {#{% for k,p in promo %}#}
+            {#<div>{{ k }}</div>#}
+            {#<textarea name="content[{{ k }}]" class="visual_editor">{{ p }}</textarea>#}
+        {#{% endfor %}#}
+        {#<button class="uk-button uk-button-primary">Записать</button>#}
+    {#</form>#}

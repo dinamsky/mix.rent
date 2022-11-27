@@ -1,0 +1,134 @@
+{% extends 'user/user_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/chat.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+        <h1>{% trans %}Мои сообщения{% endtrans %}</h1>
+        <div>
+            {% for visitor_id,mss in messages %}
+                <div class="bordered padding10 uk-margin-small-bottom">
+                    <div class="uk-grid uk-grid-small" uk-grid>
+
+                        <div class="uk-width-auto">
+                            {% if users[visitor_id].user_foto %}
+                                <div style="background: url('{{ users[visitor_id].user_foto }}') center center no-repeat;
+                                        background-size: contain;
+                                        width: 70px;
+                                        height: 70px;
+                                        display: inline-block;
+                                        position: relative;
+                                        ">
+                                </div>
+                            {% else %}
+                                <div style="background: white;
+                                        background-size: contain;
+                                        width: 70px;
+                                        height: 70px;
+                                        display: inline-block;
+                                        position: relative;
+                                        ">
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="uk-width-expand">
+                            <div class="uk-margin-small-bottom uk-clearfix">
+                                <div class="uk-float-left">
+                                    <i class="fa fa-user"></i> <a href="/user/{{ visitor_id }}">{{ users[visitor_id].header }}</a>
+                                    {% if blockings[visitor_id] %}<span class="uk-label uk-label-danger">заблокирован</span>{% endif %}
+                                </div>
+                                <div class="uk-float-right">
+                                    <form action="/user/delete_blocking_user_messages" method="POST" class="uk-display-inline-block">
+                                        <button type="button" uk-toggle="target: #tools_{{ visitor_id }}; animation: uk-animation-slide-right" class="uk-button-default uk-button-small">
+                                            <span uk-icon="icon: more"></span>
+                                        </button>
+                                        <span id="tools_{{ visitor_id }}" hidden >
+
+                                            {% if blockings[visitor_id] %}
+                                                <button name="user_action" class="uk-button-default uk-button-small" value="unblock">Разблокировать</button>
+                                            {% else %}
+                                                <button name="user_action" class="uk-button-default uk-button-small" value="block">Заблокировать</button>
+                                            {% endif %}
+
+
+                                            <button name="user_action" class="uk-button-danger uk-button-small" value="delete" onclick="return confirm('Вы уыерены?')">Удалить всю переписку</button>
+                                            <input type="hidden" name="id" value="{{ visitor_id }}">
+                                        </span>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                            {% for crd,ms in mss %}
+                                <div class="bordered padding10">
+
+                                    <div class="uk-grid" uk-grid>
+                                        <div class="uk-width-expand">
+                                            №{{ crd }}
+                                            <a href="/card/{{ crd }}">{{ cards[crd].markModel.Mark.header }} {{ cards[crd].markModel.header }} в {{ cards[crd].city.gde }}</a>
+                                            <span class="uk-text-small uk-text-muted">(сообщений: {{ ms|length }})</span>
+                                            {% set count = 0 %}
+                                            {% for m in ms if m.isRead==0 %}
+                                                {% set count = count+1 %}
+                                                {% endfor %}
+                                            {% if count>0 %}<span class="uk-badge">непрочитано: {{ count }}</span>{% endif %}
+                                            <div>
+                                                <span class="uk-text-muted uk-text-small">{{ ms|last.dateCreate|date("H:i:s") }}</span>
+                                                <span>{{ ms|last.message }}</span>
+                                                <span class="uk-text-small uk-text-muted"><span uk-icon="icon: arrow-left"></span> последнее</span>
+                                                {#<button uk-toggle="target: #chat_{{ crd }}" type="button">Показать переписку</button>#}
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-auto">
+                                            {% if blockme[visitor_id] %}
+                                                <div class="uk-label-danger padding10">Пользователь<br>заблокировал<br>переписку<br>с вами</div>
+                                            {% else %}
+                                                <button class="open_chat cursor-pointer uk-text-center uk-button uk-button-primary uk-button-small" data-user_id="{{ visitor_id }}" data-visitor_id="{{ app.session.get('logged_user').id }}" data-card_id="{{ crd }}"><i class="fa fa-comments"></i> {% trans %}Ответить{% endtrans %}</button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {{ include('user/chat_modal.html.twig') }}
+
+{% endblock %}
+
+
+{#<div id="chat_{{ crd }}" hidden>#}
+    {#{% for m in ms %}#}
+        {#<div>#}
+            {#<span class="uk-badge">{{ m.dateCreate|date("H:i:s") }}</span>#}
+
+            {#{% if m.fromUserId == app.session.get('logged_user').id %}#}
+                {#Я#}
+            {#{% else %}#}
+                {#{{ users[m.fromUserId].header }}#}
+            {#{% endif %}#}
+
+            {#<span uk-icon="icon: arrow-right"></span>#}
+
+            {#{% if m.toUserId == app.session.get('logged_user').id %}#}
+                {#Мне#}
+            {#{% else %}#}
+                {#{{ users[m.toUserId].header }}#}
+            {#{% endif %}#}
+
+
+            {#:#}
+            {#{{ m.message }}#}
+
+
+        {#</div>#}
+    {#{% endfor %}#}
+{#</div>#}

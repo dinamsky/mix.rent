@@ -1,0 +1,20 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+
+{% block content %}
+    <h1>Блог</h1>
+
+    <a href="/adminNewsAdd">Добавить новый материал</a>
+    <hr>
+        {% for news in all_news %}
+            <div>
+                <span>{{ news.dateCreate|date('d.m.Y') }}</span>
+                <a href="/adminNewsEdit/{{ news.id }}">{{ news.header }}</a>
+                <form action="/adminNewsDelete" method="post" class="uk-display-inline-block">
+                    <input type="hidden" name="id" value="{{ news.id }}">
+                    <button onclick="return confirm('Вы уверены?')">Удалить</button>
+                </form>
+            </div>
+        {% endfor %}
+
+{% endblock %}

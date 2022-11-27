@@ -1,0 +1,162 @@
+{% extends 'user/user_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/image_upload_preview.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('assets/js/phone_validate.js') }}"></script>
+    <script src="{{ asset('assets/js/order.js') }}"></script>
+{% endblock %}
+
+{% block bodyClass %}
+    big_order_list
+{% endblock %}
+
+{% block content %}
+
+    <h2>Orders</h2>
+
+<div class="">
+                {% for o in orders %}
+
+
+                    {% set card = getcard(o.cardId) %}
+                        {% set rightuser = getuser(o.userId) %}
+                        {% set rating = o.ownerRating %}
+                    {% if app.session.get('logged_user').id == o.userId %}
+                        {% set rightuser = getuser(o.renterId) %}
+                        {% set rating = o.renterRating %}
+                    {% endif %}
+
+
+
+                    <div class="uk-position-relative">
+
+                        <a class="uk-grid uk-grid-small" href="/user/order_page/{{ o.id }}" style="color:black">
+                            <div style="width: 60px;">
+                                {% set card = getcard(o.cardId) %}
+
+                                {% if card %}
+                                {% set main_foto = main_foto(card.getFotos) %}
+                                {% endif %}
+
+                                {% set bgrnd = 'white' %}
+
+                                {% if main_foto is defined %}
+                                    {% set bgrnd = 'url(/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg)' %}
+                                {% elseif card.fotos[0] is defined %}
+                                    {% set bgrnd = 'url(/assets/images/cards/'~card.fotos[0].folder~'/t/'~card.fotos[0].id~'.jpg)' %}
+                                {% else %}
+                                    {% set bgrnd = 'url(/assets/images/interface/no_image.jpg)' %}
+                                {% endif %}
+
+                                <div style="background: {{ bgrnd }} center center;background-size: cover;height: 60px;position: relative;">
+                                </div>
+                            </div>
+
+                            <div class="uk-width-expand">
+                                <div style="font-size: 16px;line-height: 18px">{{ o.transport }}</div>
+                                <div style="font-size: 16px;line-height: 18px">{{ rightuser.header }}</div>
+                                <div class="uk-text-small uk-clearfix" style="font-size: 10px;line-height: 20px;color: grey;">
+
+                                {% if o.messages != '' %}
+                                    {% for m in jsond(o.messages) %}
+                                        {% if loop.last %}
+                                            {{ m.date }} {{ m.time }}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                    <span style="color:red;float: right;font-weight: bold">
+                                        {% if o.ownerStatus == 'wait_for_accept' and app.session.get('logged_user').id == o.renterId %}
+                                        wait for owner accept
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'wait_for_accept' and app.session.get('logged_user').id == o.userId %}
+                                        wait for your accept
+                                    {% endif %}
+
+                                     {#---- after accept#}
+
+                                    {% if o.renterStatus == 'wait_for_pay' and app.session.get('logged_user').id == o.renterId %}
+                                        Accepted. Wait for pay
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'accepted' and app.session.get('logged_user').id == o.userId %}
+                                        Wait for pay
+                                    {% endif %}
+
+                                     {#---- after payment#}
+
+                                    {% if o.renterStatus == 'wait_for_finish' and app.session.get('logged_user').id == o.renterId %}
+                                        Order paid
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'wait_for_rent' and app.session.get('logged_user').id == o.userId %}
+                                        Order paid
+                                    {% endif %}
+
+                                    {#---- after pincode#}
+
+                                    {% if o.renterStatus == 'rent_in_process' and app.session.get('logged_user').id == o.renterId %}
+                                        in rent
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'rent_in_process' and app.session.get('logged_user').id == o.userId %}
+                                        in rent
+                                    {% endif %}
+
+                                    {#----- messages#}
+                                    {% if o.renterStatus == 'wait_for_answer' and app.session.get('logged_user').id == o.renterId %}
+                                        there is owner answer
+                                    {% endif %}
+
+                                    {% if o.ownerStatus == 'wait_for_answer' and app.session.get('logged_user').id == o.userId %}
+                                        there is renter answer
+                                    {% endif %}
+                                    </span>
+
+
+                                </div>
+                            </div>
+                        </a>
+
+
+                        {% set ord_icon = 'bell' %}
+                        {% if notifies[o.id] is defined %}
+
+                            {% if notifies[o.id]|length > 1%}
+
+                            {% else %}
+                                {% if notifies[o.id][0].notify == 'new_order' %}
+                                    {% set ord_icon = 'star' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_accept' %}
+                                    {% set ord_icon = 'check' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_reject' %}
+                                    {% set ord_icon = 'ban' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_answer' %}
+                                    {% set ord_icon = 'mail' %}
+                                {% endif %}
+                                {% if notifies[o.id][0].notify == 'order_payed' %}
+                                    {% set ord_icon = 'happy' %}
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="ord_notify"><i uk-icon="{{ ord_icon }}"></i></div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="uo_divider"></div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+{% endblock %}
+

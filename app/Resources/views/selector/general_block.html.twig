@@ -1,0 +1,13 @@
+<span class="selector_opener show_general_selector" uk-toggle="target: #general_type_block; cls: is_open">
+    <span class="general_selector">{{ general ? general.header : 'Тип транспорта' }}</span>
+    <i uk-icon="icon:chevron-down"></i>
+</span>
+
+<div class="hide_on_click_out" id="general_type_block">
+    <select class="uk-select" name="pgtId" id="generalTypeTopLevelId">
+        {{ include( 'common/ajax_edit_options.html.twig', { 'options': generalTopLevel, 'id': pgtid }) }}
+    </select>
+    <select class="uk-select" name="gtId" id="generalTypeId">
+        {{ include( 'common/ajax_edit_options.html.twig', { 'options': generalSecondLevel, 'id': gtid }) }}
+    </select>
+</div>

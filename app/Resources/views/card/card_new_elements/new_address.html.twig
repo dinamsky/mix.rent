@@ -1,0 +1,88 @@
+<div uk-grid>
+    <div class="uk-width-1-5@s">
+
+        {{ lang }}
+
+        {% trans %}Адрес{% endtrans %} <span class="red_star">*</span>
+        <div class="help_text">{% trans %}Укажите адрес размещения вашего транспорта{% endtrans %}</div>
+    </div>
+    <div class="uk-width-3-5@s">
+
+
+        <div class="uk-display-inline-block@s uk-margin-bottom uk-margin-remove@s">
+            {% trans %}Доставка транспорта клиенту{% endtrans %}:
+            <label class="uk-display-block  uk-display-inline-block@s"><input type="radio" name="deliveryStatus" value="0"> {% trans %}нет{% endtrans %}</label>
+            <label class="uk-display-block  uk-display-inline-block@s"><input type="radio" name="deliveryStatus" value="1"> {% trans %}да{% endtrans %}</label>
+            <label class="uk-display-block  uk-display-inline-block@s"><input type="radio" name="deliveryStatus" value="2" checked> {% trans %}возможна{% endtrans %}</label>
+        </div>
+
+        <span class="expander_button" uk-toggle="target: #city_selector"><span id="xpb_name">{{ city.header }}</span> <i uk-icon="icon:chevron-down"></i></span>
+
+        <div class="expandable_block" id="city_selector" hidden data-coords="{{ city.coords }}">
+            <div class="uk-text-small">{% trans %}Страна{% endtrans %}</div>
+            <select name="countryCode" id="countryCode" class="uk-select">
+                {#<option value="0">-выберите страну-</option>#}
+                {#{% for country_code, country_title in countries %}#}
+                {#<option value="{{ country_code }}" {{ country_code == countryCode ? 'selected' : '' }}>{{ country_title }}</option>#}
+                {#{% endfor %}#}
+                {#{{ include( 'common/ajax_edit_options.html.twig', { 'options': countries, 'id': countryCode }) }}#}
+
+                <option value="0">-select country-</option>
+
+                {#{% if app.session.has('admin') %}#}
+                    {% for cntr in countries %}
+                    <option value="{{ cntr.iso3 }}" {{ city.country == cntr.iso3 ? 'selected' }}>{{ cntr.headerEn }}</option>
+                    {% endfor %}
+                {#{% else %}#}
+                    {#<option value="RUS" selected>Russia</option>#}
+                {#{% endif %}#}
+
+
+            </select>
+            <div class="uk-text-small">{% trans %}Регион{% endtrans %}</div>
+            <select name="regionId" id="regionId" class="uk-select">
+                {{ include( 'common/ajax_edit_options.html.twig', { 'options': regions, 'id': regionId, 'lang':lang }) }}
+            </select>
+            {% if app.session.has('admin') %}
+            <div>
+                <input type="checkbox" name="is_region"> нет региона <input type="text" name="new_region" placeholder="впишите свой регион" class="uk-input uk-width-1-2">
+            </div>
+            {% endif %}
+            <div class="uk-text-small">{% trans %}Город{% endtrans %}</div>
+            <select name="cityId" id="cityId" class="uk-select cityIdSelect">
+                {{ include( 'common/ajax_edit_options.html.twig', { 'options': cities, 'id': cityId, 'lang':lang }) }}
+            </select>
+            {% if app.session.has('admin') %}
+            <div>
+                <input type="checkbox" name="is_city"> нет города <input type="text" name="new_city" placeholder="впишите свой город" class="uk-input uk-width-1-2">
+            </div>
+            {% endif %}
+            <div class="uk-text-small">{% trans %}Адрес{% endtrans %}</div>
+            <div>
+                <textarea name="address" class="uk-textarea"></textarea>
+            </div>
+            <div class="uk-text-small" uk-toggle="target: #map_selector" id="show_map">{% trans %}Карта{% endtrans %} <i uk-icon="icon:chevron-down"></i></div>
+            <div id="map_selector" hidden>
+                {% if app.session.has('admin') %}
+                    <input name="coords" type="hidden" value="">
+                    <div id="map" data-lat="55.753410" data-lng="37.620285"></div>
+                {% else %}
+                    {% if app.session.get('city').coords == NULL %}
+                        {% set lat = 55.753410 %}
+                        {% set lon = 37.620285 %}
+                    {% else %}
+                        {% set crd = app.session.get('city').coords|split(',') %}
+                        {% set lat = crd[0] %}
+                        {% set lon = crd[1] %}
+                    {% endif %}
+                    <input name="coords" type="hidden" value="{{ lat }},{{ lon }}">
+                    <div id="map" data-lat="{{ lat }}" data-lng="{{ lon }}"></div>
+                {% endif %}
+            </div>
+            <input type="hidden" name="streetView">
+        </div>
+    </div>
+    <div class="uk-width-1-5 uk-visible@s">
+
+    </div>
+</div>

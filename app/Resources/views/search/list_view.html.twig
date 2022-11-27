@@ -1,0 +1,49 @@
+<div uk-grid class="uk-grid-small">
+    {% for card in cards %}
+        <div class="uk-width-1-1">
+            <div class="bordered uk-position-relative">
+                <div uk-grid class="uk-grid-collapse">
+                    <div class="uk-width-1-5">
+                        <a href="/card/{{ card.id }}" style="background:url('/assets/images/cards/{% for foto in card.getFotos if foto.isMain %}{{ foto.folder }}/t/{{ foto.id }}.jpg{% endfor %}') center center;
+                                background-size: cover;
+                                height: 120px;
+                                display: block;">
+                        </a>
+                    </div>
+                    <div class="uk-width-4-5">
+                        <div class="padding20">
+                            {#<a href="/card/{{ card.id }}">{{ card.header }}</a>#}
+
+
+                            <div>
+                                {{ card.getMarkModel.getMark.header }} {{ card.getMarkModel.header }}
+                            </div>
+                            <div>
+                                {% if card.address != '' %}
+                                    <i class="fa fa-map-marker"></i> {{ card.address }}
+                                {% else %}
+                                    <i class="fa fa-map-marker"></i> {{ card.getCity.header }}, {{ card.getCity.getParent.header }}, {{ card.getCity.country }}
+                                {% endif %}
+                            </div>
+                            <div>
+                                {% for price in card.cardPrices if price.priceId == 2 %}
+                                    {{ price.value|number_format(0,'.','<span class="thousand_separator"></span>')|raw }} ₽ / день
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if app.session.get('admin').email is defined %}
+                    <form action="/card/update" method="POST" style="position: absolute;top:0;right:0;">
+                        <input type="hidden" name="cardId" value="{{ card.id }}">
+                        <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                        <button class="uk-button uk-button-danger" name="delete">Удалить</button>
+                    </form>
+                    <a class="uk-button-primary" href="/user/edit/card/{{ card.id }}" uk-icon="icon:pencil" style="position: absolute;left:0;top:0"></a>
+                {% endif %}
+
+            </div>
+        </div>
+    {% endfor %}
+</div>

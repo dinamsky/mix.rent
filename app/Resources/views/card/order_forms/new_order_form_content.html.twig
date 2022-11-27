@@ -1,0 +1,66 @@
+{#<button uk-toggle="target: #howtopay" type="button" style="color: #07d;#}
+                                {#background: transparent;#}
+                                {#text-decoration: underline;#}
+                                {#padding: 0;#}
+                                {#margin-bottom: 10px;">Как это работает?</button>#}
+
+                        <form id="nbf_form" action="/user/bookMessage" uk-grid class="uk-grid-small" method="POST" onsubmit="return new_book_validate();">
+
+                            <div class="uk-width-1-1">
+                                <span class="uk-text-small">Vehicle</span>
+                                <input type="text" name="header" class="uk-input" value="{{ card.markModel.mark.header }} {{ card.markModel.header }}" required>
+                            </div>
+
+                            <div class="uk-width-1-2@s">
+                                <span class="uk-text-small">Pickup Date (yyyy.mm.dd) <span class="c_red">{{ reserved ? 'с '~card.dateRentFinish|date_modify("+1 day")|date('d.m.Y') }}</span></span>
+                                <input type="text" name="date_in" class="uk-input uk-width-1-1 datepicker-reserve" autocomplete="off" required>
+                            </div>
+
+                            <div class="uk-width-1-2@s">
+                                <span class="uk-text-small">Drop Date (yyyy.mm.dd)<span class="c_red">{{ reserved ? 'с '~card.dateRentFinish|date_modify("+1 day")|date('d.m.Y') }}</span></span>
+                                <input type="text" name="date_out" class="uk-input uk-width-1-1 datepicker-reserve" autocomplete="off" required>
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">Pickup City</span>
+                                <input type="text" name="city_in" class="uk-input uk-width-1-1" value="{{ card.city.header }}" autocomplete="off" required>
+                            </div>
+
+                            <div class="uk-width-1-2">
+                                <span class="uk-text-small">Drop City</span>
+                                <input type="text" name="city_out" class="uk-input uk-width-1-1" value="{{ card.city.header }}" autocomplete="off" required>
+                            </div>
+
+                            <div class="uk-width-1-1">
+                                <span class="uk-text-small">Your message to owner</span>
+                                <textarea name="content" class="uk-width-1-1 short_textarea"></textarea>
+                            </div>
+
+                            {% if not phone %}
+                                <div class="uk-width-1-1" id="bk_phn">
+                                    <div class="uk-margin-bottom uk-position-relative">
+                                        <input type="text" name="phone" id="phone" placeholder="Type your mobile phone number" class="uk-input phone_validate">
+                                        <div class="uk-position-absolute uk-position-top-left" style="left:5px;"><span class="red_star">*</span></div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <input type="hidden" name="phone" id="phone" value="{{ phone }}">
+                            {% endif %}
+
+                            <input type="hidden" name="card_id" value="{{ card.id }}">
+
+                            <div class="uk-width-1-1">
+                                Wait for owner response<br>
+                                in user dashboard + to your email + SMS to your mobile phone
+                            </div>
+
+                            <input type="hidden" name="g-recaptcha-response">
+                            <div id="recap3"></div>
+
+                            <div class="uk-width-1-1">
+                                <button id="bookMessageButton" class="uk-button uk-button-default uk-width-1-1">Send</button>
+                            </div>
+                            {% if nonreged is defined %}
+                            <input type="hidden" name="is_nonreged" value="1">
+                            {% endif %}
+                        </form>

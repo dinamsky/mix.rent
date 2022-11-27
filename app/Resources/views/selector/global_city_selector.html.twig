@@ -1,0 +1,39 @@
+<input type="hidden" id="cityURL" name="cityURL" value="{{ city.url }}">
+<input type="hidden" id="cityId" name="cityId" value="{{ city.id }}">
+<div uk-toggle="target: #city_popular" class="cursor-pointer sticky_top_city_selector">
+    <span uk-icon="icon:location" class="{{ is_mobile() ? 'c_white' : 'c_blue' }}"></span>
+    {% if lang=='ru' %}
+        {{ app.session.has('city')  ? app.session.get('city').header : city.header }}
+    {% else %}
+        {{ app.session.has('city') and app.session.get('city').id > 1251  ? app.session.get('city').header~' '~app.session.get('city').iso~' '~app.session.get('city').country : city.header~' '~city.iso~' '~city.country }}
+    {% endif %}
+
+
+    </span>
+</div>
+
+<div id="city_popular" class="uk-modal-container uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">{% trans %}Выберите город{% endtrans %}</h2>
+        <div>
+            {% trans %}или начните вводить наименование города{% endtrans %}: <input name="input_city" class="uk-input {{ is_mobile() ? 'uk-width-1-1' : 'uk-width-1-5' }}">
+        </div>
+        <hr>
+        <div class="uk-column-1-1 uk-column-1-5@s">
+            {#<div class="city_block uk-margin-bottom" data-id="0" data-url="rus" data-header="Россия">Россия</div>#}
+            {% for city in t3_new.popularCities if city.total >= 10 %}
+                <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ lang=='en' ? city.url : city.header }}</div>
+            {% endfor %}
+        </div>
+        <hr>
+        <button uk-toggle="target: #more_cities" type="button" class="more_cities_button">{% trans %}показать все города{% endtrans %}</button>
+        <div id="more_cities" hidden>
+            <div class="uk-column-1-1 uk-column-1-5@s">
+                {% for city in t3_new.popularCities if city.total < 10 %}
+                    <div class="city_block" data-id="{{ city.id }}" data-url="{{ city.url }}" data-header="{{ city.header }}">{{ lang=='en' ? city.url : city.header }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

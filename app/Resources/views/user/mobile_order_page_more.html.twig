@@ -1,0 +1,254 @@
+{% extends 'user/user_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/image_upload_preview.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('assets/js/phone_validate.js') }}"></script>
+    <script src="{{ asset('assets/js/order.js') }}"></script>
+{% endblock %}
+
+{% block bodyClass %}
+    big_order_list
+{% endblock %}
+
+{% block content %}
+
+
+    {% set card = getcard(o.cardId) %}
+                        {% set rightuser = getuser(o.userId) %}
+                        {% set rating = o.ownerRating %}
+                    {% if app.session.get('logged_user').id == o.userId %}
+                        {% set rightuser = getuser(o.renterId) %}
+                        {% set rating = o.renterRating %}
+                    {% endif %}
+
+<div class="ord_page_header" uk-sticky>
+    <div class="uk-grid uk-grid-small uk-flex uk-flex-middle">
+        <div class="uk-text-center" style="width: 20px;">
+            <a href="/user/order_page/{{ o.id }}" style="position: relative;left: -8px;"><i uk-icon="icon:chevron-left;ratio:2"></i></a>
+        </div>
+        <div style="width: 60px;">
+            {% set card = getcard(o.cardId) %}
+
+            {% if card %}
+            {% set main_foto = main_foto(card.getFotos) %}
+            {% endif %}
+
+            {% set bgrnd = 'white' %}
+
+            {% if main_foto  %}
+                {% set bgrnd = 'url(/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg)' %}
+            {% elseif card.fotos[0] is defined %}
+                {% set bgrnd = 'url(/assets/images/cards/'~card.fotos[0].folder~'/t/'~card.fotos[0].id~'.jpg)' %}
+            {% else %}
+                {% set bgrnd = 'url(/assets/images/interface/no_image.jpg)' %}
+            {% endif %}
+
+            <div style="background: {{ bgrnd }} center center;background-size: cover;height: 60px;position: relative;">
+            </div>
+        </div>
+
+        <div class="uk-width-expand">
+            <div>{{ o.transport }}</div>
+            <div>{{ rightuser.header }}</div>
+            <div class="uk-text-small">{{ o.dateCreate|date('d.m.Y - H:i') }}</div>
+        </div>
+    </div>
+</div>
+
+    <div id="ord_sum_{{ o.id }}" class="uk-margin-top" >
+
+
+
+
+
+                    <div class="uk-margin-medium-bottom uk-text-center">
+
+                        {% set url = '/assets/images/users/t/user_'~o.renterId~'.jpg' %}
+                        {% if( app.session.get('logged_user').id == o.renterId) %}
+                            {% set url = '/assets/images/users/t/user_'~o.userId~'.jpg' %}
+                        {% endif %}
+                        {% if not file_exists('.'~url) %}
+                            {% set url = '/assets/images/interface/default-user.png' %}
+                        {% endif %}
+
+                        <a target="_blanc"
+                                       href="/user/{{  app.session.get('logged_user').id == o.renterId ? o.userId : o.renterId }}"
+                                       uk-tooltip="title:Перейти на страницу пользователя"
+                                       style="background: url({{ url }}) center center;
+                                        background-size: cover;
+                                        height: 60px;
+                                               width: 60px;
+                                        display: inline-block;
+                                        border-radius: 30px;
+                                        position: relative;"
+                                    ></a>
+                        <div>{{ rightuser.header }}</div>
+                        <div>Россия, {{ o.cityIn }}</div>
+                        <div>
+                            {% for star in [1,2,3,4,5] %}
+                                <span uk-icon="icon:star; ratio:0.5" class="rating_star {{ rating >= star ? 'filled' : '' }}"></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div class="uk-margin-top">
+                        <div class="">
+                            <div><b>Заявка №{{ o.id }}</b></div>
+                            <a href="/card/{{ o.cardId }}" uk-tooltip="title:Перейти на страницу транспорта">{{ o.transport }}</a><br>
+                            {#Арендатор: {{ o.fioRenter }} <br>#}
+                            <i class="fa fa-calendar"></i> {{ o.dateIn|date('d.m.Y') }} - <i class="fa fa-calendar"></i> {{ o.dateOut|date('d.m.Y') }}
+                            <br>
+                            Дней аренды: {{ date(o.dateOut).diff(date(o.dateIn)).days == 0 ? 1 : date(o.dateOut).diff(date(o.dateIn)).days }}
+                            <hr>
+                            <div class="uk-grid uk-grid-small">
+                                <div class="uk-width-2-3">
+                                    Получить: {{ o.cityIn }}<br>
+                                    Вернуть: {{ o.cityOut }}<br>
+                                </div>
+
+                                <div class="uk-width-1-3">
+
+                                    {% if card %}
+                                    {% set main_foto = main_foto(card.getFotos) %}
+                                    {% endif %}
+
+                                    {% set bgrnd = 'white' %}
+
+                                    {% if main_foto  %}
+                                        {% set bgrnd = '/assets/images/cards/'~main_foto.folder~'/t/'~main_foto.id~'.jpg' %}
+                                    {% elseif card.fotos[0] is defined %}
+                                        {% set bgrnd = '/assets/images/cards/'~card.fotos[0].folder~'/t/'~card.fotos[0].id~'.jpg' %}
+                                    {% else %}
+                                        {% set bgrnd = '/assets/images/interface/no_image.jpg' %}
+                                    {% endif %}
+
+                                    <div uk-lightbox>
+                                        <a href="{{ bgrnd }}">
+                                            <div style="background: url({{ bgrnd }}) center center;
+                                                background-size: cover;
+                                                height: 60px;
+                                                display: block;
+                                                position: relative;"></div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if o.email != '' %}
+                            Email: {{ o.email }}<br>
+                            {% endif %}
+                            {% if o.phone != '' %}
+                            Телефон: {{ o.phone }}<br>
+                            {% endif %}
+
+                            {#{% if o.content != '' %}#}
+                                {#Сообщение: {{ o.content }}<br>#}
+                            {#{% endif %}#}
+
+                            <hr>
+                            <div class="uk-grid uk-margin-remove-top">
+                                <div class="uk-width-expand">Аренда:</div>
+                                <div class="uk-width-auto">{{ o.price }} <i class="fa fa-ruble"></i></div>
+                            </div>
+                            {#<div class="uk-grid uk-margin-remove-top">#}
+                                {#<div class="uk-width-expand">Залог:</div>#}
+                                {#<div class="uk-width-auto">{{ o.deposit }} <i class="fa fa-ruble"></i></div>#}
+                            {#</div>#}
+                            <div class="uk-grid uk-margin-remove-top">
+                                <div class="uk-width-expand">Сервисный сбор:</div>
+                                <div class="uk-width-auto">{{ o.service }} <i class="fa fa-ruble"></i></div>
+                            </div>
+                            <div class="uk-grid uk-margin-remove-top">
+                                <div class="uk-width-expand"><b>Итого:</b></div>
+                                <div class="uk-width-auto"><b>{{ o.total }}</b> <i class="fa fa-ruble"></i></div>
+                            </div>
+                            <hr>
+                            <div class="uk-text-small">
+                                Иногда владелец может попросить залог
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div class="uk-margin-top">
+                            {% if o.renterStatus == 'wait_for_pay' and app.session.get('logged_user').id == o.renterId %}
+                                <a href="/pay_for_order/{{ o.id }}" class="ok_btn uk-margin-top uk-text-center uk-display-block">Оплатить</a>
+
+                                <div class="uk-margin-top">
+                                    Оплата производится через партнера: <a href="http://mandarinpay.com/" target="_blank">Mandarin Pay</a><br>
+                                </div>
+
+                                <div class="uk-margin-top">
+                                    <a href="/article/pravila-oplaty" target="_blank">Правила</a> оплаты заявок
+                                </div>
+                            {% endif %}
+                        </div>
+
+
+                        {% if o.ownerStatus in ['wait_for_accept','answered','wait_for_answer'] and app.session.get('logged_user').id == o.userId %}
+
+                        <button type="button" id="owner_accept" class="ok_btn ok_big uk-width-1-1" value="{{ o.id }}">Одобрить</button>
+                        <br><br>
+                        <button type="button" id="owner_reject" class="nt_btn uk-width-1-1" value="{{ o.id }}">Отклонить</button>
+
+
+                        {% endif %}
+
+                        <div>
+                            {% if o.renterStatus == 'wait_for_finish' and app.session.get('logged_user').id == o.renterId %}
+                                {% set owner = getuser(o.userId) %}
+                                {% set userinfo = owner.getInformation %}
+                                Владелец : {{ owner.header }}<br>
+                                {% for info in userinfo if info.uiKey == 'phone' and info.uiValue != '' %}
+                                Телефон: {{ info.uiValue }}<br>
+                                {% endfor %}
+                                Email: {{ owner.email }}<br><br>
+                                <a href="/assets/docs/rent_contract.docx">Скачать договор аренды транспорта</a>
+                            {% endif %}
+
+                            {% if o.ownerStatus == 'wait_for_rent' and app.session.get('logged_user').id == o.userId %}
+                                {% set owner = getuser(o.renterId) %}
+                                {% set userinfo = owner.getInformation %}
+                                Владелец : {{ owner.header }}<br>
+                                {% for info in userinfo if info.uiKey == 'phone' and info.uiValue != '' %}
+                                Телефон: {{ info.uiValue }}<br>
+                                {% endfor %}
+                                Email: {{ owner.email }}<br><br>
+                                <a href="/assets/docs/rent_contract.docx">Скачать договор аренды транспорта</a>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            {% if o.renterStatus == 'wait_for_finish' and app.session.get('logged_user').id == o.renterId %}
+                                <button type="button" uk-toggle="target: #renter_modal_{{ o.id }}" class="ok_btn uk-margin-top uk-text-center uk-display-block uk-width-1-1">Завершить</button>
+                            {% endif %}
+
+                            {% if o.ownerStatus == 'wait_for_rent' and app.session.get('logged_user').id == o.userId %}
+                                <button type="button" uk-toggle="target: #owner_modal_{{ o.id }}" class="ok_btn uk-margin-top uk-text-center uk-display-block uk-width-1-1">Завершить</button>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <button uk-toggle="target: #howtopay" type="button" style="padding: 10px;
+                        width: 100%;
+                        margin-top: 20px;
+                        background: #ffffff;
+                        color: #1976d2;
+                        border: 1px solid #1976d2;">Как это работает?</button>
+
+                </div>
+
+
+
+{% endblock %}
+

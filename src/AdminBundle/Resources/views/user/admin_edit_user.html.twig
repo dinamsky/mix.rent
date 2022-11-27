@@ -1,0 +1,66 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/js/visual_editor.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('assets/js/phone_validate.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Редактирование профиля пользователя</h1>
+
+    <form id="save_profile" action="/adminUserSave" method="POST">
+        <div>Имя: <input name="header" value="{{ user.header }}" class="uk-input"></div>
+
+        {% set phone = '' %}
+        {% set website = '' %}
+        {% set foto = '' %}
+
+        {% set vk = '' %}
+        {% set fb = '' %}
+        {% set ig = '' %}
+        {% set ok = '' %}
+        {% set tw = '' %}
+        {% set gp = '' %}
+        {% set yt = '' %}
+
+        {% for info in user.information %}
+            {% if info.uiKey == 'phone' %}
+                {% set phone = info.uiValue %}
+            {% endif %}
+            {% if info.uiKey == 'website' %}
+                {% set website = info.uiValue %}
+            {% endif %}
+            {% if info.uiKey == 'foto' %}
+                {% set foto = info.uiValue %}
+            {% endif %}
+
+            {% if info.uiKey == 'vk' %}{%  set vk = info.uiValue %}{% endif %}
+            {% if info.uiKey == 'fb' %}{%  set fb = info.uiValue %}{% endif %}
+            {% if info.uiKey == 'ig' %}{%  set ig = info.uiValue %}{% endif %}
+            {% if info.uiKey == 'ok' %}{%  set ok = info.uiValue %}{% endif %}
+            {% if info.uiKey == 'tw' %}{%  set tw = info.uiValue %}{% endif %}
+            {% if info.uiKey == 'gp' %}{%  set gp = info.uiValue %}{% endif %}
+            {% if info.uiKey == 'yt' %}{%  set yt = info.uiValue %}{% endif %}
+
+        {% endfor %}
+
+        <div>Телефон: <input name="info[phone]" value="{{ phone }}" class="uk-input phone_validate"></div>
+        <div>Website: <input name="info[website]" value="{{ website }}" class="uk-input"></div>
+        <hr>
+
+        <div>Вконтакте: <input name="info[vk]" value="{{ vk }}" class="uk-input"></div>
+        <div>Facebook: <input name="info[fb]" value="{{ fb }}" class="uk-input"></div>
+        <div>Instagram: <input name="info[ig]" value="{{ ig }}" class="uk-input"></div>
+        <div>Одноклассники: <input name="info[ok]" value="{{ ok }}" class="uk-input"></div>
+        <div>Twitter: <input name="info[tw]" value="{{ tw }}" class="uk-input"></div>
+        <div>Google+: <input name="info[gp]" value="{{ gp }}" class="uk-input"></div>
+        <div>Youtube: <input name="info[yt]" value="{{ yt }}" class="uk-input"></div>
+
+        <input type="hidden" name="id" value="{{ user.id }}">
+        <button class="uk-button uk-button-primary uk-margin-top">Сохранить</button>
+    </form>
+{% endblock %}

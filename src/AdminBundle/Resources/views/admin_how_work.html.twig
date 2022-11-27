@@ -1,0 +1,22 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/js/visual_editor.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Как это работает</h1>
+    <form action="/adminSaveHowWork" method="POST">
+        <textarea name="content" class="visual_editor">{{ content }}</textarea>
+
+        <br><br>
+        <button>Записать</button>
+    </form>
+{% endblock %}

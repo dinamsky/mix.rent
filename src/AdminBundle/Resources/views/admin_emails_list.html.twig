@@ -1,0 +1,8 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block content %}
+    <h1>Письма</h1>
+    {% for email in emails %}
+        <div><a href="/adminEditEmail/{{ email }}">{{ names[email] }}</a></div>
+    {% endfor %}
+{% endblock %}

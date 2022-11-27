@@ -1,0 +1,26 @@
+{% extends 'user/user_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/image_upload_preview.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('assets/js/phone_validate.js') }}"></script>
+    <script src="{{ asset('assets/js/order.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Тестовая оплата</h1>
+    <div class="">
+        Стоимость аренды: {{ order.price }}<br><br>
+        Залог: {{ order.deposit }}<br><br>
+        Транспорт: {{ order.transport }}<br>
+        даты: с {{ order.dateIn|date('d.m.Y') }} по {{ order.dateOut|date('d.m.Y') }} <br>
+        забрать: {{ order.cityIn }}<br>
+        вернуть: {{ order.cityOut }}<br>
+    </div>
+    <form action="/user_order_pay_success" method="POST">
+        <input type="hidden" name="id" value="{{ order.id }}">
+        <button>Оплатить</button>
+    </form>
+{% endblock %}
+

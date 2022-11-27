@@ -1,0 +1,17 @@
+<hr>
+
+<div class="uk-column-1-5">
+    {% for city in popular_city if  city.total >= 10 %}
+        <a class="city_block uk-display-block" href="/rent/{{ city.url }}">{{ city.header }}</a>
+    {% endfor %}
+</div>
+
+<hr>
+
+<div id="more_cities">
+    <div class="uk-column-1-5">
+        {% for city in popular_city if  city.total < 10 %}
+            <a class="city_block uk-display-block" href="/rent/{{ city.url }}">{{ city.header }}</a>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWdm1zrblFjsdUfi1-6fsPvj30ACCiCxk"></script>
+    <script src="{{ asset('assets/js/show_map.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div id="map" data-lat="53.3379095" data-lng="-6.2482482" class="uk-margin-bottom"></div>
+
+
+
+    <div class="standard_wide uk-margin-bottom">
+        <h1><span>{% trans %}Контакты{% endtrans %}</span></h1>
+
+        <div class="uk-margin">
+            Mix Rent LP<br>
+            Company Number LP2418<br>
+            Office 29, Clifton House, Fitzwilliam Street Lower, Dublin 2, Republic of Ireland
+        </div>
+
+        <div>
+            <form action="/user/contactsMessage" uk-grid class="uk-grid-medium" method="POST">
+
+                <div class="uk-width-1-2@s">
+                    <div class="uk-width-1-1 uk-margin-bottom"><input type="text" name="name" class="uk-input" placeholder="{% trans %}Имя{% endtrans %}"></div>
+                    <div class="uk-width-1-1 uk-margin-bottom"><input type="text" name="phone" class="uk-input uk-width-1-1" placeholder="{% trans %}Телефон{% endtrans %}"></div>
+                    <div class="uk-width-1-1"><input type="text" name="email" class="uk-input" placeholder="{% trans %}Email{% endtrans %}" required></div>
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-width-1-1"><textarea name="message" class="uk-width-1-1" style="padding: 10px;
+    min-height: 160px;
+    border: 1px solid #e2e2e2;" placeholder="{% trans %}Сообщение{% endtrans %}" required></textarea>
+                    </div>
+                </div>
+
+                <div class="uk-width-1-1">
+                    <button class="uk-button uk-button-default">{% trans %}Отправить{% endtrans %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

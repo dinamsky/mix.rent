@@ -1,0 +1,38 @@
+<div class="top_user_actions">
+    {% if app.session.has('logged_user') %}
+        <a class="user_image_block" href="/user/cards">
+
+
+            {% if app.session.get('user_pic') != '' %}
+            <div style="background: url(/assets/images/users/t/{{ app.session.get('user_pic') }}.jpg) center center;
+                        background-size: cover;
+                        width:40px;
+                        height:40px;
+                        border-radius:20px;
+                        display:inline-block;
+                        vertical-align: middle;
+                        margin-right: 10px;"></div>
+            {% else %}
+                <i uk-icon="user"></i>
+            {% endif %}
+
+
+            {{ app.session.get('logged_user').header }}
+            {% if t3_new.getUnread>0 %}<span class="uk-badge red_badge">{{ t3_new.getUnread }}</span>{% endif %}
+        </a>
+
+
+        <div uk-drop="offset: 0" class="user_top_drop bg_blue" style="height: 40px">
+            <a href="/profile">{% trans %}Профиль{% endtrans %}</a><br>
+            <a href="/user/cards">{% trans %}Объявления{% endtrans %}</a>
+            <a href="/user/messages">{% trans %}Сообщения{% endtrans %}  {% if t3_new.getUnread>0 %}<span class="uk-badge red_badge">{{ t3_new.getUnread }}</span>{% endif %}</a>
+        </div>
+        {#<a href="/userLogout" class="uk-position-relative right_quit"><span><i uk-icon="icon:sign-out"></i> Выход</span></a>#}
+    {% elseif app.session.get('admin').email is defined %}
+        <a href="/admin"><span uk-icon="icon:user" class="c_blue"></span> {{ app.session.get('admin').email }}</a>
+        <a href="/adminLogout" class=""><span><i uk-icon="icon:sign-out" class="c_blue"></i> {% trans %}Выход{% endtrans %}</span></a>
+    {% else %}
+        <div  uk-toggle="target: #sign_in" class="top_user_actions_button"><span uk-icon="icon:sign-in" class="c_blue"></span> {% trans %}Вход{% endtrans %}</div>
+        {#<div  uk-toggle="target: #sign_up" class="top_user_actions_button"><span uk-icon="icon:lock"></span>Регистрация</div>#}
+    {% endif %}
+</div>

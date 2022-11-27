@@ -1,0 +1,22 @@
+<div uk-grid class="uk-flex uk-flex-middle">
+    <div class="uk-width-1-5@s">
+        {% trans %}Тип объявления{% endtrans %} <span class="red_star">*</span>
+        <div class="help_text">{% trans %}Сдаете в прокат или в аренду?{% endtrans %}</div>
+    </div>
+    <div class="uk-width-3-5@s">
+        <div uk-grid class="service_selector">
+            <div class="">
+                <button type="button" class="uk-button uk-button-primary uk-width-1-1" value="1">{% trans %}Прокат{% endtrans %}</button>
+            </div>
+            <div class="">
+                <button type="button" class="uk-button uk-button-default uk-width-1-1" value="2">{% trans %}Аренда{% endtrans %}</button>
+            </div>
+            <div class="">
+                <button type="button" class="uk-button uk-button-default uk-width-1-1" value="3">{% trans %}Аренда с правом выкупа{% endtrans %}</button>
+            </div>
+            <input type="hidden" name="serviceTypeId" value="1">
+        </div>
+    </div>
+    <div class="uk-width-1-5 uk-visible@s">
+    </div>
+</div>

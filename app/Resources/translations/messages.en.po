@@ -1,0 +1,935 @@
+msgid "Сдать"
+msgstr "Add listing"
+
+msgid "Лучшие предложения"
+msgstr "Best offers"
+
+msgid "Разместить объявление в ТОП"
+msgstr "Move listing to TOP"
+
+msgid "Большой выбор транспорта в аренду"
+msgstr "Wide transport offer to select"
+
+msgid "Найти"
+msgstr "Find"
+
+msgid "еще категории"
+msgstr "more categories"
+
+msgid "Объявлений"
+msgstr "Listings"
+
+msgid "Просмотров объявлений"
+msgstr "Views"
+
+msgid "Городов"
+msgstr "Cities"
+
+msgid "Категорий"
+msgstr "Categories"
+
+
+# -------------------------------------------- footer -----------------------------------------
+
+
+msgid "Категории"
+msgstr "Categories"
+
+msgid "Новые на сайте"
+msgstr "New on website"
+
+msgid "Информация"
+msgstr "Information"
+
+msgid "Легковые автомобили"
+msgstr "Cars"
+
+msgid "Свадебные авто"
+msgstr "Wedding cars"
+
+msgid "Вертолеты"
+msgstr "Helicopters"
+
+msgid "Снегоходы"
+msgstr "Snowmobiles"
+
+msgid "Грузовые автомобили"
+msgstr "Trucks"
+
+msgid "Новости"
+msgstr "News"
+
+msgid "Контакты"
+msgstr "Contacts"
+
+msgid "Сдать свой автомобиль"
+msgstr "Rent out your car"
+
+msgid "Сервис аренды автотранспорта"
+msgstr "Vehicle rent service"
+
+msgid "Условия и положения"
+msgstr "Terms and conditions"
+
+msgid "Конфиденциальность"
+msgstr "Confidential"
+
+# -------------------------------------------- header -----------------------------------------
+
+msgid "Поиск, например: bmw"
+msgstr "Type to search: bmw, for example"
+
+msgid "Вход"
+msgstr "Sign in"
+
+msgid "Профиль"
+msgstr "Profile"
+
+msgid "Объявления"
+msgstr "My listings"
+
+msgid "Выход"
+msgstr "Logout"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Войти"
+msgstr "Login"
+
+msgid "Забыли пароль?"
+msgstr "Forgot password?"
+
+msgid "Нет аккаунта?"
+msgstr "Have no account?"
+
+msgid "Регистрация"
+msgstr "Signup"
+
+msgid "Введите название компании или ваше имя"
+msgstr "Type the company name or your name "
+
+msgid "Зарегистрироваться"
+msgstr "Signup"
+
+msgid "Смена пароля"
+msgstr "Change password"
+
+msgid "Введите email использованный при регистрации"
+msgstr "Type your email, used in sign up form"
+
+msgid "Придумайте новый пароль"
+msgstr "Type your new password"
+
+msgid "Повторите новый пароль"
+msgstr "Repeat your new password"
+
+msgid "Сменить пароль"
+msgstr "Change password"
+
+msgid "Что дальше?"
+msgstr "What’s next?"
+
+msgid "Войдите"
+msgstr "Login"
+
+msgid "или пройдите"
+msgstr "or pass"
+
+msgid "быструю регистрацию"
+msgstr "fast signup"
+
+msgid "чтобы разместить ваше объявление"
+msgstr "to place your listing"
+
+msgid "Выберите пакет 'Премиум', чтобы попасть в ТОП"
+msgstr "Choose 'Premium' to get in TOP"
+
+
+# -------------------------------------------- catalog -----------------------------------------
+
+
+msgid "Найдено"
+msgstr "Found"
+
+msgid "объявлений"
+msgstr "listings"
+
+msgid "Объявлений не найдено"
+msgstr "Listings not found"
+
+msgid "Любой кузов"
+msgstr "Any bodytype"
+
+msgid "Цена"
+msgstr "Price"
+
+msgid "дешевле"
+msgstr "cheaper"
+
+msgid "дороже"
+msgstr "more expensive"
+
+msgid "Марка"
+msgstr "Vehicle brand"
+
+msgid "выбрать"
+msgstr "select"
+
+msgid "Выберите тип транспорта"
+msgstr "Select vehicle type"
+
+msgid "Любой тип транспорта"
+msgstr "Any vehicle type"
+
+msgid "Тип транспорта"
+msgstr "Vehicle type"
+
+msgid "Любая марка"
+msgstr "Any vehicle brand"
+
+msgid "Выберите марку"
+msgstr "Select vehicle brand"
+
+msgid "или начните вводить наименование марки"
+msgstr "or start typing a vehicle brand "
+
+msgid "показать все марки"
+msgstr "show all brands"
+
+msgid "Модель"
+msgstr "Vehicle model"
+
+msgid "Выберите Модель"
+msgstr "Select Vehicle model"
+
+msgid "Любая модель"
+msgstr "Any vehicle model"
+
+msgid "Прокат и аренда"
+msgstr "Rent and lease"
+
+msgid "Прокат"
+msgstr "Rent"
+
+msgid "Аренда"
+msgstr "Lease"
+
+msgid "день"
+msgstr "day"
+
+msgid "час"
+msgstr "hour"
+
+msgid "Пока никто не разместил объявление в этом городе и категории."
+msgstr "So far, no one has placed a listing in this city and category."
+
+msgid "Будь первым - добавь объявления и получай клиентов!"
+msgstr "Be first to add your listing and get clients!"
+
+msgid "Разместить объявление!"
+msgstr "Add listing!"
+
+msgid "На странице"
+msgstr "On page"
+
+msgid "объявлений"
+msgstr "listings"
+
+msgid "Показать"
+msgstr "Show"
+
+msgid "или"
+msgstr "or"
+
+msgid "Кузов"
+msgstr "Vehicle bodytype"
+
+msgid "седан"
+msgstr "sedan"
+
+msgid "хетчбек"
+msgstr "hatchback"
+
+msgid "кроссовер"
+msgstr "crossover"
+
+msgid "ещё"
+msgstr "more"
+
+
+# -------------------------------------------- card -----------------------------------------
+
+
+msgid "Главная"
+msgstr "Mainpage"
+
+msgid "Пожаловаться"
+msgstr "Complain"
+
+msgid "День"
+msgstr "day"
+
+msgid "Карта"
+msgstr "Map"
+
+msgid "Местность"
+msgstr "Street view"
+
+msgid "Видео"
+msgstr "Video"
+
+msgid "Год выпуска"
+msgstr "Year of manufacture "
+
+msgid "Состояние"
+msgstr "Condition"
+
+msgid "Цвет"
+msgstr "Color"
+
+msgid "показать полностью"
+msgstr "show full"
+
+msgid "Характеристики"
+msgstr "Features"
+
+msgid "Собственник"
+msgstr "Owner"
+
+msgid "Написать сообщение"
+msgstr "Send message"
+
+msgid "просмотров"
+msgstr "views"
+
+msgid "лайков"
+msgstr "likes"
+
+msgid "звезд из"
+msgstr "stars from"
+
+msgid "отзывов"
+msgstr "opinions"
+
+msgid "Все объявления"
+msgstr "All listings"
+
+msgid "пользователя"
+msgstr "of user"
+
+msgid "Комментарии и отзывы"
+msgstr "Comments and opinions"
+
+msgid "Комментарии"
+msgstr "Comments"
+
+msgid "Ваш комментарий"
+msgstr "Your comment"
+
+msgid "Отправить"
+msgstr "Send"
+
+msgid "зарегистрируйтесь"
+msgstr "sign up"
+
+msgid "чтобы написать комментарий"
+msgstr "to type comment"
+
+msgid "Отзывы"
+msgstr "Opinions"
+
+msgid "Ваш отзыв"
+msgstr "Your opinion"
+
+msgid "чтобы оставить отзыв"
+msgstr "to send opinion"
+
+msgid "Разместить еще объявление"
+msgstr "Place one more listing"
+
+msgid "Редактировать объявление"
+msgstr "Edit listing"
+
+msgid "Похожие объявления"
+msgstr "Similar listings"
+
+msgid "Показать телефон"
+msgstr "Show phone"
+
+msgid "Поделиться"
+msgstr "Share"
+
+msgid "Поиск"
+msgstr "Search"
+
+msgid "Час"
+msgstr "Hour"
+
+msgid "3 дня"
+msgstr "3 days"
+
+msgid "Неделя"
+msgstr "week"
+
+msgid "Месяц"
+msgstr "month"
+
+msgid "Ориентировочная"
+msgstr "indicative"
+
+msgid "Сообщение пользователю"
+msgstr "Message for user"
+
+msgid "Имя"
+msgstr "Name"
+
+msgid "Телефон"
+msgstr "Phone"
+
+msgid "Сообщение"
+msgstr "Message"
+
+msgid "Не забудьте сообщить владельцу, что звоните с сайта Мультипрокат и спросить скидку!"
+msgstr "Don't forget to message the owner that you are calling from mix.rent and ask for a discount!"
+
+msgid "Расскажи всем!"
+msgstr "Share with all!"
+
+msgid "Жалоба"
+msgstr "Complain"
+
+msgid "Телефон не отвечает"
+msgstr "Phone don't answer"
+
+msgid "Объявление больше не актуально"
+msgstr "Listing is no longer relevant"
+
+msgid "Ворованные фото"
+msgstr "Stolen photos"
+
+msgid "Грубый владелец"
+msgstr "Rude owner"
+
+
+# -------------------------------------------- new card -----------------------------------------
+
+
+msgid "Новое объявление"
+msgstr "New listing"
+
+msgid "Разместите объявление и будьте готовы принимать звонки и email-сообщения от клиентов."
+msgstr "Place your listing and be ready to get calls and emails from your new clients"
+
+msgid "Заполните номер телефона"
+msgstr "Type your phone number"
+
+msgid "Тип объявления"
+msgstr "Listing type"
+
+msgid "Сдаете в прокат или в аренду?"
+msgstr "Rent or lease?"
+
+msgid "Продолжить"
+msgstr "Next"
+
+msgid "Адрес"
+msgstr "Address"
+
+msgid "Укажите адрес размещения вашего транспорта"
+msgstr "Type your vehicle address"
+
+msgid "Страна"
+msgstr "Country"
+
+msgid "Регион"
+msgstr "Region"
+
+msgid "Город"
+msgstr "City"
+
+msgid "Тип транспорта"
+msgstr "Vehicle type"
+
+msgid "Выберите группу и тип транспорта"
+msgstr "Select vehicle group and type"
+
+msgid "Группа"
+msgstr "Group"
+
+msgid "Тип"
+msgstr "Type"
+
+msgid "Марка и модель"
+msgstr "Vehicle brand and model"
+
+msgid "Выберите марку и модель транспорта"
+msgstr "Select vehicle brand and model"
+
+msgid "Если не нашли свою марку/модель - поставьте галочку и укажите требуемое"
+msgstr "Set checkbox if you don't find your vehicle brand/model"
+
+msgid "Марки нет в списке"
+msgstr "My vehicle brand is not listed"
+
+msgid "впишите свою марку"
+msgstr "type your vehicle brand"
+
+msgid "Модели нет в списке"
+msgstr "My model is not listed"
+
+msgid "впишите свою модель"
+msgstr "type your model"
+
+msgid "Фотографии"
+msgstr "Foto"
+
+msgid "Выберите фотографии транспорта"
+msgstr "Select vehicle photos"
+
+msgid "до 5 одновременно"
+msgstr "up to 5 at a time"
+
+msgid "Цены"
+msgstr "Prices"
+
+msgid "Укажите свои расценки по периодам"
+msgstr "Type your prices by time periods"
+
+msgid "Одна из расценок: в час/в день обязательна!"
+msgstr "One of prices: per hour / per day is required"
+
+msgid "Еще расценки"
+msgstr "More prices"
+
+msgid "Описание"
+msgstr "Description"
+
+msgid "Подробно опишите все условия аренды/проката вашего транспорта. Не указывайте здесь свой номер телефона!"
+msgstr "Write your vehicle rent/lease details . Don't type your phone number here!"
+
+msgid "Тут можно указать условия аренды или проката"
+msgstr "Rent or lease condition may be specified here"
+
+msgid "Можно"
+msgstr "You can"
+
+msgid "заполнить дополнительную информацию"
+msgstr "fill additional info"
+
+msgid "но не обязательно"
+msgstr "but is not necessary"
+
+msgid "Показать"
+msgstr "Show"
+
+msgid "Дополнительно"
+msgstr "Additional"
+
+msgid "Дополнительные параметры объявления будут участвовать в фильтрации"
+msgstr "Listing additional parameters will take part in filtering"
+
+msgid "например"
+msgstr "for example"
+
+msgid "ваш email не будет показан на сайте"
+msgstr "your email will not be shown on website"
+
+msgid "необходимо, чтобы клиенты могли обращаться к вам"
+msgstr "necessary, so that clients could contact you"
+
+msgid "необходим для связи с вами"
+msgstr "necessary to connect with you"
+
+msgid "Выберите тариф размещения"
+msgstr "Select placement tariff"
+
+msgid "После выбора тарифа на ваш email будет отправлено письмо. Перейдите по ссылке в письме для завершения регистрации."
+msgstr "After tariff selection we will send email to you. Click to link in email to finish sign up process."
+
+msgid "Получать новости и спецпредложения"
+msgstr "Get news and specials"
+
+msgid "Похожие предложения в"
+msgstr "Similar offers in"
+
+msgid "Заполните поля"
+msgstr "Fill fields"
+
+msgid "Если вы уже зарегистрированы - выполните"
+msgstr "If you already registered - follow"
+
+msgid "и продолжайте подавать объявление."
+msgstr "and continue to place your listing"
+
+msgid "Если вы здесь впервые - нажмите"
+msgstr "If this is your first time here, click"
+
+msgid "заполните свою информацию и в конце вам будет предложено зарегистрироваться."
+msgstr "fill in your info and we will offer you to sign up at the end"
+
+msgid "вход"
+msgstr "sign in"
+
+msgid "продолжить"
+msgstr "continue"
+
+
+# -------------------------------------------- edit card -----------------------------------------
+
+
+msgid "Сохранить"
+msgstr "Save"
+
+msgid "Сменить тариф"
+msgstr "Change tariff"
+
+msgid "Удалить"
+msgstr "Delete"
+
+
+# -------------------------------------------- profile -----------------------------------------
+
+
+msgid "Мой профиль"
+msgstr "My profile"
+
+msgid "Мои объявления"
+msgstr "My listings"
+
+msgid "Выход"
+msgstr "Logout"
+
+msgid "Ваш аккаунт"
+msgstr "Account type"
+
+msgid "стандартный"
+msgstr "standart"
+
+msgid "Вы можете разместить не более 2-х объявлений"
+msgstr "You can place listings by pay for them"
+
+msgid "Оплатить PRO аккаунт"
+msgstr "Pay PRO account"
+
+msgid "Оплаченный PRO аккаунт действует бессрочно"
+msgstr "Payed PRO account has unlimited lifetime"
+
+msgid "и дает больше возможностей, в том числе: размещать больше объявлений и получать больше звонков от клиентов"
+msgstr "and gives more possibilities, like: to place more listings and get more calls from clients"
+
+msgid "Вы можете разместить неограниченное количество объявлений"
+msgstr "You can place unlimited amount of listings"
+
+msgid "Кратко о себе/компании"
+msgstr "Briefly about yourself / company"
+
+msgid "Ссылки на соцсети"
+msgstr "Social links"
+
+msgid "Фото"
+msgstr "Photo"
+
+msgid "Объявления пользователя"
+msgstr "User’s listings"
+
+msgid "все"
+msgstr "all"
+
+msgid "выберите"
+msgstr "select"
+
+
+# -------------------------------------------- tariffs -----------------------------------------
+
+
+msgid "Премиум размещение"
+msgstr "Premium placement"
+
+msgid "Экспресс продвижение"
+msgstr "Express promotion"
+
+msgid "Обычная публикация"
+msgstr "Standard listing"
+
+msgid "ваш текущий тариф"
+msgstr "your current tariff"
+
+msgid "Разместить и оплатить"
+msgstr "Place and pay"
+
+msgid "Разместить бесплатно"
+msgstr "Place for free"
+
+msgid "Ваше объявление на самом заметном месте сайта: на главной странице, на первом месте в выбранной вами категории.<br>Премиум размещение дает плюс 1000 просмотров.<br>Размещение объявления на главной странице сайта привлекает больше просмотров, вы повысите количество клиентов за короткий срок."
+msgstr "Your listing will be  at the prominent site location: on the main page and in the first place in your chosen category<br>Premium placement gives you +1000 views<br>Placement on the main page gives you more views and customers in a short time"
+
+msgid "Разместите ваше объявление в разделе «похожие объявления».<br>Ваше объявление в течении 7-ми дней будет размещено в карточках похожих объявлений выбранного региона.<br>Будьте лидером в своем регионе!"
+msgstr "Place your listing in «similars»<br>Your listing will be in similar listings for one week in the chosen region<br>Be a leader in your region!"
+
+msgid "Бесплатное размещение вашего объявления на 365 дней<br>Объявление вытесняется другими, не участвует в продвижении на сайте.<br>Нужно больше клиентов в вашем городе?<br>Воспользуйтесь тарифами"
+msgstr "Free placement for one year<br>Your listing will move down with other new listings and not take part in advancement on the website<br>Do you need more customers? Choose tariffs"
+
+
+# -------------------------------------------- modals -----------------------------------------
+
+
+msgid "Выберите город"
+msgstr "Select city"
+
+msgid "или начните вводить наименование города"
+msgstr "or start typing city name"
+
+msgid "показать все города"
+msgstr "show all cities"
+
+
+# -------------------------------------------- other -----------------------------------------
+
+
+msgid "Аренда с правом выкупа"
+msgstr "Lease with buyout"
+
+msgid "транспорта"
+msgstr "transport"
+
+msgid "Ваша жалоба успешно отправлена!"
+msgstr "Your complain has been sent successfully"
+
+msgid "Каптча не пройдена!"
+msgstr "Wrong captcha"
+
+msgid "Ваше сообщение успешно отправлено!"
+msgstr "Your message has been sent successfully!"
+
+msgid "Сообщение от пользователя"
+msgstr "Message from user"
+
+msgid "Вы успешно вошли в аккаунт!"
+msgstr " You have successfully logged into your account!"
+
+msgid "Неправильная пара логин/пароль!"
+msgstr "Wrong login/password"
+
+msgid "Вы успешно вышли из аккаунта"
+msgstr "You have successfully logged out of your account!"
+
+msgid "Пользователь уже зарегистрирован!"
+msgstr "User already registered"
+
+msgid "Регистрация на сайте multiprokat.com"
+msgstr "Sign up on mix.rent"
+
+msgid "На вашу почту было отправлено письмо для активации аккаунта!"
+msgstr "An email has been sent to your email to activate your account"
+
+msgid "Ваш аккаунт успешно активирован!"
+msgstr "Your account has been successfully activated!"
+
+msgid "Ваш новый пароль успешно активирован!"
+msgstr "Your new password has been successfully activated!"
+
+msgid "Произошла ошибка, попробуйте еще раз."
+msgstr "An error has occurred, please try again"
+
+msgid "Восстановление пароля на сайте multiprokat.com"
+msgstr "Password recovery on mix.rent"
+
+msgid "Вам отправлено письмо с активацией нового пароля"
+msgstr "You will be sent an email with a new password activation link"
+
+msgid "Пароли не совпадают!"
+msgstr "Passwords mismatch"
+
+msgid "Ваш новый тариф успешно оплачен!"
+msgstr "Your new tariff has been successfully payed!"
+
+msgid "Ваш PRO аккаунт успешно оплачен!"
+msgstr "Your PRO account has been successfully payed!"
+
+msgid "К сожалению оплата не прошла!"
+msgstr "Unfortunately payment has not passed!"
+
+# -------------------------------------------- booking form -----------------------------------------
+
+msgid "Забронировать"
+msgstr "Book this"
+
+msgid "Запрос на бронирование"
+msgstr "Booking request"
+
+msgid "Транспортное средство"
+msgstr "Vehicle"
+
+msgid "Дата приема"
+msgstr "Pickup Date"
+
+msgid "Дата возврата"
+msgstr "Drop Date"
+
+msgid "Город приема"
+msgstr "Pickup City"
+
+msgid "Город возврата"
+msgstr "Drop City"
+
+msgid "Имя и фамилия"
+msgstr "Full name"
+
+msgid "Укажите альтернативу, если выбранный транспорт окажется недоступен"
+msgstr "Type alternative variant of vehicle if the chosen is busy"
+
+msgid "Напишите город, если он отличается от вашего"
+msgstr "Type city name, if it differs from yours"
+
+msgid "Выберите категорию транспорта"
+msgstr "Select vehicle category"
+
+msgid "Наши категории"
+msgstr "Our categories"
+
+msgid "Отправить заявку"
+msgstr "Send order"
+
+# -------------------------------------------- booking form -----------------------------------------
+
+msgid "Все категории"
+msgstr "All categories"
+
+msgid "Сдать транспорт"
+msgstr "List your transport"
+
+msgid "в"
+msgstr "in"
+
+msgid "Легковые"
+msgstr "Cars"
+
+msgid "Учитывать"
+msgstr "Consider"
+
+msgid "Отфильтровать"
+msgstr "Filter results"
+
+msgid "Сбросить фильтры"
+msgstr "Reset filters"
+
+msgid "Сбросить характеристики"
+msgstr "Reset characteristics"
+
+
+msgid "Авто"
+msgstr "Vehicle"
+
+msgid "Похожие"
+msgstr "Similar"
+
+
+msgid "Доставка до клиента"
+msgstr "Delivery to the client"
+
+msgid "нет, клиент забирает транспорт самостоятельно"
+msgstr "no, only self-pickup"
+
+msgid "да, мы доставляем транспорт"
+msgstr "yes, we deliver transport"
+
+msgid "возможна, по согласованию"
+msgstr "possible, as agreed"
+
+msgid "Мои сообщения"
+msgstr "My messages"
+
+msgid "Тариф"
+msgstr "Tariff"
+
+msgid "Стандарт"
+msgstr "Standart"
+
+msgid "Экспресс"
+msgstr "Express"
+
+msgid "Премиум"
+msgstr "Premium"
+
+msgid "Продвинуть"
+msgstr "Promote"
+
+msgid "Записать фото"
+msgstr "Save photo"
+
+msgid "Сохранить профиль"
+msgstr "Save profile"
+
+msgid "Доставка транспорта клиенту"
+msgstr "Delivery to client"
+
+msgid "да"
+msgstr "yes"
+
+msgid "нет"
+msgstr "no"
+
+msgid "возможна"
+msgstr "possible"
+
+msgid "Выберите фотографии транспорта"
+msgstr "Select your vehicle photos"
+
+msgid "Возможности продвижения объявления"
+msgstr "Listing promo possibilities"
+
+msgid "Минимальная и максимальная цена на сайте"
+msgstr "Minimal and maximal price on site"
+
+msgid "Подсказка!<br>Если поставить цены ниже, чем у конкурентов, звонков будет больше."
+msgstr "Hint!<br>If you put prices lower than those of competitors, there will be more calls."
+
+msgid "Купить"
+msgstr "Buy"
+
+msgid "Заявка"
+msgstr "Order"
+
+msgid "Ваш коментарий к заявке"
+msgstr "Your comment to order"
+
+msgid "Самолеты"
+msgstr "Airplanes"
+
+msgid "Катера"
+msgstr "Boats"
+
+msgid "Яхты"
+msgstr "Yachts"
+
+msgid "Бронь до"
+msgstr "Reserved till"
+
+msgid "Отфильтровать по цене"
+msgstr "Filter by price"
+
+msgid "Уточнить поиск"
+msgstr "Expand details"
+
+msgid "Свернуть"
+msgstr "Close up details"
+
+msgid "Сообщения"
+msgstr "Messages"
+
+msgid "Дата начала аренды"
+msgstr "Rent start date"
+
+
+msgid "Дата окончания аренды"
+msgstr "Rent finish date"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""

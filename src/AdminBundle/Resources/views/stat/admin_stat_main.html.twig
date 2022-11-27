@@ -1,0 +1,18 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+{% endblock %}
+
+{% block content %}
+
+    <h1>Статистика</h1>
+    <div>
+        <a href="/adminStatCityQuantity">Количество объявлений в регионах</a><br>
+        <a href="/adminStatUserReg">Количество регистраций пользователей/публикаций объявлений по датам</a>
+        <a href="/adminStatUserReg">Количество регистраций пользователей/публикаций объявлений по датам</a>
+    </div>
+    
+
+{% endblock %}

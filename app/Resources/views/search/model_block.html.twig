@@ -1,0 +1,6 @@
+<hr>
+<div class="uk-column-1-5">
+    {% for model in mark.models if model.id in gtm_ids['models'] %}
+        <a class="uk-display-block" href="/rent/{{ city.url }}/all/{{ general.url }}/{{ mark.header }}/{{ model.header }}">{{ model.header }} </a>
+    {% endfor %}
+</div>

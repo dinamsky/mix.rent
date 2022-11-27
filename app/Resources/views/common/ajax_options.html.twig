@@ -1,0 +1,4 @@
+<option value="0">- {% trans %}все{% endtrans %} -</option>
+{% for option in options %}
+    <option value="{{ option.id }}">{{ option.header }}</option>
+{% endfor %}

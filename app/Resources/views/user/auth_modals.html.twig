@@ -1,0 +1,55 @@
+{% if not app.session.has('logged_user') and not app.session.has('admin')%}
+    <div id="sign_in" class="uk-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">{% trans %}Вход{% endtrans %}</h2>
+            <form action="/userSignIn" method="POST">
+                <input type="text" name="email" placeholder="Email" class="uk-input uk-margin-bottom">
+                <input type="password" name="password" placeholder="{% trans %}Пароль{% endtrans %}" class="uk-input uk-margin-bottom">
+                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                <div class="uk-grid" uk-grid>
+                    <div class="uk-width-1-3@s"><button class="uk-button uk-button-primary uk-width-1-1">{% trans %}Войти{% endtrans %}</button></div>
+                    <div class="uk-width-1-3@s"><button  uk-toggle="target: #sign_up" class="uk-button uk-button-default uk-width-1-1">{% trans %}Регистрация{% endtrans %}</button></div>
+                    <div class="uk-width-1-3@s"><a uk-toggle="target: #pass_recover">{% trans %}Забыли пароль?{% endtrans %}</a></div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="sign_up" class="uk-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">{% trans %}Регистрация{% endtrans %}</h2>
+            <form id="signUpForm" action="/userSignUp" method="POST" onsubmit="return signup_validate();">
+                <input type="text" name="header" placeholder="{% trans %}Введите название компании или ваше имя{% endtrans %}" class="uk-input uk-margin-bottom">
+                <input type="text" name="email" placeholder="Email" required class="uk-input uk-margin-bottom">
+                <input type="password" name="password" placeholder="{% trans %}Пароль{% endtrans %}" required class="uk-input uk-margin-bottom">
+                <button class="uk-button uk-button-primary">{% trans %}Зарегистрироваться{% endtrans %}</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="pass_recover" class="uk-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">{% trans %}Смена пароля{% endtrans %}</h2>
+            <form action="/userRecover" method="POST">
+                <input type="text" name="email" placeholder="{% trans %}Введите email использованный при регистрации{% endtrans %}" class="uk-input uk-margin-bottom">
+                <input type="password" name="password1" placeholder="{% trans %}Придумайте новый пароль{% endtrans %}" class="uk-input uk-margin-bottom">
+                <input type="password" name="password2" placeholder="{% trans %}Повторите новый пароль{% endtrans %}" class="uk-input uk-margin-bottom">
+                <input type="hidden" name="return" value="{{ app.request.requestUri }}">
+                <button class="uk-button uk-button-primary">{% trans %}Сменить пароль{% endtrans %}</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="sign_in_or_up" class="uk-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <h2 class="uk-modal-title">{% trans %}Что дальше?{% endtrans %}</h2>
+            <div><a uk-toggle="target: #sign_in">{% trans %}Войдите{% endtrans %}</a> {% trans %}или пройдите{% endtrans %} <a uk-toggle="target: #sign_up">{% trans %}быструю регистрацию{% endtrans %}</a> {% trans %}чтобы разместить ваше объявление{% endtrans %}.</div>
+            <div>{% trans %}Выберите пакет 'Премиум', чтобы попасть в ТОП{% endtrans %}.</div>
+        </div>
+    </div>
+{% endif %}

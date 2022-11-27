@@ -1,0 +1,10 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+
+{% block content %}
+    <h1>Страницы</h1>
+        {% for article in articles %}
+            <a href="/adminArticleEdit/{{ article.id }}">{{ article.header }}</a><br>
+        {% endfor %}
+
+{% endblock %}

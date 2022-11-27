@@ -1,0 +1,85 @@
+h1{
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+h2{
+    font-size: 1.6rem;
+    line-height: 1.2;
+}
+
+.thousand_separator{
+    display: inline-block;
+    width:5px;
+}
+
+.tx_16{
+    font-size: 16px;
+}
+
+.tx_19{
+    font-size: 19px;
+}
+
+.tx_24{
+    font-size: 24px;
+}
+
+.tx_30{
+    font-size: 30px;
+}
+
+.tx_40{
+    font-size: 40px;
+}
+
+.undln{
+    text-decoration: underline;
+}
+
+.micro{
+    font-size:11px !important;
+}
+
+.uk-padding-large-top{
+    padding-top:30px;
+}
+
+.border_bottom{
+    border-bottom: 1px solid lightgrey;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+input[type=checkbox].css-checkbox {
+    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left:30px;
+    height:25px;
+    display:inline-block;
+    line-height:25px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:15px;
+    vertical-align:middle;
+    cursor:pointer;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -25px;
+}
+
+label.css-label {
+    background-image:url(/assets/images/interface/csscheckbox.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

@@ -1,0 +1,45 @@
+{% extends 'AdminBundle::admin_base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/js/visual_editor.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Новость</h1>
+
+    <form action="/adminNewsEdit" method="POST" enctype="multipart/form-data">
+        <div>Миниатюра
+            <div>
+                <img src="/assets/images/articles/{{ news.thumbnail }}" style="height:150px;">
+            </div>
+            <div uk-form-custom>
+                <input type="file" name="thumbnail">
+                <button class="uk-button uk-button-default" type="button" tabindex="-1">Выбрать файл</button>
+            </div>
+        </div>
+        <div>Заголовок
+            <input type="text" name="header" value="{{ news.header }}" class="uk-input">
+        </div>
+        <div class="uk-margin-top">Путь
+            <input type="text" name="slug" value="{{ news.slug }}" class="uk-input">
+        </div>
+        <div class="uk-margin-top">
+            Анонс
+            <textarea name="anons" class="visual_editor">{{ news.anons }}</textarea>
+        </div>
+        <div class="uk-margin-top">
+            Контент
+            <textarea name="content" class="visual_editor">{{ news.content }}</textarea>
+        </div>
+        <input type="hidden" name="id" value="{{ news.id }}">
+        <button class="uk-button uk-button-primary">Записать</button>
+    </form>
+
+{% endblock %}

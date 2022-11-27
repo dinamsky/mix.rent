@@ -1,0 +1,116 @@
+<footer class="">
+
+
+
+    <div class="footer_info bg_dark">
+        <div class="standard_wide c_white">
+            <div uk-grid>
+
+                <div class="uk-width-1-4@l">
+                    <div>
+                        <img class="logo" src="/assets/images/interface/logo.svg" alt="">
+                    </div>
+                    <div class="uk-margin-top">
+                            <a class="c_grey" rel="nofollow" href="https://www.facebook.com/mix.rent.team/"><span uk-icon="icon:facebook"></span></a>
+                            &nbsp;
+                            {#<a class="c_grey" rel="nofollow" href="https://twitter.com/multiprokat"><span uk-icon="icon:twitter"></span></a>#}
+                            {#&nbsp;#}
+                            <a class="c_grey" rel="nofollow" href="https://plus.google.com/u/1/108392252184431209923"><span uk-icon="icon:google-plus"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://www.instagram.com/mix.rent/"><span uk-icon="icon:instagram"></span></a>
+                            &nbsp;
+                            <a class="c_grey" rel="nofollow" href="https://twitter.com/MixRent"><span uk-icon="icon:twitter"></span></a>
+                            &nbsp;
+                            <a href="https://medium.com/@mixrent"><img src="/assets/images/interface/medium.png" alt=""></a>
+                        <br>
+                        <a href="https://bitcointalk.org/index.php?topic=5059228.0" style="color: white"><img src="/assets/images/interface/bct.png" alt="" style="height: 30px"> Global</a>
+                        <a href="https://bitcointalk.org/index.php?topic=5069557.msg47915788#msg47915788" style="color: white"><img src="/assets/images/interface/bct.png" alt="" style="height: 30px"> Korea</a>
+
+                            {#<a class="c_grey" rel="nofollow" href="https://www.instagram.com/multiprokat/"><span uk-icon="icon:instagram"></span></a>#}
+                            {#&nbsp;#}
+                            {#<a class="c_grey" rel="nofollow" href="https://vk.com/multiprokatcom"><span class="fa fa-vk"></span></a>#}
+                            {#&nbsp;#}
+                            {#<a class="c_grey" rel="nofollow" href="https://www.youtube.com/channel/UCj-igu9KFIbzdzVCezy1qFg"><span uk-icon="icon:youtube"></span></a>#}
+                        </div>
+
+                    <div style="color:grey;font-size: 13px;" class="uk-margin-top">
+                        Mix Rent LP<br>
+                        Office 29, Clifton House,<br>
+                        Fitzwilliam Street Lower,<br>
+                        D02 XT91, Dublin, Republic of Ireland
+                    </div>
+                    
+                    <div>
+                        <div class="uk-text-small uk-margin-top c_grey">&copy; {{ date()|date("Y") }} {{ app.request.host }} | {% trans %}Сервис аренды автотранспорта{% endtrans %}</div>
+                    </div>
+
+                    <div class="uk-margin-top">
+                        <img src="{{ asset('assets/images/interface/csn.png') }}" alt="" style="width: 100px;">
+                    </div>
+
+                </div>
+
+                <div class="uk-width-1-4@l">
+                    <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Категории{% endtrans %}</b></div>
+                    <a rel="nofollow" href="/rent/{{ city.url }}/all/cars" class="c_grey">{% trans %}Легковые автомобили{% endtrans %}</a>
+                    <hr>
+                    <a rel="nofollow" href="/rent/{{ city.url }}/all/wedding" class="c_grey">{% trans %}Свадебные авто{% endtrans %}</a>
+                    <hr>
+                    <a rel="nofollow" href="/rent/{{ city.url }}/all/helicopters" class="c_grey">{% trans %}Вертолеты{% endtrans %}</a>
+                    <hr>
+                    <a rel="nofollow" href="/rent/{{ city.url }}/all/snowride" class="c_grey">{% trans %}Снегоходы{% endtrans %}</a>
+                    <hr>
+                    <a rel="nofollow" href="/rent/{{ city.url }}/all/trucks" class="c_grey">{% trans %}Грузовые автомобили{% endtrans %}</a>
+                </div>
+
+
+                <div class="uk-width-1-4@l">
+                    <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Информация{% endtrans %}</b></div>
+                        {#<a rel="nofollow" href="/news" class="c_grey">{% trans %}Новости{% endtrans %}</a>#}
+                        {#<hr>#}
+                        <a rel="nofollow" href="/contacts" class="c_grey">{% trans %}Контакты{% endtrans %}</a>
+                        <hr>
+
+
+                            <a href="/promo" class="c_grey">{% trans %}Сдать свой автомобиль{% endtrans %}</a>
+
+                    <hr>
+                    <a rel="nofollow" href="/howdoesitwork" class="c_grey">How does it work?</a>
+                    <hr>
+                    <a rel="nofollow" href="/news" class="c_grey">Blog</a>
+                    <hr>
+                    <a rel="nofollow" href="/privacypolicy" class="c_grey">Privacy policy</a>
+                    <hr>
+                    <a rel="nofollow" href="/termsofuse" class="c_grey">Terms of use</a>
+
+                </div>
+
+                <div class="uk-width-1-4@l uk-visible@l">
+                    <div class="uk-margin-bottom uk-text-uppercase"><b>{% trans %}Новые на сайте{% endtrans %}</b></div>
+                    {% for card in t3_new.getNew %}
+                        {{ include(':footer:top_new_tpl.html.twig', {'card':card}) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {#<div class="bottom_line bg_black">#}
+        {#<div class="standard_wide uk-clearfix">#}
+            {#<div uk-grid>#}
+                {#<div class="uk-width-2-5@s">#}
+                    {#<a rel="nofollow" href="/article/term-conditions" class="c_grey">{% trans %}Условия и положения{% endtrans %}</a> /#}
+                    {#<a rel="nofollow" href="/article/politika-konfidentsialnosti" class="c_grey">{% trans %}Конфиденциальность{% endtrans %}</a>#}
+                    {#<a rel="nofollow" href="/promo" class="c_grey uk-margin-left">Промо</a>#}
+                {#</div>#}
+
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+</footer>
+
+{% if is_mobile() %}
+    {% include 'left_bar.html.twig' %}
+{% endif %}

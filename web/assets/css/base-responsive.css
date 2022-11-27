@@ -1,0 +1,414 @@
+@media (max-width: 600px){
+    .standard_wide{
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    .owl-nav{
+        display:none;
+    }
+    .add_card_button{
+        width: auto;
+        font-size: 9px;
+        padding: 0 5px;
+    }
+    .top_sticky.uk-active .add_card_button{
+        width: auto;
+    }
+    .top_line{
+        height:40px;
+    }
+    .top_sticky .logo{
+        width: 200px;
+    }
+
+
+
+    .user_page_top_line_1 {
+        background-color: white;
+        padding-top: 10px;
+        height: auto;
+        padding-bottom: 10px;
+    }
+
+    .user_page_top_line_2 {
+        background-color: white;
+        height: auto;
+        padding-top: 10px;
+    }
+
+    .top_user_actions a img{
+        height: 40px !important;
+    }
+
+    .tariff_block_inner{
+        height: auto;
+    }
+
+    .top_line_right {
+        border-right: 0;
+    }
+
+    .edit_bottom .uk-button{
+        padding: 0 10px;
+    }
+
+    .mark_selector{
+         width: 75%;
+         display: inline-block;
+         vertical-align: top;
+     }
+
+    .model_selector{
+        width: 75%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .top_selector_box{
+        padding: 8px;
+    }
+
+    .main_h1{
+        font-size: 21px;
+    }
+
+    .cat_main_header{
+        /*margin-bottom:0 !important;*/
+    }
+
+    #top_selector_block{
+        margin-bottom:10px;
+    }
+
+    .top_counter_desc{
+        font-size: 10px;
+        position: relative;
+        top: -6px;
+    }
+
+    .top_counter {
+        padding: 10px 0;
+        font-size: 23px;
+        line-height: 15px;
+        background: white;
+        margin-bottom: 15px;
+    }
+
+    #tt li a {
+        font-size: 12px;
+    }
+
+    #pager button {
+        padding: 0px 12px;
+    }
+
+    #main_finder h1{
+        font-size: 22px;
+        text-align: center;
+        margin-bottom: 0px;
+        border-bottom: 1px solid #d6d6d6;
+        padding-bottom: 5px;
+    }
+
+    .found_row{
+        border-bottom: 1px solid #d6d6d6;
+        padding-bottom: 3px;
+        margin-bottom: 12px;
+        font-size: 16px;
+        color: #06a7ea;
+    }
+
+    .card_cover{
+        height: 300px !important;
+    }
+
+    .breadcrumbs a{
+        font-size: 13px;
+    }
+
+    .sticky_top_city_selector{
+        padding: 0;
+        color:white;
+    }
+
+    .m_add_card_button {
+        padding: 0;
+        font-size: 11px;
+        width: 50px;
+    }
+
+    #left_bar .m_add_card_button {
+        padding: 15px;
+    font-size: 16px;
+    width: 100%;
+    background: white;
+    color: #2d9cdb;
+    }
+
+    #button_main_search{
+        background: transparent;
+        border: 1px solid white;
+        color: white;
+    }
+
+    .card_page_phone{
+        position: fixed;
+        bottom: 0;
+        z-index: 10;
+        width: 100%;
+        left: 0;
+        margin-bottom: 0 !important;
+    }
+
+    .card_page_phone .hidden_phone, .card_page_phone .opened_phone {
+        height: 53px;
+        padding: 3px 0;
+        cursor: pointer;
+        line-height: 21px;
+    }
+
+    .card_page_phone .user_form_button {
+        height: 53px;
+        padding: 13px 0;
+        color: white;
+        text-align: center;
+        border-left: 1px solid white;
+        line-height: 21px;
+        cursor: pointer;
+    }
+
+    .modal_phone {
+        font-weight: bold;
+        font-size: 27px;
+    }
+
+    .card_page_phone .opened_phone {
+        height: 53px;
+        padding: 13px 0;
+        cursor: pointer;
+        line-height: 21px;
+    }
+
+    .card_cover{
+
+    }
+
+    .toggle_chars{
+        color: grey;
+        border: 1px solid grey;
+        margin-top: 5px;
+        display: inline-block;
+        line-height: 19px;
+        font-size: 18px;
+        padding: 5px 10px;
+    }
+
+    .pf_style_header{
+        text-align: center;
+        border-bottom: 0 ;
+    }
+
+    header .uk-button{
+        box-shadow: none !important;
+    }
+
+    .m_add_card_button{
+        line-height: 28px;
+        padding: 5px 0;
+    }
+
+    .desktop_header{
+        display: none;
+    }
+
+    .promo_wide{
+        width: 100% !important;
+        /*margin: 10px !important;*/
+    }
+
+    .promo h3{
+        word-break: break-all;
+        font-size: 14px;
+    }
+
+    .promo h2{
+        font-size: 16px;
+    }
+
+    .promo .tx_24{
+        font-size: 14px;
+    }
+
+    .promo .block_padding{
+        padding: 30px 0;
+    }
+
+    .promo .block_4{
+        padding: 10px;
+    }
+
+    .promo .block_5{
+        padding: 10px;
+        padding-top: 30px;
+    }
+
+    .promo .block_4 .uk-float-left{
+        width:80%;
+    }
+
+    .promo .block_4 .uk-float-right{
+        width:20%;
+    }
+
+    .promo .b4_toggler_text {
+        width: 95%;
+    }
+
+    .block_6 img{
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .block_1 a{
+        width: 100%;
+    font-size: 13px;
+    line-height: 15px;
+    padding: 17px 0;
+    margin-top: 10px;
+    }
+
+    .block_1 h1{
+        font-size: 31px !important;
+    }
+
+    .main_top_form{
+        position: initial;
+    margin-top: 0;
+    width: 100%;
+    height: auto !important;
+    }
+
+    .b_content_block{
+        left: 0;
+        width: 100%;
+        text-align: center;
+        top: 20px;
+        box-sizing: border-box;
+    }
+
+    .cat_main_header{
+        text-align: center;
+    }
+
+    .top_categories_content .owl-stage-outer {
+        box-shadow: none;
+    }
+
+    .top_categories_content .owl-stage {
+        right: 20px;
+    }
+
+    .top_slider_block .owl-stage {
+        right: 20px;
+    }
+
+    .user_page_phone{
+        width: 100%;
+    }
+
+    .mobile_header{
+        background: white;
+    }
+
+    .mtf_button{
+        width: 90%;
+        margin: 0 5%;
+    }
+
+    .right_corner{
+        display: none;
+    }
+
+    .right_round{
+        display: none;
+    }
+
+    .left_corner{
+        display: none;
+    }
+
+    .left_round{
+        display: none;
+    }
+
+    .hw_mob{
+        position: static !important;
+        box-sizing: border-box;
+    }
+
+    .how_h1{
+        font-size: 20px !important;
+    margin-left: 0 !important;
+    left: 0 !important;
+    width: 100%;
+    text-align: center;
+    }
+
+    .hw_mouse{
+        display: none;
+    }
+    .how_black{
+        height: 430px !important;
+    }
+
+    .howto_inner{
+        padding: 10px !important;
+    }
+
+    .hw_grid{
+        width: 100%;
+    }
+
+    .msl_txt{
+        top: 10px !important;
+        left: 0 !important;
+        width: 100%;
+    }
+
+    .msl_txt .slt1{
+        font-size: 33px !important;
+        text-align: center;
+    }
+
+    .msl_txt .slt2{
+        font-size: 10px !important;
+        text-align: center;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1024px){
+    .standard_wide{
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+    .top_sticky{
+        width: 100% !important;
+    }
+
+    img.logo{
+        width: 100px !important;
+    }
+
+    .add_card_button{
+        width: 50px !important;
+        font-size: 10px !important;
+    }
+}
+
+@media (min-width: 600px) {
+    .mobile_header{
+        display: none;
+    }
+}

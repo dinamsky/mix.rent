@@ -1,0 +1,9 @@
+<div>
+    от имени пользователя:
+    <select name="user_email" class="uk-select uk-width-1-5">
+        {% for user in admin.users %}
+            <option value="{{ user.email }}">{{ user.email }}</option>
+        {% endfor %}
+    </select>
+</div>
+<hr>

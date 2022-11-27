@@ -1,0 +1,42 @@
+<div id="nonreged_user_book_form" uk-modal="bg-close:false">
+        <div class="uk-modal-dialog uk-modal-body">
+
+            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <div id="nrf">
+
+                <div class="rb_1">
+                    <h2 class="uk-modal-title">Fast sign up</h2>
+                    {#Пожалуйста, укажите номер мобильного телефона для верификации в Мультипрокат<br><br>#}
+                    Please, type your mobile phone number for verification in Mix Rent platform<br>
+                    <div class="uk-margin-top">
+                        <input type="text" name="phone" class="uk-input" placeholder="mobile phone number" required>
+                    </div>
+                    <div class="uk-margin-top">
+                        <input type="hidden" name="back_url" value="/rent/{{ card.city.url }}/all/{{ card.generalType.url }}/{{ card.markModel.mark.header }}/{{ card.markModel.header }}">
+                        <button class="uk-button uk-button-primary" id="qreg_1">Send SMS</button>
+                    </div>
+                </div>
+
+                <div class="rb_2 uk-hidden">
+                    <h2 class="uk-modal-title">Verification</h2>
+
+                    <div>
+                        <input type="text" name="regcode" class="uk-input" placeholder="verification code">
+                    </div>
+                    <div class="uk-margin-top">
+                        <button class="uk-button uk-button-primary" id="qreg_2">Check</button>
+                    </div>
+                </div>
+
+                <div class="rb_3 uk-hidden">
+                    <h2 class="uk-modal-title">Order</h2>
+                    {{ include('card/order_forms/new_order_form_content.html.twig',{'nonreged':true}) }}
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>

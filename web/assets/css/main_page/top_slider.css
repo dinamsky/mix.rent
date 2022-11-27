@@ -1,0 +1,35 @@
+.top_slider_block .owl-next{
+    right: -68px;
+    background: transparent !important;
+}
+
+.top_slider_block .owl-next i{
+    width:50px;
+}
+
+.top_slider_block .owl-next i svg{
+    width: 100%;
+    height:100%;
+    color: white;
+}
+
+.top_slider_block .owl-prev{
+    left: -68px;
+    background: transparent !important;
+}
+
+.top_slider_block .owl-prev i{
+    width:50px;
+}
+
+.top_slider_block .owl-prev i svg{
+    width: 100%;
+    height:100%;
+    color: white;
+}
+
+.top_slider_block{
+    padding: 50px 0 70px 0;
+    /*background: #1976d2;*/
+    background: #eaeaea;
+}

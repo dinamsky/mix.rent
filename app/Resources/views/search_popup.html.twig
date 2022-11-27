@@ -1,0 +1,30 @@
+<div id="search_popup" class="uk-hidden">
+
+
+
+    <div class="popup_city_search uk-inline uk-width-1-1">
+        <span class="uk-form-icon" uk-icon="icon: search"></span>
+        <input type="text" name="popup_search" class="uk-input uk-width-1-1" placeholder="{% trans %}Город{% endtrans %}">
+    </div>
+
+
+
+
+        <div class="uk-text-center uk-margin-bottom uk-margin-top">
+        {% trans %}Наши категории{% endtrans %}:
+        </div>
+
+
+    <div  class=" top_pop_carousel owl-carousel uk-margin-bottom">
+            {% for gt in t3_new.getGt if gt.carTypeIds %}
+                <div class="uk-width-1-1" style="display: none">
+                    <a href="/rent/{{ city.url }}/all/{{ gt.url }}" class="gt_button {{ gt.url == 'cars' ? 'active' }}">
+                        <i class="fa fa-{{ gt.icon }}"></i>
+                        <br>
+                        <span>{{ lang == 'ru' ? gt.header : gt.url }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+</div>

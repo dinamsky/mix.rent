@@ -1,0 +1,16 @@
+<ul>
+    {% for field in custom_fields %}
+        <li>{{ field.fieldType.header }}
+            {#{% if field.selects is defined and field.selects is not empty%}#}
+                {#<select>#}
+                    {#{% for sf in field.selects %}#}
+                        {#<option value="">{{ sf.subField.getHeader() }}</option>#}
+                    {#{% endfor %}#}
+                {#</select>#}
+            {#{% endif %}#}
+        </li>
+    {% endfor %}
+</ul>
+
+
+

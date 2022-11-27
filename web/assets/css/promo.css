@@ -1,0 +1,22 @@
+.block_padding{
+    padding: 100px 0;
+}
+
+.promo_wide{
+    width: 960px;
+    margin: 0 auto;
+}
+
+.uk-button{
+    box-shadow: none !important;
+}
+
+#promo_result_slider{
+    height: 220px;
+    overflow: hidden;
+}
+
+#promo_add_case{
+    padding: 10px 10px;
+    vertical-align: top;
+}

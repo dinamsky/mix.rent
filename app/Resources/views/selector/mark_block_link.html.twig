@@ -1,0 +1,27 @@
+{% set if_body = '' %}
+{% if is_body is defined and is_body != ''%}
+    {% set if_body = '/'~is_body %}
+{% endif %}
+
+<div id="top_mark_links" class="uk-modal-container uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">{% trans %}Выберите марку{% endtrans %}</h2>
+
+        <div class="uk-column-1-1 uk-column-1-5@s">
+            <a class="uk-display-block uk-margin-bottom" href="/rent/{{ city.url }}/all/{{ general.url }}{{ if_body }}">{% trans %}Любая марка{% endtrans %}</a>
+            {% for mark in mark_arr[type]|slice(0,50) %}
+                <a class="uk-display-block" href="/rent/{{ city.url }}/all/{{ general.url }}/{{ mark.mark.header }}{{ if_body }}">{{ mark.mark.header }}</a>
+            {% endfor %}
+        </div>
+        <hr>
+        <button uk-toggle="target: #more_marks_links" type="button" class="more_cities_button">{% trans %}показать все марки{% endtrans %}</button>
+        <div id="more_marks_links" hidden>
+            <div class="uk-column-1-1 uk-column-1-5@s">
+                {% for mark in mark_arr[type]|slice(50) %}
+                    <a class="uk-display-block" href="/rent/{{ city.url }}/all/{{ general.url }}/{{ mark.mark.header }}{{ if_body }}">{{ mark.mark.header }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

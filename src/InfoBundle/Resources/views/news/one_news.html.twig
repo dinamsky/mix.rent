@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+
+
+    <div class="standard_wide uk-margin-large-bottom-bottom uk-margin-large-top">
+        <a href="/news">All articles</a>
+        <br><br>
+        <h1>{{ news.header }}</h1>
+        <div>{{ news.content|raw }}</div>
+    </div>
+{% endblock %}

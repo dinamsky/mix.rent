@@ -1,0 +1,19 @@
+{% set filt = 'price_range' %}
+<form class="" id="price_form">
+    <div class="uk-margin-top">
+        <input id="r_from_{{ filt }}" type="number" name="price_from" data-start="0" value="{{ app.request.get('price_from')  is not null ? app.request.get('price_from') : 0 }}" class="uk-input uk-width-1-3">
+        - <input id="r_to_{{ filt }}" type="number" name="price_to" data-start="1000000" value="{{ app.request.get('price_to')  is not null ? app.request.get('price_to') : 1000000 }}" class="uk-input uk-width-1-3">
+        {{ lang=='ru' ? '₽' : '$' }}/{% trans %}день{% endtrans %}
+        <div id="ranger_{{ filt }}"
+             style="width: 90%; margin: 0 5%;"
+             class="ranger uk-margin-top"
+             data-from="0"
+             data-to="1000000"
+             data-id="{{ filt }}"
+             data-start="{{ app.request.get('price_from')  is not null ? app.request.get('price_from') : 0 }}"
+             data-finish="{{ app.request.get('price_to')  is not null ? app.request.get('price_to') : 1000000 }}">
+
+        </div>
+    </div>
+    <button type="button" id="price_button" class="uk-button uk-button-primary uk-margin-top uk-width-1-1">{% trans %}Отфильтровать по цене{% endtrans %}</button>
+</form>
