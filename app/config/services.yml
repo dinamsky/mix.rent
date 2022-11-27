@@ -52,10 +52,10 @@ services:
         resource: '../../src/AppBundle/Menu'
         public: true
 
-    AppBundle\Menu\MyCacheService:
-        class: 'AppBundle\Menu\MyCacheService'
-        public: true
-        arguments: ["%kernel.environment%"]
+#    AppBundle\Menu\MyCacheService:
+#        class: 'AppBundle\Menu\MyCacheService'
+#        public: true
+#        arguments: ["%kernel.environment%"]
 
     AppBundle\SubFields\:
             resource: '../../src/AppBundle/SubFields'
